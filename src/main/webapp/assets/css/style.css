@@ -1,0 +1,36 @@
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+// pointer-events: none;
+}
+
+._nav-link {
+    color: white;
+    padding-top: 50px;
+    font-weight: bolder;
+}
+
+._nav-link:hover {
+    text-decoration: none;
+    color: white;
+}
+
+._nav-item {
+    padding: 15px 25px;
+}
+
+._nav-item:hover {
+    background-color: #00466f;
+
+}
+
+nav {
+    background-color: #00629c;
+}
+
+._blue{
+    color:  #00629c;
+}

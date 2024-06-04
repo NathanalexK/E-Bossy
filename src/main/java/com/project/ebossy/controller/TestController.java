@@ -1,4 +1,4 @@
-package com.project.ebossy.controllers;
+package com.project.ebossy.controller;
 
 
 import org.springframework.stereotype.Controller;
