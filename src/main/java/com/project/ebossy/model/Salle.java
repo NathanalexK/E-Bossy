@@ -1,5 +1,6 @@
 package com.project.ebossy.model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Salle {
     @Id
     @ColumnDefault("nextval('salle_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -25,4 +27,6 @@ public class Salle {
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
+
 }
+

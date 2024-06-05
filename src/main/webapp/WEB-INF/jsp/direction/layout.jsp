@@ -79,8 +79,9 @@
                     <div class="dropdown-menu"
                     >
                         <a href="" class="dropdown-item">Niveau Scolaire</a>
-                        <a href="" class="dropdown-item">Classe</a>
-                        <a href="" class="dropdown-item">Salle</a>
+                        <a href="/classe/form" class="dropdown-item">Classe</a>
+                        <a href="/salle/form" class="dropdown-item">Salle</a>
+                        <a href="/niveau/form" class="dropdown-item">Niveau</a>
                         <a href="" class="dropdown-item">Matière</a>
                         <a href="" class="dropdown-item">Calendrier Scolaire</a>
                         <a href="" class="dropdown-item">Emploi du temps</a>
@@ -152,6 +153,9 @@
 
 </body>
 <script src="../assets/js/bootstrap.js"></script>
-<script src="../assets/js/bootstrap.bundle.js"></script>
+<%--<script src="../assets/js/bootstrap.bundle.js"></script>--%>
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
+
+
 
 </html>

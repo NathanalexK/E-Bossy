@@ -25,5 +25,6 @@ public class Ecole {
     private String localisation;
 
     @Column(name = "id_type_ecole", length = 40)
-    private int idEcole;
+    private int idTypeEcole;
+
 }

@@ -12,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Classe {
     @Id
     @ColumnDefault("nextval('classe_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -33,5 +34,7 @@ public class Classe {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_titulaire")
     private Professeur idTitulaire;
+
+    
 
 }

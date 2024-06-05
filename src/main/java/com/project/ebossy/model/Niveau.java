@@ -19,6 +19,9 @@ public class Niveau {
     @Column(name = "nom_niveau", length = 50)
     private String nomNiveau;
 
+    @Column(name = "numero")
+    private Integer numero;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;

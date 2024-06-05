@@ -34,3 +34,7 @@ nav {
 ._blue{
     color:  #00629c;
 }
+
+.white-icon {
+    filter: invert(100);
+}

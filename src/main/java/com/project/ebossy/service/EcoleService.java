@@ -16,7 +16,8 @@ public class EcoleService {
         this.ecoleRepository = ecoleRepository;
     }
 
-    public Optional<Ecole> getEcoleById(int id) {
+    public Optional<Ecole> getEcoleById(Integer id) {
         return ecoleRepository.findById(id);
     }
+
 }

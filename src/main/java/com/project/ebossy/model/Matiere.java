@@ -29,8 +29,8 @@ public class Matiere {
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_prof")
-    private Professeur idProf;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_prof")
+//    private Professeur idProf;
 
 }

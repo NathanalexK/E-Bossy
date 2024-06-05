@@ -27,7 +27,8 @@ create table salle(
 );
 create table niveau(
     id serial primary key, 
-    nom_niveau varchar(50), 
+    nom_niveau varchar(50),
+    numero int,
     id_ecole int  references ecole(id)
 );
 create table dirigeant(
@@ -98,8 +99,8 @@ create table matiere(
     nom_matiere varchar(50), 
     coefficient int not null, 
     id_niveau int references niveau(id),
-    id_ecole int references ecole(id),
-    id_prof int references professeur(id)
+    id_ecole int references ecole(id)
+--     id_prof int references professeur(id)
 );
 create table evenement_scolaire(
     id serial primary key, 
@@ -186,7 +187,13 @@ create table utilisateur(
     id bigserial primary key,
     mdp varchar(50),
     id_type_user int references type_user(id)
-)
+);
+create table prof_matiere(
+    id serial primary key,
+    id_classe int references classe(id),
+    id_matiere int references matiere(id),
+    id_prof int references professeur(id)
+);
 
 -- create table communique(
 --     id serial primary key,

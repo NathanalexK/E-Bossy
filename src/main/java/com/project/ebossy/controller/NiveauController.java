@@ -3,19 +3,16 @@ package com.project.ebossy.controller;
 
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Niveau;
-import com.project.ebossy.model.Note;
 import com.project.ebossy.service.EcoleService;
 import com.project.ebossy.service.NiveauService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/niveau")
+@CrossOrigin("*")
 public class NiveauController {
 
 
@@ -33,7 +30,9 @@ public class NiveauController {
     public ModelAndView niveauForm() {
         ModelAndView modelAndView = new ModelAndView("direction/layout");
 
-        httpSession.setAttribute("ecole", ecoleService.getEcoleById(2).get());
+        Ecole ecole = (Ecole) httpSession.getAttribute("ecole");
+
+        modelAndView.addObject("niveauList", niveauService.findAll(ecole.getId()));
 
         modelAndView.addObject("page", "direction/niveau");
         return modelAndView;
@@ -41,14 +40,28 @@ public class NiveauController {
 
     @PostMapping("/save")
     public String niveauSave(
-            @RequestParam("nom") String nom
+            @RequestParam("nom") String nom,
+            @RequestParam("numero") Integer numero
     ) {
         Niveau niveau = new Niveau();
         Ecole idEcole = (Ecole) httpSession.getAttribute("ecole");
         niveau.setIdEcole(idEcole);
         niveau.setNomNiveau(nom);
+        niveau.setNumero(numero);
         niveauService.save(niveau);
         return "redirect:/niveau/form";
     }
+
+    @PostMapping("/delete")
+    public String niveauDelete(@RequestParam("idNiveau") Integer id) {
+        niveauService.deleteById(id);
+        return "redirect:/niveau/form";
+    }
+
+//    @DeleteMapping("/del/{id}")
+//    public String delete(@PathVariable Integer id) {
+//        niveauService.deleteById(id);
+//        return "redirect:/niveau/form";
+//    }
 
 }
