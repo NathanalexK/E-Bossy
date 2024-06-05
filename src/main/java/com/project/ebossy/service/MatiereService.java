@@ -18,4 +18,8 @@ public class MatiereService {
     public List<Matiere> findAll() {
         return matiereRepository.findAll();
     }
+
+    public Matiere save(Matiere matiere) {
+        return matiereRepository.save(matiere);
+    }
 }

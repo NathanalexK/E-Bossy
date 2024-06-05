@@ -78,11 +78,11 @@
 
                     <div class="dropdown-menu"
                     >
-                        <a href="" class="dropdown-item">Niveau Scolaire</a>
+<%--                        <a href="" class="dropdown-item">Niveau Scolaire</a>--%>
                         <a href="/classe/form" class="dropdown-item">Classe</a>
                         <a href="/salle/form" class="dropdown-item">Salle</a>
                         <a href="/niveau/form" class="dropdown-item">Niveau</a>
-                        <a href="" class="dropdown-item">Matière</a>
+                        <a href="/matiere/form" class="dropdown-item">Matière</a>
                         <a href="" class="dropdown-item">Calendrier Scolaire</a>
                         <a href="" class="dropdown-item">Emploi du temps</a>
 
