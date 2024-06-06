@@ -12,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Matiere {
     @Id
     @ColumnDefault("nextval('matiere_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

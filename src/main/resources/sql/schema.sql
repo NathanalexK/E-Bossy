@@ -122,16 +122,26 @@ create table ecolage(
     id_niveau int references niveau(id),
     montant decimal(10,2) not null
 );
-create table annee_scolaire(
+-- create table annee_scolaire(
+--     id serial primary key,
+--     annee_debut int,
+--     anne_fin int
+-- );
+create table annee_scolaire (
     id serial primary key,
-    annee_debut int,
-    anne_fin int
+    id_ecole int references ecole(id),
+    nom varchar(20),
+    date_debut date,
+    date_fin date
 );
+-- alter table  annee_scolaire add column date_fin date;
+
 create table periode_note(
     id serial primary key,
     date_debut date,
     date_fin date,
     nom_periode varchar(30),
+    id_ecole int references ecole(id),
     id_annee_scolaire int references annee_scolaire(id)
 );
 create table note(
@@ -194,6 +204,7 @@ create table prof_matiere(
     id_matiere int references matiere(id),
     id_prof int references professeur(id)
 );
+
 
 -- create table communique(
 --     id serial primary key,
