@@ -60,4 +60,22 @@ public class MatiereController {
 
         return "redirect:/matiere/form";
     }
+
+    @PostMapping("/{id}")
+    public String onUpdate(
+            @RequestParam("id") Integer id,
+            @RequestParam("nom") String nom,
+            @RequestParam("idNiveau") Integer idNiveau,
+            @RequestParam("coefficient") Integer coefficient
+    ){
+        Matiere matiere = new Matiere();
+        matiere.setNomMatiere(nom);
+        matiere.setCoefficient(coefficient);
+        Niveau niveau = niveauService.findById(idNiveau);
+        matiere.setIdNiveau(niveau);
+        matiere.setIdEcole(((Ecole) httpSession.getAttribute("ecole")));
+        matiereService.update(id,matiere);
+
+        return "redirect:/matiere/form";
+    }
 }

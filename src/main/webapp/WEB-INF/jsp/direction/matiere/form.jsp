@@ -17,7 +17,7 @@
     <table class="table table-borderless">
         <thead><tr>
             <th>Niveau</th>
-            <th>Ajouter?</th>
+            <th>Ajouter</th>
             <th>Coefficient</th>
             <th>Volume Horaire</th>
         </tr></thead>

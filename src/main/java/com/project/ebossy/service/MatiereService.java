@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Optional;
+
 @Service
 public class MatiereService {
 
@@ -28,6 +30,20 @@ public class MatiereService {
 
     public Matiere save(Matiere matiere) {
         return matiereRepository.save(matiere);
+    }
+
+    public Optional<Matiere> getMatiereById(Integer id){
+        return matiereRepository.findById(id);
+    }
+
+    public Matiere update(Integer id,Matiere matiere){
+        Matiere matiere2 = getMatiereById(id).get();
+        // matiere2.setId(id);
+        matiere2.setNomMatiere(matiere.getNomMatiere());
+        matiere2.setCoefficient(matiere.getCoefficient());
+        matiere2.setIdEcole(matiere.getIdEcole());
+        matiere2.setIdNiveau(matiere.getIdNiveau());
+        return matiereRepository.save(matiere2);
     }
 
 //    public Map<Matiere, List<Class>> getListeClasseParMatiere(Ecole ecole){
