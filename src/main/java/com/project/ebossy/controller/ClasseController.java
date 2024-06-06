@@ -38,7 +38,7 @@ public class ClasseController {
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
         modelAndView.addObject("salleList", salleService.getSalleDisponibles(myEcole));
-        modelAndView.addObject("niveauList", niveauService.findAll(myEcole.getIdTypeEcole()));
+        modelAndView.addObject("niveauList", niveauService.findAll(myEcole.getId()));
         modelAndView.addObject("classeList", classeService.findAll(myEcole));
 
         return modelAndView;

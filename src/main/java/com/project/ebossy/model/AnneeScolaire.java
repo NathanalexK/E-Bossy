@@ -1,12 +1,11 @@
 package com.project.ebossy.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,13 +14,23 @@ import org.hibernate.annotations.ColumnDefault;
 public class AnneeScolaire {
     @Id
     @ColumnDefault("nextval('annee_scolaire_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "annee_debut")
-    private Integer anneeDebut;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ecole")
+    private Ecole idEcole;
 
-    @Column(name = "anne_fin")
-    private Integer anneFin;
+    @Column(name = "date_debut")
+    private LocalDate dateDebut;
+
+    @Column(name = "date_fin")
+    private LocalDate dateFin;
+//    @Column(name = "annee_debut")
+//    private Integer anneeDebut;
+//
+//    @Column(name = "anne_fin")
+//    private Integer anneFin;
 
 }
