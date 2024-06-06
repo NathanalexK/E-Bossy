@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class PeriodeNote {
     @Id
     @ColumnDefault("nextval('periode_note_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -25,6 +26,10 @@ public class PeriodeNote {
 
     @Column(name = "nom_periode", length = 30)
     private String nomPeriode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ecole")
+    private Ecole idEcole;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_annee_scolaire")
