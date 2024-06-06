@@ -1,5 +1,6 @@
 create database gestion_vie_scolaire;
-gestion_vie_scolaire;
+alter database gestion_vie_scolaire owner to postgres;
+\c gestion_vie_scolaire;
 
 create table type_user(
     id serial primary key, 
