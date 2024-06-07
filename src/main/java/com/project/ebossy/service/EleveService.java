@@ -11,11 +11,9 @@ import java.util.Optional;
 @Service
 public class EleveService {
     private final EleveRepository eleveRepository;
-    private final Eleve eleve;
 
-    public EleveService(EleveRepository eleveRepository,Eleve eleve){
+    public EleveService(EleveRepository eleveRepository){
         this.eleveRepository = eleveRepository;
-        this.eleve = eleve;
     }
 
     public Optional<Eleve> getEleveById(Integer id){

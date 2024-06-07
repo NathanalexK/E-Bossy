@@ -14,7 +14,7 @@ create table ecole(
     nom_ecole varchar(50), 
     localisation varchar(50),
     id_type_ecole int references type_ecole(id)
-);
+);5/21/24, 9:00 AM
 create table sexe(
     id serial primary key, 
     type_sexe varchar(50)
@@ -205,6 +205,7 @@ create table prof_matiere(
     id_prof int references professeur(id)
 );
 
+alter table utilisateur add column email varchar(40);
 
 -- create table communique(
 --     id serial primary key,
