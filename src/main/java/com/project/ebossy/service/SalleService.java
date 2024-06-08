@@ -40,6 +40,10 @@ public class SalleService {
         return salleRepository.findAllByEcole(ecole.getId());
     }
 
+    public List<Salle> findAllByIdEcole(Integer idEcole) {
+        return salleRepository.findAllByEcole(idEcole);
+    }
+
     public Salle save(Salle salle) {
         return salleRepository.save(salle);
     }

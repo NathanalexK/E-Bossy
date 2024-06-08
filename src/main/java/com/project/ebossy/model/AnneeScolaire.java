@@ -22,6 +22,9 @@ public class AnneeScolaire {
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
+    @Column(name = "nom")
+    private String nom;
+
     @Column(name = "date_debut")
     private LocalDate dateDebut;
 

@@ -20,4 +20,8 @@ public class AnneeScolaireService {
     public List<AnneeScolaire> findAllByEcole(Ecole ecole) {
         return anneeScolaireRepository.findAllByEcole(ecole);
     }
+
+    public AnneeScolaire save(AnneeScolaire anneeScolaire) {
+        return anneeScolaireRepository.save(anneeScolaire);
+    }
 }

@@ -4,7 +4,7 @@
     String urlPage = "/WEB-INF/jsp/" + request.getAttribute("page").toString() + ".jsp";
 %>
 
-<!DOCTYPE html>
+<!DOCTYPE html ng-app="app">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="../assets/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="../assets/css/bootstrap-grid.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="/assets/js/angular.min.js"></script>
+    <script>
+        const app = angular.module("app", [])
+    </script>
 </head>
 <body>
 <main>
@@ -154,9 +158,18 @@
 </main>
 
 </body>
-<script src="../assets/js/bootstrap.js"></script>
-<%--<script src="../assets/js/bootstrap.bundle.js"></script>--%>
 <script src="/assets/js/jquery-3.7.1.min.js"></script>
+<script src="../assets/js/bootstrap.js"></script>
+
+<script src="../assets/js/bootstrap.bundle.js"></script>
+
+
+
+<!-- Include jQuery -->
+<%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>
+<!-- Include Bootstrap JS -->
+<%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>--%>
+
 
 
 

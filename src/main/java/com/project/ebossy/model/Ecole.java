@@ -1,12 +1,10 @@
 package com.project.ebossy.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Fetch;
 
 @Getter
 @Setter
@@ -26,5 +24,9 @@ public class Ecole {
 
     @Column(name = "id_type_ecole", length = 40)
     private int idTypeEcole;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_annee_scolaire")
+    private AnneeScolaire anneeScolaire;
 
 }

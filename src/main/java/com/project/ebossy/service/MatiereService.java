@@ -36,14 +36,18 @@ public class MatiereService {
         return matiereRepository.findById(id);
     }
 
-    public Matiere update(Integer id,Matiere matiere){
-        Matiere matiere2 = getMatiereById(id).get();
-        // matiere2.setId(id);
-        matiere2.setNomMatiere(matiere.getNomMatiere());
-        matiere2.setCoefficient(matiere.getCoefficient());
-        matiere2.setIdEcole(matiere.getIdEcole());
-        matiere2.setIdNiveau(matiere.getIdNiveau());
-        return matiereRepository.save(matiere2);
+//    public Matiere update(Integer id,Matiere matiere){
+//        Matiere matiere2 = getMatiereById(id).get();
+//        // matiere2.setId(id);
+//        matiere2.setNomMatiere(matiere.getNomMatiere());
+//        matiere2.setCoefficient(matiere.getCoefficient());
+//        matiere2.setIdEcole(matiere.getIdEcole());
+//        matiere2.setIdNiveau(matiere.getIdNiveau());
+//        return matiereRepository.save(matiere2);
+//    }
+
+    public Matiere update(Matiere matiere) {
+        return matiereRepository.save(matiere);
     }
 
 //    public Map<Matiere, List<Class>> getListeClasseParMatiere(Ecole ecole){

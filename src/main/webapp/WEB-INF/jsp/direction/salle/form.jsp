@@ -5,6 +5,8 @@
 
 <div class="text-center py-2">
     <h1>Ajouter une salle</h1>
+</div><div class="tex
+    <h1>Ajouter
 </div>
 
 
