@@ -87,7 +87,7 @@
                         <a href="/salle/form" class="dropdown-item">Salle</a>
                         <a href="/niveau/form" class="dropdown-item">Niveau</a>
                         <a href="/matiere/form" class="dropdown-item">Matière</a>
-                        <a href="/periodeExamen/form" class="dropdown-item">Periode d'Examen</a>
+<%--                        <a href="/periodeExamen/form" class="dropdown-item">Periode d'Examen</a>--%>
                         <a href="/calendrier/form" class="dropdown-item">Calendrier Scolaire</a>
 
                         <a href="" class="dropdown-item">Emploi du temps</a>
@@ -163,7 +163,17 @@
 
 <script src="../assets/js/bootstrap.bundle.js"></script>
 
+<script>
+    function confirmSubmission(event, nom) {
+        if (!confirm('Êtes-vous sûr de vouloir supprimer  ' + nom + " ?")) {
+            event.preventDefault();
+        }
+    }
 
+    function rollback() {
+        window.location.reload();
+    }
+</script>
 
 <!-- Include jQuery -->
 <%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>

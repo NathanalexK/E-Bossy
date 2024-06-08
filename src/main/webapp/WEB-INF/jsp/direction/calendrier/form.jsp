@@ -1,4 +1,7 @@
-
+<%@ page import="java.util.List" %>
+<%@ page import="com.project.ebossy.view.CalendrierScolaire" %><%
+    List<CalendrierScolaire> evenementList = ((List<CalendrierScolaire>) request.getAttribute("evenementList"));
+%>
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
     Ajouter une Annee Scolaire
@@ -131,10 +134,7 @@
 
 
 
-<div class="py-2 text-center">
-    <h2>Ajouter une nouvelle Annee Scolaire</h2>
-</div>
-
+<%@include file="list.jsp"%>
 
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {

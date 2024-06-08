@@ -6,6 +6,7 @@ import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.EvenementScolaire;
 import com.project.ebossy.model.PeriodeNote;
 import com.project.ebossy.service.AnneeScolaireService;
+import com.project.ebossy.service.CalendrierScolaireService;
 import com.project.ebossy.service.EvenementScolaireService;
 import com.project.ebossy.service.PeriodeNoteService;
 import jakarta.servlet.http.HttpSession;
@@ -27,21 +28,26 @@ public class CalendrierScolaireController {
     private final AnneeScolaireService anneeScolaireService;
     private final EvenementScolaireService evenementScolaireService;
     private final PeriodeNoteService periodeNoteService;
+    private final CalendrierScolaireService calendrierScolaireService;
 
-    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService) {
+    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService) {
         this.httpSession = httpSession;
         this.anneeScolaireService = anneeScolaireService;
         this.evenementScolaireService = evenementScolaireService;
         this.periodeNoteService = periodeNoteService;
+        this.calendrierScolaireService = calendrierScolaireService;
     }
 
     @GetMapping("/form")
     public ModelAndView calendrierForm() {
         ModelAndView modelAndView = new ModelAndView("direction/layout");
         modelAndView.addObject("page", "direction/calendrier/form");
+        Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
 
+        modelAndView.addObject("evenementList", calendrierScolaireService.getCalendrierScolaireActuel(myEcole));
         return modelAndView;
     }
+
 
     @PostMapping("/save")
     public String onSaveAnneeScolaire(

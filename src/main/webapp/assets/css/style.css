@@ -38,3 +38,30 @@ nav {
 .white-icon {
     filter: invert(100);
 }
+
+.bg1 {
+    background-color: rgba(147, 245, 0, 0.22);
+}
+
+.bg2 {
+    background-color: rgba(12, 97, 255, 0.29);
+}
+
+form{
+    /*all: initial;*/
+    /*width: initial;*/
+    /*height: initial;*/
+    /*margin: initial;*/
+    /*padding: initial;*/
+    display: initial;
+}
+
+/*.disabled_input {*/
+/*    !*all:initial;*!*/
+/*    !*border: none;*!*/
+/*}*/
+
+.sticky-top-offset{
+    /*z-index: 1000;*/
+    top:56px;
+}

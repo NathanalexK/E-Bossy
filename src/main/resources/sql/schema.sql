@@ -226,6 +226,10 @@ create table annee_scolaire_actuel (
     id_annee_scolaire int references annee_scolaire(id)
 )
 
+create table status(
+    id int primary key,
+    nom varchar(20)
+)
 
 
 
