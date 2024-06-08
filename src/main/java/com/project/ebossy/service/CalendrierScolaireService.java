@@ -20,4 +20,8 @@ public class CalendrierScolaireService {
     public List<CalendrierScolaire> getCalendrierScolaireActuel(Ecole ecole) {
         return calendrierScolaireRepository.findAllCalendrierScolaire(ecole, ecole.getAnneeScolaire());
     }
+
+//    public List<CalendrierScolaire> getEvenementFini(Ecole ecole) {
+//        return calendrierScolaireRepository.findEvenementFini(ecole);
+//    }
 }

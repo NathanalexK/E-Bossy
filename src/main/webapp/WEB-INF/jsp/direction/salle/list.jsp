@@ -4,19 +4,29 @@
 <%
 %>
 
+
 <form action="/salle/update" method="post">
-    <div class="d-flex w-100 justify-content-between py-4">
+    <div class="d-flex w-100 justify-content-between py-2">
         <h2>Liste des Salles</h2>
 
-        <div>
-        <table class="table table-bordered">
-            <tr>
-                <td><b>Capacité:</b></td>
-                <td class="bg-light"><%=capacite%></td>
-                <td><b>Nombres de salles:</b></td>
-                <td class="bg-light"><%=nombre%></td>
-            </tr>
-        </table>
+        <div class="d-flex ">
+            <div class="px-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><b>Capacité:</b></td>
+                        <td class="bg-light"><%=capacite%>
+                        </td>
+                        <td><b>Nombres de salles:</b></td>
+                        <td class="bg-light"><%=nombre%>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="align-items-center px-2 pt-1">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Ajouter une salle
+                </button>
+            </div>
         </div>
     </div>
     <div id="apply_update" class="fixed-bottom text-center bg-white border-top py-2">

@@ -9,6 +9,7 @@ import com.project.ebossy.service.AnneeScolaireService;
 import com.project.ebossy.service.CalendrierScolaireService;
 import com.project.ebossy.service.EvenementScolaireService;
 import com.project.ebossy.service.PeriodeNoteService;
+import com.project.ebossy.view.CalendrierScolaire;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/calendrier")
@@ -44,7 +46,12 @@ public class CalendrierScolaireController {
         modelAndView.addObject("page", "direction/calendrier/form");
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
 
-        modelAndView.addObject("evenementList", calendrierScolaireService.getCalendrierScolaireActuel(myEcole));
+        List<CalendrierScolaire> evenements = calendrierScolaireService.getCalendrierScolaireActuel(myEcole);
+
+        modelAndView.addObject("avenir", evenements.stream().filter(e -> e.getStatus().getId() == 1).toList());
+        modelAndView.addObject("encours", evenements.stream().filter(e -> e.getStatus().getId() == 2).toList());
+        modelAndView.addObject("fini", evenements.stream().filter(e -> e.getStatus().getId() == 3).toList());
+
         return modelAndView;
     }
 

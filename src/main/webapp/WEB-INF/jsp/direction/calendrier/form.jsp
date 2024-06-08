@@ -1,11 +1,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.view.CalendrierScolaire" %><%
-    List<CalendrierScolaire> evenementList = ((List<CalendrierScolaire>) request.getAttribute("evenementList"));
+    List<CalendrierScolaire> avenir = ((List<CalendrierScolaire>) request.getAttribute("avenir"));
+    List<CalendrierScolaire> encours = ((List<CalendrierScolaire>) request.getAttribute("encours"));
+    List<CalendrierScolaire> fini = ((List<CalendrierScolaire>) request.getAttribute("fini"));
+
 %>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Ajouter une Annee Scolaire
-</button>
+<%--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--%>
+<%--    Ajouter une Annee Scolaire--%>
+<%--</button>--%>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -46,9 +49,9 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterEvenement">
-    Planifier un Evenement
-</button>
+<%--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterEvenement">--%>
+<%--    Planifier un Evenement--%>
+<%--</button>--%>
 
 <div class="modal fade" id="ajouterEvenement" tabindex="-1" role="dialog" aria-labelledby="ajouterEvenenement"
      aria-hidden="true">
@@ -89,9 +92,9 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterExamen">
-    Planifier un Examen
-</button>
+<%--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterExamen">--%>
+<%--    Planifier un Examen--%>
+<%--</button>--%>
 
 <div class="modal fade" id="ajouterExamen" tabindex="-1" role="dialog" aria-labelledby="ajouterExamen"
      aria-hidden="true">

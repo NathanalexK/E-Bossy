@@ -1,7 +1,13 @@
 <%@ page import="com.project.ebossy.model.Classe" %>
 <%@ page import="com.project.ebossy.model.MatiereNiveau" %>
-<div class="text-center py-2">
+<div class="d-flex justify-content-between py-2">
     <h2>Liste des Matieres</h2>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Ajouter une Matiere
+        </button>
+    </div>
 </div>
 
 <div class="table-responsive card">

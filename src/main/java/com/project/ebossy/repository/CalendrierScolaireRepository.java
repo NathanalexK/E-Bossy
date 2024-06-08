@@ -13,4 +13,8 @@ import java.util.List;
 public interface CalendrierScolaireRepository extends JpaRepository<CalendrierScolaire, Long> {
     @Query("select c from CalendrierScolaire c where c.idEcole = ?1 and c.idAnneeScolaire = ?2")
     List<CalendrierScolaire> findAllCalendrierScolaire(Ecole idEcole, AnneeScolaire idAnneeScolaire);
+
+
+
+
 }
