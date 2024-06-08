@@ -121,7 +121,7 @@
 
                     <div class="dropdown-menu"
                     >
-                        <a href="" class="dropdown-item">Prix</a>
+                        <a href="/payeEcolage/form" class="dropdown-item">Prix</a>
                         <a href="" class="dropdown-item">Ecolage non payé </a>
 
                     </div>
