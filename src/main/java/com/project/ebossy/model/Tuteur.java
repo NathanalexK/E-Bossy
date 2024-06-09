@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class Tuteur {
     @Id
     @ColumnDefault("nextval('tuteur_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -38,9 +39,9 @@ public class Tuteur {
     @Column(name = "mdp", nullable = false, length = 50)
     private String mdp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ecole")
-    private Ecole idEcole;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_ecole")
+//    private Ecole idEcole;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sexe")

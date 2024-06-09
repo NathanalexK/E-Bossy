@@ -29,4 +29,9 @@ public class DatabaseService {
         String sql = "select count(*) as nombre from salle where id_ecole=?";
         return (Long) jdbcTemplate.queryForMap(sql, ecole.getId()).get("nombre");
     }
+
+    public boolean TuteurEmailExist(String email){
+        String sql = "select * from tuteur where email=?";
+        return !jdbcTemplate.queryForMap(sql, email).isEmpty();
+    }
 }

@@ -11,32 +11,6 @@ where
 select * from v_salles_disponibles;
 
 
-
-create or replace view v_calendrier_scolaire as
-select
-    rank() over (partition by id_annee_scolaire order by date_debut desc) as id,
-    *,
-    case when date_debut < now() and date_fin < now() then 3
-         when date_debut < now() and date_fin > now() then 2
-         else 1
-        end as status
-from(select
-    libelle,
-    date_debut,
-    date_fin,
-    id_ecole,
-    id_annee_scolaire,
-    0 as type_evenement
-from evenement_scolaire
-union (SELECT
-           nom_periode,
-           date_debut,
-           date_fin,
-           id_ecole,
-           id_annee_scolaire,
-           1
-       from periode_note)) as a;
-
 create or replace view v_calendrier_scolaire as
 select
             rank() over (partition by id_annee_scolaire order by date_debut desc) as id,
@@ -53,6 +27,7 @@ from(select
          date_fin,
          id_ecole,
          id_annee_scolaire,
+         description,
          0 as type_evenement
      from evenement_scolaire
      union (SELECT
@@ -62,8 +37,9 @@ from(select
                 date_fin,
                 id_ecole,
                 id_annee_scolaire,
+                null,
                 1
-            from periode_note)) as a
+            from periode_note)) as a;
 
 --  trouver l'ID de la période d'écolage (periode_ecolage) pour une date donnée,
 CREATE VIEW view_periode_ecolage_for_date AS

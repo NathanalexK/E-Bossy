@@ -79,7 +79,8 @@ public class CalendrierScolaireController {
     public String onSaveEvenement(
             @RequestParam("nom") String nom,
             @RequestParam("dateDebut") LocalDateTime dateDebut,
-            @RequestParam("dateFin") LocalDateTime dateFin
+            @RequestParam("dateFin") LocalDateTime dateFin,
+            @RequestParam("description") String description
     ) {
         if(dateDebut.isAfter(dateFin)) return "redirect:/calendrier/form";
 
@@ -87,6 +88,7 @@ public class CalendrierScolaireController {
         es.setLibelle(nom);
         es.setDateDebut(dateDebut);
         es.setDateFin(dateFin);
+        es.setDescription(description);
         Ecole myEcole = (Ecole) httpSession.getAttribute("ecole");
         es.setIdEcole(myEcole);
         es.setIdAnneeScolaire(myEcole.getAnneeScolaire());

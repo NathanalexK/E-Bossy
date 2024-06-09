@@ -56,7 +56,7 @@
 
 <div class="modal fade" id="ajouterEvenement" tabindex="-1" role="dialog" aria-labelledby="ajouterEvenenement"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ajouterEvenenement">Planifier un evenement</h5>
@@ -80,6 +80,11 @@
                     <div class="form-group">
                         <label for="dateFin_in">Date Fin:</label>
                         <input type="datetime-local" class="form-control" name="dateFin" id="dateFin_in" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description_in">Description:</label>
+                        <textarea name="description" class="form-control" id="description_in" rows="10"></textarea>
                     </div>
 
                 </div>

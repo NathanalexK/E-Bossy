@@ -36,4 +36,7 @@ public class EvenementScolaire {
     @JoinColumn(name = "id_annee_scolaire")
     private AnneeScolaire idAnneeScolaire;
 
+    @Column(name="description")
+    private String description;
+
 }

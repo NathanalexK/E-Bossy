@@ -4,13 +4,13 @@
     String urlPage = "/WEB-INF/jsp/" + request.getAttribute("page").toString() + ".jsp";
 %>
 
-<!DOCTYPE html ng-app="app">
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Bossy</title>
-    <link rel="icon" href="../assets/icon/logo.png">
+    <link rel="icon" href="/assets/icon/logo.png">
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="../assets/css/bootstrap-grid.css">
@@ -56,7 +56,7 @@
                     <div class="dropdown-menu"
                     >
                         <a href="" class="dropdown-item">Liste des élèves</a>
-                        <a href="" class="dropdown-item">Ajouter un élève</a>
+                        <a href="/eleve/form" class="dropdown-item">Ajouter un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
                         <a href="" class="dropdown-item">Comportements</a>

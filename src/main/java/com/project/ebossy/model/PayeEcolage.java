@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class PayeEcolage {
     @Id
     @ColumnDefault("nextval('paye_ecolage_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
