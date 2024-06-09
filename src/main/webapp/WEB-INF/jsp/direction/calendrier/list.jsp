@@ -1,7 +1,12 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="javax.swing.text.DateFormatter" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Locale" %>
 <%@page pageEncoding="UTF-8" %>
-
+<%
+    DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
+%>
 <div class="py-2 d-flex justify-content-between">
     <h2>Calendrier Scolaire</h2>
 
@@ -19,13 +24,12 @@
 </div>
 
 <div class="mt-5">
-    <h3>En Cours:</h3>
+    <h4>En Cours: <%=encours.size()%></h4>
     <div class="list-group">
         <%
-            if(encours.isEmpty())
-            {
+            if (encours.isEmpty()) {
         %>
-            <div class="text-center"><h5>Aucun evenement en cours</h5></div>
+        <div class="text-center"><h5>Aucun evenement en cours</h5></div>
         <%
             }
         %>
@@ -39,16 +43,23 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 font-weight-bold"><%=evenement.getLibelle()%>
                 </h5>
-                <small><%=evenement.getStatus().getNom()%>
-                </small>
+
+                <div>
+                    <form action="/calendrier/delete" method="post" onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                        <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
+                        <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
+                        <button class="btn _btn-link" type="submit">Supprimer</button>
+                    </form>
+                </div>
             </div>
-            <%--        <small><%=evenement.getStatus().getNom()%></small>--%>
-            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.getMonth()%> <%=debut.getYear()%>
+
+            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.format(df)%> <%=debut.getYear()%>
                 a  <%=debut.getHour()%>:<%=debut.getMinute()%>
             </p>
-            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.getMonth()%> <%=fin.getYear()%>
+            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
+
         </div>
         <%
             }
@@ -59,7 +70,7 @@
 
 
 <div class="mt-5">
-    <h3 class="py-2">A Venir:</h3>
+    <h4 class="py-2">A Venir: <%=avenir.size()%></h4>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : avenir) {
@@ -70,14 +81,20 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 font-weight-bold"><%=evenement.getLibelle()%>
                 </h5>
-                <small><%=evenement.getStatus().getNom()%>
-                </small>
+                <div>
+                    <form action="/calendrier/delete" method="post"  onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                        <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
+                        <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
+                        <button class="btn _btn-link" type="submit">Supprimer</button>
+                    </form>
+                </div>
             </div>
+            <small>Dans <%=evenement.getDateDiff()%> jours</small>
             <%--        <small><%=evenement.getStatus().getNom()%></small>--%>
-            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.getMonth()%> <%=debut.getYear()%>
+            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.format(df)%> <%=debut.getYear()%>
                 a  <%=debut.getHour()%>:<%=debut.getMinute()%>
             </p>
-            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.getMonth()%> <%=fin.getYear()%>
+            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
         </div>
@@ -90,7 +107,7 @@
 
 
 <div class="mt-5">
-    <h3>Terminé:</h3>
+    <h4 class="h4">Terminé: <%=fini.size()%></h4>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : fini) {
@@ -101,14 +118,19 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 font-weight-bold"><%=evenement.getLibelle()%>
                 </h5>
-                <small><%=evenement.getStatus().getNom()%>
-                </small>
+                <div>
+                    <form action="/calendrier/delete" method="post"  onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                        <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
+                        <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
+                        <button class="btn _btn-link" type="submit">Supprimer</button>
+                    </form>
+                </div>
             </div>
             <%--        <small><%=evenement.getStatus().getNom()%></small>--%>
-            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.getMonth()%> <%=debut.getYear()%>
+            <p class="mb-1"><u>Date debut:</u> <%=debut.getDayOfMonth()%> <%=debut.format(df)%> <%=debut.getYear()%>
                 a  <%=debut.getHour()%>:<%=debut.getMinute()%>
             </p>
-            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.getMonth()%> <%=fin.getYear()%>
+            <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
         </div>
@@ -118,3 +140,7 @@
 
     </div>
 </div>
+
+<script>
+
+</script>

@@ -39,8 +39,8 @@
         <table class="table table-striped table-borderless">
             <thead>
             <tr class="row">
-                <th class="col-4">Numero</th>
-                <th class="col-4">Nom</th>
+                <th class="col-4">Nom du Salle</th>
+                <th class="col-4">Capacité</th>
                 <th class="col-4">Action</th>
             </tr>
             </thead>
@@ -52,7 +52,7 @@
             <tr class="row">
 
                 <input type="hidden" name="idSalle[]" class="_input" value="<%=salle.getId()%>" disabled>
-                <td class="cols-4"><input type="text" name="numero[]" class="form-control _input"
+                <td class="cols-4"><input type="text" name="numero[]" class="form-control disabled_input _input"
                                           value="<%=salle.getNumero()%>" disabled></td>
                 <td class="col-4"><input type="number" name="capacite[]" class="form-control _input disabled_input"
                                          value="<%=salle.getCapacite()%>" disabled></td>

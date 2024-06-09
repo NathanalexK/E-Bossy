@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.view.CalendrierScolaire" %><%
     List<CalendrierScolaire> avenir = ((List<CalendrierScolaire>) request.getAttribute("avenir"));
@@ -15,7 +16,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ajouter un Niveau</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Ajouter une Annee Scolaire</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -25,7 +26,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nom_in">Nom:</label>
-                        <input type="text" name="nom" id="nom_in" class="form-control" required>
+                        <input type="text" name="nom" id="nom_in" class="form-control" placeholder="ex: OCT2023 - JUIL2024" required>
                     </div>
 
                     <div class="form-group">
@@ -68,7 +69,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nom_in">Nom:</label>
-                        <input type="text" name="nom" id="nom_in" class="form-control" required>
+                        <input type="text" name="nom" id="nom_in" class="form-control" required placeholder="ex: Sortie Scolaire">
                     </div>
 
                     <div class="form-group">
@@ -111,7 +112,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nom_in">Nom:</label>
-                        <input type="text" name="nom" id="nom_in" class="form-control" required>
+                        <input type="text" name="nom" id="nom_in" class="form-control" placeholder="ex: Examen N°2" required>
                     </div>
 
                     <div class="form-group">

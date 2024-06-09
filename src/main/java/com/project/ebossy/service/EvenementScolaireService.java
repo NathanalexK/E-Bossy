@@ -19,5 +19,9 @@ public class EvenementScolaireService {
     public EvenementScolaire save(EvenementScolaire evenementScolaire) {
         return evenementScolaireRepository.save(evenementScolaire);
     }
+
+    public void deleteById(Integer id) {
+        evenementScolaireRepository.deleteById(id);
+    }
 //    public List<E>
 }

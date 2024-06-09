@@ -25,6 +25,9 @@ public class CalendrierScolaire {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "id_event")
+    private Long idEvent;
+
     @Column(name = "libelle", length = Integer.MAX_VALUE)
     private String libelle;
 
@@ -48,5 +51,8 @@ public class CalendrierScolaire {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status")
     private Status status;
+
+    @Column(name="date_diff")
+    private Integer dateDiff;
 
 }

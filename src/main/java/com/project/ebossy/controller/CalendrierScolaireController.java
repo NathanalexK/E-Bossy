@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/calendrier")
@@ -46,11 +47,11 @@ public class CalendrierScolaireController {
         modelAndView.addObject("page", "direction/calendrier/form");
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
 
-        List<CalendrierScolaire> evenements = calendrierScolaireService.getCalendrierScolaireActuel(myEcole);
+        Map<Integer, List<CalendrierScolaire>> eventByStatus = calendrierScolaireService.getCalendrierScolaireActuelGrouppedByStatus(myEcole);
 
-        modelAndView.addObject("avenir", evenements.stream().filter(e -> e.getStatus().getId() == 1).toList());
-        modelAndView.addObject("encours", evenements.stream().filter(e -> e.getStatus().getId() == 2).toList());
-        modelAndView.addObject("fini", evenements.stream().filter(e -> e.getStatus().getId() == 3).toList());
+        modelAndView.addObject("avenir", eventByStatus.get(1));
+        modelAndView.addObject("encours", eventByStatus.get(2));
+        modelAndView.addObject("fini", eventByStatus.get(3));
 
         return modelAndView;
     }
@@ -110,6 +111,20 @@ public class CalendrierScolaireController {
         pn.setIdEcole(myEcole);
         pn.setIdAnneeScolaire(myEcole.getAnneeScolaire());
         periodeNoteService.save(pn);
+        return "redirect:/calendrier/form";
+    }
+
+    @PostMapping("/delete")
+    public String onDeleteEvenement(
+            @RequestParam("typeEvent") int typeEvent,
+            @RequestParam("idEvent") int idEvent
+    ) {
+        if(typeEvent == 0) {
+            evenementScolaireService.deleteById(idEvent);
+        }
+        else {
+            periodeNoteService.deleteById(idEvent);
+        }
         return "redirect:/calendrier/form";
     }
 }

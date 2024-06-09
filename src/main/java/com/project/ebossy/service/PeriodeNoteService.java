@@ -24,4 +24,12 @@ public class PeriodeNoteService {
     public PeriodeNote save(PeriodeNote periodeNote) {
         return periodeNoteRepository.save(periodeNote);
     }
+
+    public PeriodeNote findById(Integer id) {
+        return periodeNoteRepository.findById(id).get();
+    }
+
+    public void deleteById(Integer id) {
+        periodeNoteRepository.deleteById(id);
+    }
 }
