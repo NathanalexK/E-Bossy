@@ -38,3 +38,52 @@ nav {
 .white-icon {
     filter: invert(100);
 }
+
+.bg1 {
+    background-color: rgba(147, 245, 0, 0.09);
+    border-left: solid 4px #1c7430;
+    color: #1c7430;
+}
+
+.bg2 {
+    background-color: rgba(12, 97, 255, 0.11);
+    border-left: solid 4px #003a89;
+    color: #003a89;
+}
+
+.btn-primary{
+    background-color: #00629c;
+    border: solid 1px #00629c;
+}
+
+.btn-primary:hover {
+    background-color: #003b5f;
+}
+
+form{
+    /*all: initial;*/
+    /*width: initial;*/
+    /*height: initial;*/
+    /*margin: initial;*/
+    /*padding: initial;*/
+    display: initial;
+}
+
+.disabled_input {
+    appearance: textfield;
+    background-color: transparent;
+    border: none;
+}
+
+.form-control:disabled{
+    background-color: transparent;;
+}
+
+.sticky-top-offset{
+    /*z-index: 1000;*/
+    top:56px;
+}
+
+._btn-link {
+    padding: initial;
+}

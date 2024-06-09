@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" %>
 <%@ page import="com.project.ebossy.model.Salle" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.Niveau" %>
@@ -44,7 +45,7 @@
                 for(SalleDisponible salle : salleList)
                 {
             %>
-                    <option value="<%=salle.getId()%>"><%=salle.getNumero()%></option>
+                    <option value="<%=salle.getId()%>"><%=salle.getNumero()%> (Capacité: <%=salle.getCapacite()%>)</option>
             <%
                 }
             %>

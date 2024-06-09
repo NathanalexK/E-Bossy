@@ -14,7 +14,7 @@ create table ecole(
     nom_ecole varchar(50), 
     localisation varchar(50),
     id_type_ecole int references type_ecole(id)
-);5/21/24, 9:00 AM
+);
 create table sexe(
     id serial primary key, 
     type_sexe varchar(50)
@@ -206,6 +206,33 @@ create table prof_matiere(
 );
 
 alter table utilisateur add column email varchar(40);
+
+alter table matiere drop column id_niveau;
+alter table matiere drop column coefficient;
+alter table ecole add column id_annee_scolaire int references annee_scolaire(id);
+alter table evenement_scolaire add column  id_annee_scolaire int references annee_scolaire(id);
+
+create table matiere_niveau (
+    id serial primary key,
+    id_niveau int references niveau(id),
+    id_matiere int references matiere(id),
+    coefficient int,
+    volume_horaire int
+);
+
+create table annee_scolaire_actuel (
+    id serial primary key,
+    id_ecole int unique references ecole(id),
+    id_annee_scolaire int references annee_scolaire(id)
+)
+
+create table status(
+    id int primary key,
+    nom varchar(20)
+)
+
+
+
 
 -- create table communique(
 --     id serial primary key,

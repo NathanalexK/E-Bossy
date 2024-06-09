@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 public class EvenementScolaire {
     @Id
     @ColumnDefault("nextval('evenement_scolaire_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -22,12 +24,16 @@ public class EvenementScolaire {
     private Ecole idEcole;
 
     @Column(name = "date_debut")
-    private LocalDate dateDebut;
+    private LocalDateTime dateDebut;
 
     @Column(name = "date_fin")
-    private LocalDate dateFin;
+    private LocalDateTime dateFin;
 
     @Column(name = "libelle", length = 50)
     private String libelle;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_annee_scolaire")
+    private AnneeScolaire idAnneeScolaire;
 
 }
