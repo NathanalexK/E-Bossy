@@ -5,7 +5,8 @@
 %>
 
 
-<form action="/salle/update" method="post">
+<form action="/salle/update" method="post" id="updateForm">
+    <form action=""></form>
     <div class="d-flex w-100 justify-content-between py-2">
         <h2>Liste des Salles</h2>
 
@@ -31,7 +32,7 @@
     </div>
     <div id="apply_update" class="fixed-bottom text-center bg-white border-top py-2">
         <button class="btn btn-light" id="undo_update" type="button" onclick="location.reload(true)">Annuler</button>
-        <button class="btn btn-primary" type="submit">Sauveguarder les modifications</button>
+        <button class="btn btn-primary" type="submit" form="updateForm">Sauveguarder les modifications</button>
     </div>
 
     <div class="table-responsive card container-fluid">
@@ -62,7 +63,7 @@
                         Modifier
                     </button>
 
-                    <form id="deleteForm<%=salle.getId()%>" action="delete" method="post" style="width: max-content"
+                    <form id="deleteForm<%=salle.getId()%>" action="delete" method="post"
                           onsubmit="confirmSubmission(event,'<%=salle.getNumero()%>')">
                         <input type="hidden" value="<%=salle.getId()%>" name="idSalle">
                         <button form="deleteForm<%=salle.getId()%>" type="submit" class="btn btn-light border">

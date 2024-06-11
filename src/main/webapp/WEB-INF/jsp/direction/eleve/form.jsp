@@ -1,16 +1,51 @@
 <%@page pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.Sexe" %>
+<%@ page import="com.project.ebossy.model.Niveau" %>
+<%--<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
 <%
     List<Sexe> sexeList = ((List<Sexe>) request.getAttribute("sexeList"));
+    List<Niveau> niveauList = ((List<Niveau>) request.getAttribute("niveauList"));
+    String erreur = ((String) request.getAttribute("erreur"));
+    String success = ((String) request.getAttribute("success"));
 %>
 
 <div class="container my-2">
     <div class="card card-body">
         <div class="card-title">
-            <h2>Inscrire un élève</h2>
+            <h2>Formulaire d'inscription d'élève</h2>
         </div>
-        <form action="/tuteur/inscription/save" method="post">
+
+
+<%--        <c:if test="${not empty errorMessage}">--%>
+<%--            <div class="alert alert-danger">--%>
+<%--                <p>${errorMessage}</p>--%>
+<%--            </div>--%>
+<%--        </c:if>--%>
+
+        <%
+            if(success != null)
+            {
+        %>
+            <div class="alert alert-success">
+                <%=success%>
+            </div>
+        <%
+            }
+        %>
+
+        <%
+            if (erreur != null)
+            {
+        %>
+            <div class="alert alert-danger">
+                <%=erreur%>
+            </div>
+        <%
+            }
+        %>
+
+        <form action="save" method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nom_in">Nom</label>
@@ -29,7 +64,7 @@
 
                 <div class="form-group col-md-3">
                     <label for="sexe_in">Sexe</label>
-                    <select name="sexe" class="form-control" id="sexe_in">
+                    <select name="idSexe" class="form-control" id="sexe_in">
                         <%
                             for (Sexe sexe : sexeList) {
                         %>
@@ -50,30 +85,50 @@
                 <input type="text" class="form-control" id="contact_in" name="contact">
             </div>
             <div class="form-group">
-                <label for="parent_in">Parent</label>
+                <label for="parent_in">Email Parent:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="parent_in" name="contact">
+                    <input type="email" class="form-control" id="parent_in" name="email">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#exampleModal">Rechercher Parent</button>
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                                data-target="#exampleModal">Rechercher Parent
+                        </button>
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="niveau_in">Niveau</label>
+                <select name="idNiveau" id="niveau_in" class="form-control">
+                    <%
+                        for (Niveau niveau : niveauList)
+                        {
+                    %>
+                    <option value="<%=niveau.getId()%>"><%=niveau.getNomNiveau()%></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="email_in">Creer un identifiant unique:</label>
                 <input type="text" class="form-control" id="email_in" name="identifiant">
             </div>
-            <div class="form-group">
-                <label for="password_in">Mot de passe</label>
-                <input type="password" class="form-control password" id="password_in" name="mdp">
-            </div>
 
-            <div class="form-group">
-                <label for="password_in2">Confirmer votre mot de passe</label>
-                <input type="password" class="form-control password" id="password_in2">
-            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="password_in">Mot de passe</label>
+                    <input type="password" class="form-control password" id="password_in" name="mdp">
+                </div>
 
-            <div class="form-group text-right">
-                <input type="checkbox" id="showpwd"> Afficher le mot de passe
+                <div class="form-group col-6">
+                    <label for="password_in2">Confirmer votre mot de passe</label>
+                    <input type="password" class="form-control password" id="password_in2">
+                </div>
+
+                <div class="form-group text-right">
+                    <input type="checkbox" id="showpwd"> Afficher le mot de passe
+                </div>
             </div>
 
 
@@ -116,5 +171,18 @@
         var modal = $(this)
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
-    })
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const checkbox = document.querySelector('#showpwd');
+        document.querySelectorAll(".password").forEach(input => {
+            input.type = checkbox.checked ? 'text' : 'password';
+        })
+
+        checkbox.addEventListener('change', () => {
+            document.querySelectorAll(".password").forEach(input => {
+                input.type = checkbox.checked ? 'text' : 'password';
+            })
+        })
+    });
 </script>

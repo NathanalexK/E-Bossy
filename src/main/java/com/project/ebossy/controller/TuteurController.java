@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -46,7 +49,8 @@ public class TuteurController {
             @RequestParam("contact") String contact,
             @RequestParam("email") String email,
             @RequestParam("mdp") String mdp,
-            @RequestParam("sexe") Sexe sexe
+            @RequestParam("sexe") Sexe sexe,
+            RedirectAttributes redirectAttributes
     ) {
         Tuteur tuteur = new Tuteur();
         tuteur.setNom(nom);
@@ -57,7 +61,16 @@ public class TuteurController {
         tuteur.setEmail(email);
         tuteur.setMdp(mdp);
         tuteur.setIdSexe(sexe);
-        tuteurService.save(tuteur);
+
+        Map<String, String> erreurs = tuteurService.getErreurs(tuteur);
+        if(!erreurs.isEmpty()){
+            redirectAttributes.addFlashAttribute("erreurs", erreurs);
+        }
+        else {
+            tuteurService.save(tuteur);
+            redirectAttributes.addFlashAttribute("success", nom + " " + prenom + "a été bien inscris");
+        }
+
         return "redirect:/tuteur/inscription/form";
     }
 }

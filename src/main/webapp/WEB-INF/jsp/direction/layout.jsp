@@ -56,7 +56,7 @@
                     <div class="dropdown-menu"
                     >
                         <a href="" class="dropdown-item">Liste des élèves</a>
-                        <a href="/eleve/form" class="dropdown-item">Ajouter un élève</a>
+                        <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
                         <a href="" class="dropdown-item">Comportements</a>

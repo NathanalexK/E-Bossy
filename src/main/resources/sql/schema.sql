@@ -235,6 +235,8 @@ alter table tuteur drop column id_ecole;
 alter table eleve add column identifiant varchar(100);
 alter table evenement_scolaire add column description text;
 
+alter table eleve add column id_niveau int references niveau(id);
+
 
 
 -- create table communique(

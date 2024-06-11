@@ -38,6 +38,10 @@ public class Eleve {
     private String mdp;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_niveau")
+    private Niveau idNiveau;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_classe")
     private Classe idClasse;
 
