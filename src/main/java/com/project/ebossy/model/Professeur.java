@@ -26,6 +26,9 @@ public class Professeur {
     @Column(name = "date_naissance")
     private LocalDate dateNaissance;
 
+    @Column(name = "debut_carriere")
+    private LocalDate debutCarriere;
+
     @Column(name = "adresse", length = 50)
     private String adresse;
 

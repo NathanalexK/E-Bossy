@@ -6,7 +6,7 @@
 
 
 <form action="/salle/update" method="post" id="updateForm">
-    <form action=""></form>
+<%--    <form action=""></form>--%>
     <div class="d-flex w-100 justify-content-between py-2">
         <h2>Liste des Salles</h2>
 
