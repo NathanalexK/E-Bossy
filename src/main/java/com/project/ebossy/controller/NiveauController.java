@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/niveau")
-@CrossOrigin("*")
 public class NiveauController {
 
 

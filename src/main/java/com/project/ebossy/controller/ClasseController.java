@@ -1,4 +1,4 @@
-package com.project.ebossy.controller;
+ package com.project.ebossy.controller;
 
 
 import com.project.ebossy.model.Classe;

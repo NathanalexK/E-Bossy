@@ -13,7 +13,8 @@ import java.time.LocalDate;
 @Table(name = "professeur")
 public class Professeur {
     @Id
-    @ColumnDefault("nextval('professeur_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "professeur_seq")
+    @SequenceGenerator(name = "professeur_seq", sequenceName = "professeur_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
 
