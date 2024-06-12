@@ -62,7 +62,7 @@ public class ProfesseurController {
         professeur.setNom(nom);
         professeur.setPrenom(prenom);
         professeur.setDateNaissance(dateNaissance);
-        professeur.setConctact(contact);
+        professeur.setContact(contact);
         professeur.setEmail(email);
         professeur.setAdresse(adresse);
         professeur.setMdp(mdp);
@@ -76,4 +76,9 @@ public class ProfesseurController {
         professeurService.deleteById(id);
         return "redirect:/professeur/form";
     }
+
+    // @PostMapping("/update")
+    // public String professeurUpdate(@RequestParam("idProfesseur") Integer id) {
+
+    // }
 }

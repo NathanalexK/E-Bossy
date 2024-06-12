@@ -31,7 +31,7 @@ public class Professeur {
     private String adresse;
 
     @Column(name = "conctact", nullable = false, length = 50)
-    private String conctact;
+    private String contact;
 
     @Column(name = "email", length = 50)
     private String email;

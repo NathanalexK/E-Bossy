@@ -16,7 +16,7 @@
                     <th>Contact</th>
                     <th>Email</th>
                     <th>Sexe</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr></thead>
         
                 <tbody>
@@ -31,13 +31,22 @@
                     <td><%=professeur.getAdresse()%></td>
                     <td><%=professeur.getContact()%></td>
                     <td><%=professeur.getEmail()%></td>
-                    <td><%=professeur.getTypeSexe()%></td>
+                    <td><%= professeur.getIdSexe().getTypeSexe() %></td>
                     <td>
                         <form action="delete" method="post" >
                             <input type="hidden" value="<%=professeur.getId()%>" name="idProfesseur">
                             <button type="submit" class="btn btn-light border">
                                 <img src="/assets/icon/close.svg" width="16px" class=""/>
                                 Supprimer
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="delete" method="post" >
+                            <input type="hidden" value="<%=professeur.getId()%>" name="idProfesseur">
+                            <button type="submit" class="btn btn-light border">
+                                <img src="/assets/icon/close.svg" width="16px" class=""/>
+                                Modifier
                             </button>
                         </form>
                     </td>
