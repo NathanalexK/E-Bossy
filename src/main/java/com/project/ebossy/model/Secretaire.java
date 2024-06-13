@@ -13,7 +13,8 @@ import java.time.LocalDate;
 @Table(name = "secretaire")
 public class Secretaire {
     @Id
-    @ColumnDefault("nextval('secretaire_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secretaire_seq")
+    @SequenceGenerator(name = "secretaire_seq", sequenceName = "secretaire_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -29,8 +30,8 @@ public class Secretaire {
     @Column(name = "adresse", length = 50)
     private String adresse;
 
-    @Column(name = "conctact", nullable = false, length = 50)
-    private String conctact;
+    @Column(name = "contact", nullable = false, length = 50)
+    private String contact;
 
     @Column(name = "email", length = 50)
     private String email;

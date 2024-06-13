@@ -66,7 +66,7 @@ create table secretaire(
     prenom varchar(50), 
     date_naissance date, 
     adresse varchar(50), 
-    conctact varchar(50) not null, 
+    contact varchar(50) not null,
     email varchar(50), 
     mdp varchar(50) not null, 
     id_ecole int references ecole(id), 

@@ -66,7 +66,7 @@
 
                     <div class="dropdown-menu"
                     >
-                        <a href="" class="dropdown-item">Secretaires</a>
+                        <a href="/secretaire/form" class="dropdown-item">Secretaires</a>
                         <a href="/professeur/form" class="dropdown-item">Professeurs</a>
                     </div>
                 </li>
