@@ -3,9 +3,11 @@ package com.project.ebossy.controller;
 
 import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.Ecole;
+import com.project.ebossy.model.Professeur;
 import com.project.ebossy.model.Salle;
 import com.project.ebossy.service.ClasseService;
 import com.project.ebossy.service.NiveauService;
+import com.project.ebossy.service.ProfesseurService;
 import com.project.ebossy.service.SalleService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,14 @@ public class ClasseController {
     private final SalleService salleService;
     private final NiveauService niveauService;
     private final ClasseService classeService;
+    private final ProfesseurService professeurService;
 
-    public ClasseController(HttpSession httpSession, SalleService salleService, NiveauService niveauService, ClasseService classeService) {
+    public ClasseController(HttpSession httpSession, SalleService salleService, NiveauService niveauService, ClasseService classeService, ProfesseurService professeurService) {
         this.httpSession = httpSession;
         this.salleService = salleService;
         this.niveauService = niveauService;
         this.classeService = classeService;
+        this.professeurService = professeurService;
     }
 
     @GetMapping("/form")
@@ -40,6 +44,7 @@ public class ClasseController {
         modelAndView.addObject("salleList", salleService.getSalleDisponibles(myEcole));
         modelAndView.addObject("niveauList", niveauService.findAll(myEcole.getId()));
         modelAndView.addObject("classeList", classeService.findAll(myEcole));
+        modelAndView.addObject("professeurList", professeurService.findAllByEcole(myEcole));
 
         return modelAndView;
     }
@@ -49,7 +54,7 @@ public class ClasseController {
             @RequestParam("nomClasse") String nomClasse,
             @RequestParam("idNiveau") int idNiveau,
             @RequestParam("idSalle") int idSalle,
-            @RequestParam("idProf") Integer idProf
+            @RequestParam("idProf") Professeur idProf
     ){
         Salle salle = salleService.findById(idSalle);
 
@@ -62,7 +67,7 @@ public class ClasseController {
         classe.setIdNiveau(niveauService.findById(idNiveau));
         classe.setIdSalle(salle);
         classe.setIdEcole(((Ecole) httpSession.getAttribute("ecole")));
-        classe.setIdTitulaire(null);
+        classe.setIdTitulaire(idProf);
         classeService.save(classe);
         return "redirect:/classe/form";
     }

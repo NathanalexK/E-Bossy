@@ -34,4 +34,9 @@ public class DatabaseService {
         String sql = "select * from tuteur where email=?";
         return !jdbcTemplate.queryForMap(sql, email).isEmpty();
     }
+
+//    public void getProfMatiere(Class classe){
+//        String sql = "select * from prof_matiere where id_classe=?";
+//        jdbcTemplate.
+//    }
 }

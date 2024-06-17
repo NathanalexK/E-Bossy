@@ -45,7 +45,7 @@
             }
         %>
 
-        <form action="save" method="post">
+        <form action="save" method="post" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nom_in">Nom</label>
@@ -130,6 +130,8 @@
                     <input type="checkbox" id="showpwd"> Afficher le mot de passe
                 </div>
             </div>
+
+            <input type="file" class="form-control-file" name="photo">
 
 
             <button type="submit" class="btn btn-primary">Inscrire</button>

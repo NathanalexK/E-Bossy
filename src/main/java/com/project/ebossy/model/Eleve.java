@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,19 +32,13 @@ public class Eleve {
     @Column(name = "date_naissance")
     private LocalDate dateNaissance;
 
-    @Column(name = "etablissement_origine", length = 40)
-    private String etablissementOrigine;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ecole")
+    private Ecole idEcole;
 
     @Column(name = "mdp", nullable = false, length = 50)
     private String mdp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_niveau")
-    private Niveau idNiveau;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_classe")
-    private Classe idClasse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tuteur")
@@ -51,5 +46,11 @@ public class Eleve {
 
     @Column(name = "identifiant")
     private String identifiant;
+
+    @OneToMany(mappedBy = "idEleve", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<EleveAnneeScolaire> eleveAnneeScolaire;
+
+    @Column(name = "photo")
+    private String photo;
 
 }

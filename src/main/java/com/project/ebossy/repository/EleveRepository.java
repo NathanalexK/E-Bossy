@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EleveRepository extends JpaRepository<Eleve, Integer> {
-    @Query("select m from Eleve m where m.idClasse.idEcole = ?1")
+    @Query("select m from Eleve m where m.idEcole = ?1")
     List<Eleve> findAllByEcole(Ecole idEcole);
 }

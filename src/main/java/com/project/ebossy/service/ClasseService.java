@@ -5,9 +5,12 @@ import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Salle;
 import com.project.ebossy.repository.ClasseRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClasseService {
@@ -22,6 +25,11 @@ public class ClasseService {
         return classeRepository.findAllByEcole(ecole);
     }
 
+    public Classe findById(Integer id) {
+        Optional<Classe> classe = classeRepository.findById(id);
+        return classe.orElse(null);
+    }
+
     public Classe save(Classe classe) {
         return classeRepository.save(classe);
     }
@@ -33,6 +41,16 @@ public class ClasseService {
     public boolean isSalleOccuped(Salle salle) {
         return classeRepository.findByIdSalle(salle) != null;
     }
+
+//    public Classe findOneClasse(Ecole ecole) {
+//        Pageable page = PageRequest.of(1, 1);
+//        Optional<Classe> classe = classeRepository.findFirstClasseByEcole(ecole.getId(), page);
+//        if(classe.isPresent()) {
+//            return classe.get();
+//        }
+//        return null;
+//    }
+//
 
 
 }

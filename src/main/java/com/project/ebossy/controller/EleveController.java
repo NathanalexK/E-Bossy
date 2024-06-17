@@ -2,24 +2,22 @@ package com.project.ebossy.controller;
 
 import com.project.ebossy.model.*;
 import com.project.ebossy.repository.SexeRepository;
-import com.project.ebossy.service.EcoleService;
-import com.project.ebossy.service.EleveService;
+import com.project.ebossy.service.*;
 
-import com.project.ebossy.service.NiveauService;
-import com.project.ebossy.service.TuteurService;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,14 +30,22 @@ public class EleveController {
     private final SexeRepository sexeRepository;
     private final NiveauService niveauService;
     private final TuteurService tuteurService;
+    private final EleveAnneeScolaireService eleveAnneeScolaireService;
+    private final ClasseService classeService;
 
-    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService) {
+    private static String UPLOAD_DIR = "image/eleve/";
+    private final FileService fileService;
+
+    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService) {
         this.eleveService = eleveService;
         this.httpSession = httpSession;
         this.ecoleService = ecoleService;
         this.sexeRepository = sexeRepository;
         this.niveauService = niveauService;
         this.tuteurService = tuteurService;
+        this.eleveAnneeScolaireService = eleveAnneeScolaireService;
+        this.classeService = classeService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/form")
@@ -57,7 +63,35 @@ public class EleveController {
         return modelAndView;
     }
 
+    @GetMapping("/list")
+    public ModelAndView list(@RequestParam(name = "classe", required = false) Integer idClasse){
+        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        modelAndView.addObject("page", "direction/eleve/list");
+
+        Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
+        List<Classe> classeList = classeService.findAll(myEcole);
+
+        Classe myClasse = null;
+        if(idClasse != null){
+            myClasse = classeService.findById(idClasse);
+        }
+        if(myClasse == null){
+            myClasse = classeList.get(0);
+        }
+
+        List<EleveAnneeScolaire> eleves = eleveService.findAllByClasse(myClasse);
+        List<EleveAnneeScolaire> pasDeClasseList = eleveService.findAllElevePasDeClasse(myClasse.getIdNiveau());
+
+        modelAndView.addObject("classe", myClasse);
+        modelAndView.addObject("eleveList", eleves);
+        modelAndView.addObject("classeList", classeList);
+        modelAndView.addObject("pasDeClasseList", pasDeClasseList);
+
+        return modelAndView;
+    }
+
     @PostMapping("/save")
+    @Transactional
     public String onSave(
             @RequestParam("nom") String nom,
             @RequestParam("prenom") String prenom,
@@ -67,25 +101,76 @@ public class EleveController {
             @RequestParam("mdp") String mdp,
             @RequestParam("idNiveau") Niveau niveau,
             @RequestParam("identifiant") String identifiant,
+            @RequestParam(name = "photo", required = false) MultipartFile photo,
             RedirectAttributes redirectAttributes
     ){
         Map<String, String> errors = new HashMap<>();
         Tuteur tuteur = tuteurService.findByEmail(email);
+
+        String photoPath = null;
+        try {
+            photoPath = fileService.saveFile(photo, UPLOAD_DIR, "0.jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/niveau/form";
+        }
+
         if(tuteur == null){
             redirectAttributes.addAttribute("erreur", "Aucun tutueur correspond à: " + email);
         }
+        Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
         Eleve eleve = new Eleve();
         eleve.setNom(nom);
         eleve.setPrenom(prenom);
         eleve.setIdSexe(idSexe);
         eleve.setDateNaissance(date);
-        eleve.setIdNiveau(niveau);
         eleve.setIdTuteur(tuteur);
         eleve.setIdentifiant(identifiant);
         eleve.setMdp(mdp);
-        eleveService.save(eleve);
+        eleve.setIdEcole(myEcole);
+        eleve.setPhoto(photoPath);
+        Eleve saved = eleveService.save(eleve);
+
+        EleveAnneeScolaire eas = new EleveAnneeScolaire();
+        eas.setIdEleve(saved);
+        eas.setIdAnneeScolaire(myEcole.getAnneeScolaire());
+        eas.setIdNiveau(niveau);
+        eleveAnneeScolaireService.save(eas);
+
         redirectAttributes.addAttribute("success", nom + " " + prenom + "a été bien inscris");
         return "redirect:/eleve/form";
+    }
+
+    @PostMapping("/affecter")
+    @Transactional
+    public String onAffectation(
+            @RequestParam("idClasse") Classe classe,
+            @RequestParam("idEleve[]") List<EleveAnneeScolaire> eleveList
+    ){
+        for(EleveAnneeScolaire eleve : eleveList){
+            eleve.setIdClasse(classe);
+            eleveAnneeScolaireService.save(eleve);
+        }
+
+        return "redirect:/eleve/list?classe=" + classe.getId();
+    }
+
+    @GetMapping("/information")
+    public ModelAndView information(@RequestParam("id") Integer id){
+        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        modelAndView.addObject("page", "direction/eleve/information");
+
+        Eleve myEleve = eleveService.findEleveById(id);
+        List<EleveAnneeScolaire> eleveAnneeScolaire =
+                myEleve.getEleveAnneeScolaire()
+                        .stream()
+                                .sorted(Comparator.comparingInt(EleveAnneeScolaire::getId))
+                                        .toList();
+
+        modelAndView.addObject("eleve", myEleve);
+        modelAndView.addObject("parcours", eleveAnneeScolaire);
+
+        return modelAndView;
     }
 
     @PostMapping("/{id}")

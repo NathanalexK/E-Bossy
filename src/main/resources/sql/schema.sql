@@ -237,7 +237,33 @@ alter table evenement_scolaire add column description text;
 
 alter table eleve add column id_niveau int references niveau(id);
 alter table professeur add column debut_carriere date;
+alter table professeur add column identifiant varchar(100);
+alter table prof_matiere add column id_annee_scolaire int references annee_scolaire(id);
 
+alter table note drop column id_ecole;
+
+alter table note drop column note_attribue;
+alter table note add column note decimal(4,2) check ( note >= 0 and note <= 20 );
+alter table note add column id_professeur int references professeur(id);
+alter table note add column appreciation text;
+
+alter table eleve drop column id_classe;
+alter table eleve drop column id_niveau;
+
+create table eleve_annee_scolaire(
+    id serial primary key,
+    id_annee_scolaire int references annee_scolaire(id),
+    id_eleve int references eleve(id),
+    id_niveau int references niveau(id),
+    id_classe int references classe(id)
+);
+
+alter table eleve drop column etablissement_origine;
+alter table eleve add column id_ecole int references ecole(id);
+
+alter table niveau add column id_annee_scolaire int references annee_scolaire(id);
+
+alter table eleve add column photo varchar(255);
 
 
 -- create table communique(

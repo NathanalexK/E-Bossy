@@ -65,3 +65,4 @@ WHERE
         -- Ou le paiement est en dehors de la période d'écolage actuelle
         pe.date_payement < p.date_debut OR pe.date_payement > p.date_fin
     );
+

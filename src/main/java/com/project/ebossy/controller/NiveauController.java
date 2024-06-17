@@ -47,6 +47,7 @@ public class NiveauController {
         Ecole idEcole = (Ecole) httpSession.getAttribute("ecole");
         niveau.setIdEcole(idEcole);
         niveau.setNomNiveau(nom);
+        niveau.setIdAnneeScolaire(idEcole.getAnneeScolaire());
         niveau.setNumero(numero);
         niveauService.save(niveau);
         return "redirect:/niveau/form";
@@ -57,11 +58,4 @@ public class NiveauController {
         niveauService.deleteById(id);
         return "redirect:/niveau/form";
     }
-
-//    @DeleteMapping("/del/{id}")
-//    public String delete(@PathVariable Integer id) {
-//        niveauService.deleteById(id);
-//        return "redirect:/niveau/form";
-//    }
-
 }

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class Professeur {
     @Id
     @ColumnDefault("nextval('professeur_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -37,6 +38,9 @@ public class Professeur {
 
     @Column(name = "email", length = 50)
     private String email;
+
+    @Column(name = "identifiant", length = 100)
+    private String identifiant;
 
     @Column(name = "mdp", nullable = false, length = 50)
     private String mdp;

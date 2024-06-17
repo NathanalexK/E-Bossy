@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -34,6 +36,9 @@ public class Classe {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_titulaire")
     private Professeur idTitulaire;
+
+    @OneToMany(mappedBy = "idClasse", fetch = FetchType.LAZY)
+    private Set<MatiereProf> matiereProfs;
 
     
 

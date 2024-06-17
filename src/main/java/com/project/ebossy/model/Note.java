@@ -30,11 +30,19 @@ public class Note {
     private Matiere idMatiere;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_professeur")
+    private Professeur idProfesseur;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_eleve")
     private Eleve idEleve;
 
-    @Column(name = "note_attribue", nullable = false, precision = 6, scale = 3)
-    private BigDecimal noteAttribue;
+    @Column(name = "note", nullable = false, precision = 6, scale = 3)
+    private BigDecimal note;
+
+    @Column(name = "appreciation")
+    private String appreciation;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_periode_note")

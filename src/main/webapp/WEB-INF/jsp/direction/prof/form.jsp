@@ -2,11 +2,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.Sexe" %>
 <%@ page import="com.project.ebossy.model.Niveau" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="com.project.ebossy.model.Professeur" %>
 <%--<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
 <%
     List<Sexe> sexeList = ((List<Sexe>) request.getAttribute("sexeList"));
-    String erreur = ((String) request.getAttribute("erreur"));
+    Map<String,String> erreurs = request.getAttribute("erreurs") != null ? ( (Map<String, String>) request.getAttribute("erreurs")) : new HashMap<>();
     String success = ((String) request.getAttribute("success"));
+    Professeur professeur = request.getAttribute("professeur") != null ? ((Professeur) request.getAttribute("professeur")) : new Professeur();
 %>
 
 <div class="container my-2">
@@ -34,11 +39,11 @@
         %>
 
         <%
-            if (erreur != null)
+            if (!erreurs.isEmpty())
             {
         %>
         <div class="alert alert-danger">
-            <%=erreur%>
+            Erreur lors de l'inscription
         </div>
         <%
             }
@@ -48,17 +53,20 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nom_in">Nom</label>
-                    <input type="text" class="form-control" id="nom_in" placeholder="" name="nom">
+                    <input type="text" class="form-control" id="nom_in" placeholder="" name="nom" value="<%=professeur.getNom() != null ? professeur.getNom() : ""%>">
+                    <small class="text-danger"><%=erreurs.get("nom")!=null ? erreurs.get("nom") : ""%></small>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">Prenom</label>
-                    <input type="text" class="form-control" id="inputPassword4" placeholder="" name="prenom">
+                    <input type="text" class="form-control" id="inputPassword4" placeholder="" name="prenom" value="<%=professeur.getPrenom() != null ? professeur.getPrenom() : ""%>">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-9">
                     <label for="date_in">Date de Naissance</label>
-                    <input type="date" class="form-control" id="date_in" name="date" required>
+                    <input type="date" class="form-control" id="date_in" name="dateNaissance" value="<%=professeur.getDateNaissance()%>" required>
+                    <small class="text-danger"><%=erreurs.get("dateNaissance")!=null ? erreurs.get("dateNaissance") : ""%></small>
+
                 </div>
 
                 <div class="form-group col-md-3">
@@ -67,7 +75,8 @@
                         <%
                             for (Sexe sexe : sexeList) {
                         %>
-                        <option value="<%=sexe.getId()%>"><%=sexe.getTypeSexe()%>
+                        <option value="<%=sexe.getId()%>" <%=professeur.getIdSexe() != null ? (professeur.getIdSexe().getId().equals(sexe.getId()) ? "selected" : "") : ""%>>
+                            <%=sexe.getTypeSexe() %>
                         </option>
                         <%
                             }
@@ -78,26 +87,38 @@
 
             <div class="form-group">
                 <label for="debut_in">Date de debut du carriere:</label>
-                <input type="date" class="form-control" id="debut_in" name="debut" required>
+                <input type="date" class="form-control" id="debut_in" name="debutCarriere" value="<%=professeur.getDebutCarriere()%>" required>
             </div>
 
             <div class="form-group">
                 <label for="inputAddress2">Addresse</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="LOT IPN 20A" name="adresse">
+                <input type="text" class="form-control" id="inputAddress2" placeholder="LOT IPN 20A" name="adresse" value="<%=professeur.getAdresse() != null ? professeur.getAdresse() : ""%>">
             </div>
             <div class="form-group">
                 <label for="contact_in">Contact</label>
-                <input type="text" class="form-control" id="contact_in" name="contact">
+                <input type="text" class="form-control" id="contact_in" name="contact" value="<%=professeur.getConctact() != null ? professeur.getConctact() : ""%>">
             </div>
             <div class="form-group">
                 <label for="email_in">Email:</label>
-                <input type="email" class="form-control" id="email_in" name="email">
+                <input type="email" class="form-control" id="email_in" name="email" value="<%=professeur.getEmail() != null ? professeur.getEmail() : ""%>">
+                <small class="text-danger"><%=erreurs.get("email")!=null ? erreurs.get("email") : ""%></small>
+
+            </div>
+
+            <div class="form-group">
+                <label for="identifiant_in">Creer un identifiant unique:</label>
+                <small>(A utiliser pour se connecter)</small>
+                <input type="text" class="form-control" id="identifiant_in" name="identifiant" value="<%=professeur.getIdentifiant() != null ? professeur.getIdentifiant() : ""%>">
+                <small class="text-danger"><%=erreurs.get("identifiant")!=null ? erreurs.get("identifiant") : ""%></small>
+
             </div>
 
             <div class="form-row">
                 <div class="form-group col-6">
                     <label for="password_in">Mot de passe</label>
                     <input type="password" class="form-control password" id="password_in" name="mdp">
+                    <small class="text-danger"><%=erreurs.get("mdp")!=null ? erreurs.get("mdp") : ""%></small>
+
                 </div>
 
                 <div class="form-group col-6">
