@@ -1,9 +1,7 @@
 package com.project.ebossy.service;
 
 
-import com.project.ebossy.model.Classe;
-import com.project.ebossy.model.Ecole;
-import com.project.ebossy.model.Salle;
+import com.project.ebossy.model.*;
 import com.project.ebossy.repository.ClasseRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +39,10 @@ public class ClasseService {
     public boolean isSalleOccuped(Salle salle) {
         return classeRepository.findByIdSalle(salle) != null;
     }
+
+//    public List<Classe> findClasseByProfesseur(Professeur professeur, AnneeScolaire anneeScolaire) {
+//        return List<Pr>;
+//    }
 
 //    public Classe findOneClasse(Ecole ecole) {
 //        Pageable page = PageRequest.of(1, 1);

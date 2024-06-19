@@ -11,6 +11,9 @@
     <h2>Calendrier Scolaire</h2>
 
     <div>
+        <%
+            if(!readonly){
+        %>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Ajouter une Annee Scolaire
         </button>
@@ -20,6 +23,9 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterExamen">
             Planifier un Examen
         </button>
+        <%
+            }
+        %>
     </div>
 </div>
 

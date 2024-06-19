@@ -1,5 +1,6 @@
 package com.project.ebossy.service;
 
+import com.project.ebossy.model.Classe;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ public class PayeEcolageService {
         this.payeEcolageRepository = payeEcolageRepository;
     }
 
-    public void save(PayeEcolage payeEcolage) {
-        payeEcolageRepository.save(payeEcolage);
+    public PayeEcolage save(PayeEcolage payeEcolage) {
+        return payeEcolageRepository.save(payeEcolage);
     }
 }

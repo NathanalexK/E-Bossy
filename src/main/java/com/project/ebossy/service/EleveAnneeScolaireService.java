@@ -1,10 +1,12 @@
 package com.project.ebossy.service;
 
 
+import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.EleveAnneeScolaire;
 import com.project.ebossy.repository.EleveAnneeScolaireRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,5 +26,9 @@ public class EleveAnneeScolaireService {
     public EleveAnneeScolaire findById(Integer id) {
         Optional<EleveAnneeScolaire> eleveAnneeScolaire = eleveAnneeScolaireRepository.findById(id);
         return eleveAnneeScolaire.orElse(null);
+    }
+
+    public List<EleveAnneeScolaire> findAllByClasse(Classe classe) {
+        return eleveAnneeScolaireRepository.findAllByClasse(classe);
     }
 }

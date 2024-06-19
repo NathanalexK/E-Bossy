@@ -15,4 +15,7 @@ public interface ProfesseurRepository extends JpaRepository<Professeur, Integer>
 
     @Query("select p from Professeur p where p.identifiant = ?1")
     Professeur findByIdentifiant(String identifiant);
+
+    @Query("select p from Professeur p where p.identifiant = ?1 and p.mdp = ?2")
+    Professeur findByIdentifiantAndMotDePasse(String identifiant, String mdp);
 }

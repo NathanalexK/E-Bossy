@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.Sexe" %>
 <%@ page import="com.project.ebossy.model.Niveau" %>
+<%@ page import="com.project.ebossy.model.PeriodeNote" %>
 <%--<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>--%>
 <%
     List<Sexe> sexeList = ((List<Sexe>) request.getAttribute("sexeList"));

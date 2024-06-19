@@ -10,7 +10,8 @@ public class AuthentificationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(request.getSession().getAttribute("ecole") == null){
-            response.sendRedirect("/");
+            response.sendRedirect("/index");
+            System.out.println("null");
             return false;
         }
         return true;

@@ -4,6 +4,7 @@
     List<CalendrierScolaire> avenir = ((List<CalendrierScolaire>) request.getAttribute("avenir"));
     List<CalendrierScolaire> encours = ((List<CalendrierScolaire>) request.getAttribute("encours"));
     List<CalendrierScolaire> fini = ((List<CalendrierScolaire>) request.getAttribute("fini"));
+    boolean readonly = ((boolean) request.getAttribute("readonly"));
 
 %>
 

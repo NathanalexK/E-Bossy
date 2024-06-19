@@ -244,7 +244,6 @@ alter table note drop column id_ecole;
 
 alter table note drop column note_attribue;
 alter table note add column note decimal(4,2) check ( note >= 0 and note <= 20 );
-alter table note add column id_professeur int references professeur(id);
 alter table note add column appreciation text;
 
 alter table eleve drop column id_classe;
@@ -264,6 +263,12 @@ alter table eleve add column id_ecole int references ecole(id);
 alter table niveau add column id_annee_scolaire int references annee_scolaire(id);
 
 alter table eleve add column photo varchar(255);
+
+alter table note drop column id_classe;
+alter table note drop column id_matiere;
+
+alter table note add column id_matiere_prof int references prof_matiere(id);
+alter table note add constraint check_unique_note UNIQUE (id_eleve, id_periode_note, id_matiere_prof);
 
 
 -- create table communique(

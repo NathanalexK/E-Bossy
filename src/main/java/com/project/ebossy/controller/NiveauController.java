@@ -4,8 +4,12 @@ package com.project.ebossy.controller;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Niveau;
 import com.project.ebossy.service.EcoleService;
+import com.project.ebossy.service.LayoutService;
 import com.project.ebossy.service.NiveauService;
+import com.project.ebossy.service.RoleService;
+import com.project.ebossy.util.Role;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,19 +20,33 @@ import org.springframework.web.servlet.ModelAndView;
 public class NiveauController {
 
 
-    private final HttpSession httpSession;
-    private final NiveauService niveauService;
-    private final EcoleService ecoleService;
+    @Autowired
+    private HttpSession httpSession;
 
-    public NiveauController(HttpSession httpSession, NiveauService niveauService, EcoleService ecoleService) {
-        this.httpSession = httpSession;
-        this.niveauService = niveauService;
-        this.ecoleService = ecoleService;
-    }
+    @Autowired
+    private NiveauService niveauService;
+
+    @Autowired
+    private EcoleService ecoleService;
+
+    @Autowired
+    private LayoutService layoutService;
+    @Autowired
+    private RoleService roleService;
+
+//    public NiveauController(HttpSession httpSession, NiveauService niveauService, EcoleService ecoleService) {
+//        this.httpSession = httpSession;
+//        this.niveauService = niveauService;
+//        this.ecoleService = ecoleService;
+//    }
 
     @GetMapping("/form")
     public ModelAndView niveauForm() {
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        roleService.allowedRoles(
+            Role.DIRECTEUR
+        );
+
+        ModelAndView modelAndView = layoutService.getLayout();
 
         Ecole ecole = (Ecole) httpSession.getAttribute("ecole");
 

@@ -44,6 +44,7 @@ public class MatiereProfService {
         }
 
         return matiereProfMap;
+
     }
 
     public MatiereProf findMatiereProf(Classe classe, Matiere matiere) {
@@ -52,6 +53,14 @@ public class MatiereProfService {
 
     public MatiereProf save(MatiereProf matiereProf) {
         return matiereProfRepository.save(matiereProf);
+    }
+
+    public List<MatiereProf> findAllByProfesseur(Professeur professeur, AnneeScolaire anneeScolaire) {
+        if(anneeScolaire == null){
+            anneeScolaire = professeur.getIdEcole().getAnneeScolaire();
+        }
+
+        return matiereProfRepository.findAllByProfesseurWithAnneeScolaire(professeur, anneeScolaire);
     }
 
 //    public Map<Matiere, Professeur> findMatiereProfByClasse(Classe classe) {

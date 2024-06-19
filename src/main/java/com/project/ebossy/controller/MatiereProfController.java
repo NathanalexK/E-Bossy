@@ -2,10 +2,7 @@ package com.project.ebossy.controller;
 
 
 import com.project.ebossy.model.*;
-import com.project.ebossy.service.ClasseService;
-import com.project.ebossy.service.MatiereProfService;
-import com.project.ebossy.service.MatiereService;
-import com.project.ebossy.service.ProfesseurService;
+import com.project.ebossy.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,45 +25,30 @@ public class MatiereProfController {
     private final ProfesseurService professeurService;
     private final MatiereService matiereService;
     private final MatiereProfService matiereProfService;
+    private final LayoutService layoutService;
 
-    public MatiereProfController(ClasseService classeService, HttpSession httpSession, ProfesseurService professeurService, MatiereService matiereService, MatiereProfService matiereProfService) {
+    public MatiereProfController(ClasseService classeService, HttpSession httpSession, ProfesseurService professeurService, MatiereService matiereService, MatiereProfService matiereProfService, LayoutService layoutService) {
         this.classeService = classeService;
         this.httpSession = httpSession;
         this.professeurService = professeurService;
         this.matiereService = matiereService;
         this.matiereProfService = matiereProfService;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/form")
     public ModelAndView form(Model model, @RequestParam(value = "classe", required = false) Integer idClasse) {
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/matiereProf/form");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
         List<Classe> classes = classeService.findAll(myEcole);
 
-//        System.out.println(c);
-        Classe myClasse = null;
+        Classe myClasse = null;//        System.out.println(c);
 
         if(idClasse != null) myClasse = classeService.findById(idClasse);
         if(myClasse == null) myClasse = classes.get(0);
         if(myClasse == null) return new ModelAndView("redirect:/niveau/form");
-
-//        if(idClasse == null) {
-//            if (myClasse == null) {
-//                myClasse = classes.get(0);
-//
-//                if (myClasse == null) {
-//                    return new ModelAndView("redirect:/niveau/form");
-//                }
-//            }
-//        }
-//        else {
-//            myClasse = classeService.findById(idClasse);
-//        }
-
-
-
         Niveau myNiveau =  myClasse.getIdNiveau();
 
         model.addAttribute("classeList", classes);
@@ -74,8 +56,6 @@ public class MatiereProfController {
         modelAndView.addObject("matiereProf", matiereProfService.findMatiereProfByClasse(myClasse));
         modelAndView.addObject("matiereProfList", matiereProfService.findAllByClasse(myClasse));
         modelAndView.addObject("classe", myClasse);
-
-
 
         return modelAndView;
     }

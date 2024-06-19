@@ -3,6 +3,8 @@ package com.project.ebossy.service;
 import com.project.ebossy.model.*;
 import com.project.ebossy.repository.EleveAnneeScolaireRepository;
 import com.project.ebossy.repository.EleveRepository;
+import com.project.ebossy.repository.VEleveEcoleRepository;
+import com.project.ebossy.view.VEleveEcole;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class EleveService {
     private final EleveRepository eleveRepository;
     private final EleveAnneeScolaireRepository eleveAnneeScolaireRepository;
+    private final VEleveEcoleService vEleveEcoleService;
 
-    public EleveService(EleveRepository eleveRepository, EleveAnneeScolaireRepository eleveAnneeScolaireRepository){
+    public EleveService(EleveRepository eleveRepository, EleveAnneeScolaireRepository eleveAnneeScolaireRepository, VEleveEcoleService vEleveEcoleService){
         this.eleveRepository = eleveRepository;
         this.eleveAnneeScolaireRepository = eleveAnneeScolaireRepository;
+        this.vEleveEcoleService = vEleveEcoleService;
     }
 
     public Eleve findEleveById(Integer id){
@@ -44,6 +48,7 @@ public class EleveService {
         return eleveAnneeScolaireRepository.findAllElevePasDeClasseByNiveau(niveau);
     }
 
+
 //    public EleveAnneeScolaire findClasseActuelEleve(Eleve eleve, Ecole ecole){
 //        return eleve.getEleveAnneeScolaire().stream()
 //                .filter(e -> e.getIdAnneeScolaire().getId().equals(ecole.getAnneeScolaire().getId()))
@@ -53,7 +58,14 @@ public class EleveService {
 
 //    public EleveAnneeScolaire findAll
 
-
+    public Eleve getByNumero(Integer numero, Integer idclasse, Integer idEcole){
+        VEleveEcole el = vEleveEcoleService.getByIdEleve(numero, idclasse, idEcole);
+        Optional<Eleve> els =  getByIdEleve(el.getId());
+        if (els.isPresent()){
+            return  els.get();
+        }
+        return null;
+    }
 
     public Eleve update(Integer id,Eleve eleve){
         Eleve eleve2 = getByIdEleve(id).get();

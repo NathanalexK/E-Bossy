@@ -1,6 +1,7 @@
 package com.project.ebossy.service;
 
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.PeriodeNote;
 import com.project.ebossy.repository.PeriodeNoteRepository;
@@ -17,9 +18,19 @@ public class PeriodeNoteService {
         this.periodeNoteRepository = periodeNoteRepository;
     }
 
+
     public List<PeriodeNote> findAllByEcole(Ecole ecole) {
         return periodeNoteRepository.findByEcole(ecole);
     }
+
+    public List<PeriodeNote> findAllByEcole(Ecole ecole, AnneeScolaire anneeScolaire) {
+        if(anneeScolaire == null){
+            anneeScolaire = ecole.getAnneeScolaire();
+        }
+
+        return periodeNoteRepository.findAllByEcoleWithAnneeScolaire(ecole, anneeScolaire);
+    }
+
 
     public PeriodeNote save(PeriodeNote periodeNote) {
         return periodeNoteRepository.save(periodeNote);

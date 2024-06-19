@@ -21,4 +21,7 @@ public interface MatiereProfRepository extends JpaRepository<MatiereProf, Intege
 
   @Query("select m from MatiereProf m where m.idClasse = ?1 and m.idMatiere = ?2")
   MatiereProf findMatiereProf(Classe idClasse, Matiere idMatiere);
+
+  @Query("select m from MatiereProf m where m.idProf = ?1 and m.idAnneeScolaire = ?2")
+  List<MatiereProf> findAllByProfesseurWithAnneeScolaire(Professeur idProf, AnneeScolaire idAnneeScolaire);
 }

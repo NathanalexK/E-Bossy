@@ -5,10 +5,8 @@ import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.EvenementScolaire;
 import com.project.ebossy.model.PeriodeNote;
-import com.project.ebossy.service.AnneeScolaireService;
-import com.project.ebossy.service.CalendrierScolaireService;
-import com.project.ebossy.service.EvenementScolaireService;
-import com.project.ebossy.service.PeriodeNoteService;
+import com.project.ebossy.service.*;
+import com.project.ebossy.util.Role;
 import com.project.ebossy.view.CalendrierScolaire;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -32,13 +30,15 @@ public class CalendrierScolaireController {
     private final EvenementScolaireService evenementScolaireService;
     private final PeriodeNoteService periodeNoteService;
     private final CalendrierScolaireService calendrierScolaireService;
+    private final RoleService roleService;
 
-    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService) {
+    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService, RoleService roleService) {
         this.httpSession = httpSession;
         this.anneeScolaireService = anneeScolaireService;
         this.evenementScolaireService = evenementScolaireService;
         this.periodeNoteService = periodeNoteService;
         this.calendrierScolaireService = calendrierScolaireService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/form")
@@ -49,6 +49,7 @@ public class CalendrierScolaireController {
 
         Map<Integer, List<CalendrierScolaire>> eventByStatus = calendrierScolaireService.getCalendrierScolaireActuelGrouppedByStatus(myEcole);
 
+        modelAndView.addObject("readonly", roleService.canAccess(Role.PROFESSEUR, Role.TUTEUR, Role.ELEVE, Role.PARENT, Role.SECRETAIRE));
         modelAndView.addObject("avenir", eventByStatus.get(1));
         modelAndView.addObject("encours", eventByStatus.get(2));
         modelAndView.addObject("fini", eventByStatus.get(3));

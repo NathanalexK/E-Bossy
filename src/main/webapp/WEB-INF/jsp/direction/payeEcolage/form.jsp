@@ -10,7 +10,7 @@
     <h2>Effectuez une paiement de scolarite </h2>
 </div>
 
-<form action="save">
+<form action="save" method="post">
     <div class="form-group">
         <label for="numero_in">Numero d'eleve:</label>
         <input type="number" name="numero" id="numero_in" class="form-control" required>

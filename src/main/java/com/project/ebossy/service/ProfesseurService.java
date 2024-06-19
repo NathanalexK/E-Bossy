@@ -34,6 +34,10 @@ public class ProfesseurService {
         return professeurRepository.findByIdentifiant(identifiant);
     }
 
+    public Professeur authenticate(String identifiant, String password) {
+        return professeurRepository.findByIdentifiantAndMotDePasse(identifiant, password);
+    }
+
     public Map<String, String> getErreurs (Professeur professeur) {
         Map<String, String> erreurs = new HashMap<>();
         if(professeur.getNom().trim().length() < 3){
