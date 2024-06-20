@@ -21,6 +21,7 @@ public class Convocation {
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_eleve")
     private Eleve idEleve;

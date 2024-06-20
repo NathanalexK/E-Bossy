@@ -46,4 +46,7 @@ public class Dirigeant {
     @JoinColumn(name = "id_sexe")
     private Sexe idSexe;
 
+    @Column(name = "identifiant")
+    private String identifiant;
+
 }

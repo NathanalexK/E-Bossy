@@ -5,7 +5,8 @@
 %>
 
 
-<form action="/salle/update" method="post">
+<%--<form action="/salle/update" method="post" id="updateForm">--%>
+<%--    <form action=""></form>--%>
     <div class="d-flex w-100 justify-content-between py-2">
         <h2>Liste des Salles</h2>
 
@@ -24,21 +25,21 @@
             </div>
             <div class="align-items-center px-2 pt-1">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Ajouter une salle
+                    Ajouter
+                </button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+                    Modifier
                 </button>
             </div>
         </div>
     </div>
-    <div id="apply_update" class="fixed-bottom text-center bg-white border-top py-2">
-        <button class="btn btn-light" id="undo_update" type="button" onclick="location.reload(true)">Annuler</button>
-        <button class="btn btn-primary" type="submit">Sauveguarder les modifications</button>
-    </div>
 
     <div class="table-responsive card container-fluid">
 
-        <table class="table table-striped table-borderless">
+        <table class="table table-striped table-borderless text-center">
             <thead>
-            <tr class="row">
+            <tr>
                 <th class="col-4">Nom du Salle</th>
                 <th class="col-4">Capacité</th>
                 <th class="col-4">Action</th>
@@ -49,23 +50,17 @@
             <%
                 for (Salle salle : salleList) {
             %>
-            <tr class="row">
+            <tr>
 
                 <input type="hidden" name="idSalle[]" class="_input" value="<%=salle.getId()%>" disabled>
-                <td class="cols-4"><input type="text" name="numero[]" class="form-control disabled_input _input"
-                                          value="<%=salle.getNumero()%>" disabled></td>
-                <td class="col-4"><input type="number" name="capacite[]" class="form-control _input disabled_input"
-                                         value="<%=salle.getCapacite()%>" disabled></td>
+                <td class="cols-4"> <%=salle.getNumero()%> </td>
+                <td class="col-4"><%=salle.getCapacite()%></td>
                 <td class="col-4 text-center">
-                    <button class="btn btn-light border _update" type="button">
-                        <img src="/assets/icon/modify.svg" width="16px" alt="">
-                        Modifier
-                    </button>
 
-                    <form id="deleteForm<%=salle.getId()%>" action="delete" method="post" style="width: max-content"
+                    <form id="deleteForm<%=salle.getId()%>" action="delete" method="post"
                           onsubmit="confirmSubmission(event,'<%=salle.getNumero()%>')">
                         <input type="hidden" value="<%=salle.getId()%>" name="idSalle">
-                        <button form="deleteForm<%=salle.getId()%>" type="submit" class="btn btn-light border">
+                        <button type="submit" class="btn btn-light border" form="deleteForm<%=salle.getId()%>">
                             <img src="/assets/icon/close.svg" width="16px" class=""/>
                             Supprimer
                         </button>
@@ -80,11 +75,13 @@
             </tbody>
         </table>
     </div>
-</form>
+<%--</form>--%>
 
+
+<%@include file="update.jsp"%>
 
 <script>
-    document.querySelector("#apply_update").style.visibility = "hidden";
+    // document.querySelector("#apply_update").style.visibility = "hidden";
 
     document.querySelectorAll("._input").forEach(input => {
         input.disabled = true;
@@ -95,7 +92,7 @@
         const row = btn.closest("tr");
 
         btn.addEventListener('click', evt => {
-            document.querySelector("#apply_update").style.visibility = "visible";
+            // document.querySelector("#apply_update").style.visibility = "visible";
 
             row.querySelectorAll("._input").forEach(input => {
                 input.disabled = false;

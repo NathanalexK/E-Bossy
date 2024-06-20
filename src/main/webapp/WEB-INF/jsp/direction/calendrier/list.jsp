@@ -11,6 +11,9 @@
     <h2>Calendrier Scolaire</h2>
 
     <div>
+        <%
+            if(!readonly){
+        %>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
             Ajouter une Annee Scolaire
         </button>
@@ -20,11 +23,15 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajouterExamen">
             Planifier un Examen
         </button>
+        <%
+            }
+        %>
     </div>
 </div>
 
 <div class="mt-5">
-    <h4>En Cours: <%=encours.size()%></h4>
+    <h4>En Cours: <%=encours.size()%>
+    </h4>
     <div class="list-group">
         <%
             if (encours.isEmpty()) {
@@ -45,7 +52,10 @@
                 </h5>
 
                 <div>
-                    <form action="/calendrier/delete" method="post" onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                    <button class="btn _btn-link mr-2 voir-detail">Voir details</button>
+
+                    <form action="/calendrier/delete" method="post"
+                          onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
                         <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
                         <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
                         <button class="btn _btn-link" type="submit">Supprimer</button>
@@ -59,8 +69,12 @@
             <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
+            <div class="_details mt-3">
+                <%=evenement.getDescription() != null ? evenement.getDescription() : "Aucun detail"%>
+            </div>
 
         </div>
+
         <%
             }
         %>
@@ -70,7 +84,8 @@
 
 
 <div class="mt-5">
-    <h4 class="py-2">A Venir: <%=avenir.size()%></h4>
+    <h4 class="py-2">A Venir: <%=avenir.size()%>
+    </h4>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : avenir) {
@@ -82,7 +97,10 @@
                 <h5 class="mb-1 font-weight-bold"><%=evenement.getLibelle()%>
                 </h5>
                 <div>
-                    <form action="/calendrier/delete" method="post"  onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                    <button class="btn _btn-link mr-2 voir-detail">Voir details</button>
+
+                    <form action="/calendrier/delete" method="post"
+                          onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
                         <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
                         <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
                         <button class="btn _btn-link" type="submit">Supprimer</button>
@@ -97,7 +115,11 @@
             <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
+            <div class="_details mt-3">
+                <%=evenement.getDescription() != null ? evenement.getDescription() : "Aucun detail"%>
+            </div>
         </div>
+
         <%
             }
         %>
@@ -107,7 +129,8 @@
 
 
 <div class="mt-5">
-    <h4 class="h4">Terminé: <%=fini.size()%></h4>
+    <h4 class="h4">Terminé: <%=fini.size()%>
+    </h4>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : fini) {
@@ -119,7 +142,10 @@
                 <h5 class="mb-1 font-weight-bold"><%=evenement.getLibelle()%>
                 </h5>
                 <div>
-                    <form action="/calendrier/delete" method="post"  onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
+                    <button class="btn _btn-link mr-2 voir-detail">Voir details</button>
+
+                    <form action="/calendrier/delete" method="post"
+                          onsubmit="confirmSubmission(event, '<%=evenement.getLibelle()%>')">
                         <input type="hidden" name="typeEvent" value="<%=evenement.getTypeEvenement()%>">
                         <input type="hidden" name="idEvent" value="<%=evenement.getIdEvent()%>">
                         <button class="btn _btn-link" type="submit">Supprimer</button>
@@ -133,6 +159,10 @@
             <p class="mb-1"><u>Date Fin:</u> <%=fin.getDayOfMonth()%> <%=fin.format(df)%> <%=fin.getYear()%>
                 a  <%=fin.getHour()%>:<%=fin.getMinute()%>
             </p>
+
+            <div class="_details mt-3">
+                <%=evenement.getDescription() != null ? evenement.getDescription() : "Aucun detail"%>
+            </div>
         </div>
         <%
             }
@@ -142,5 +172,26 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("._details").forEach(details => {
+            details.style.display = "none";
+        })
+
+        document.querySelectorAll(".voir-detail").forEach(link => {
+            link.addEventListener("click", (event) => {
+                const div = link.closest(".list-group-item")
+
+                const detail = div.querySelector("._details");
+                if (detail.style.display.toLowerCase() === 'none') {
+                    detail.style.display = "block";
+                    link.innerHTML = "Masquer details"
+                } else {
+                    detail.style.display = "none";
+                    link.innerHTML = "Voir detail";
+                }
+            })
+
+        })
+    })
 
 </script>

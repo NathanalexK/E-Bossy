@@ -55,4 +55,7 @@ public class CalendrierScolaire {
     @Column(name="date_diff")
     private Integer dateDiff;
 
+    @Column(name = "description")
+    private String description;
+
 }

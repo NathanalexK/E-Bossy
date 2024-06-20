@@ -3,11 +3,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.Niveau" %>
 <%@ page import="com.project.ebossy.view.SalleDisponible" %>
+<%@ page import="com.project.ebossy.model.Professeur" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%
     List<SalleDisponible> salleList = ((List<SalleDisponible>) request.getAttribute("salleList"));
     List<Niveau> niveauList = ((List<Niveau>) request.getAttribute("niveauList"));
     List<Classe> classeList = ((List<Classe>) request.getAttribute("classeList"));
+    List<Professeur> professeurList = ((List<Professeur>) request.getAttribute("professeurList"));
 %>
 
 
@@ -57,7 +59,16 @@
     <div class="form-group">
         <label for="titulaire_in">Responsable de Classe:</label>
         <select name="idProf" id="titulaire_in" class="form-control">
-            <option value="1">Pas de Responsable</option>
+            <option value="null">Pas de Responsable</option>
+
+            <%
+                for(Professeur professeur : professeurList)
+                {
+            %>
+            <option value="<%=professeur.getId()%>"><%=professeur.getNom()%> <%=professeur.getPrenom()%></option>
+            <%
+                }
+            %>
         </select>
     </div>
 

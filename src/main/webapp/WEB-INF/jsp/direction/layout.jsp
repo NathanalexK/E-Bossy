@@ -4,13 +4,13 @@
     String urlPage = "/WEB-INF/jsp/" + request.getAttribute("page").toString() + ".jsp";
 %>
 
-<!DOCTYPE html ng-app="app">
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Bossy</title>
-    <link rel="icon" href="../assets/icon/logo.png">
+    <link rel="icon" href="/assets/icon/logo.png">
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/bootstrap-reboot.css">
     <link rel="stylesheet" href="../assets/css/bootstrap-grid.css">
@@ -32,12 +32,12 @@
                 <b class="_blue" style="font-size: 24px">E-Bossy</b>
             </div>
             <div class="col-md-4 text-right align-content-center">
-                <a href="">Se Deconnecter</a>
+                <a href="/logout">Se Deconnecter</a>
             </div>
         </div>
     </div>
 
-    <nav class="py-0 bg-body-tertiary border-bottom text-center sticky-top">
+    <nav class="py-0 bg-body-tertiary border-bottom text-center sticky-top shadow-sm">
         <div class="py-0">
             <!--                  <a class="navbar-brand" href="#">Hidden brand</a>-->
             <ul class="mb-0">
@@ -55,8 +55,9 @@
 
                     <div class="dropdown-menu"
                     >
-                        <a href="" class="dropdown-item">Liste des élèves</a>
-                        <a href="" class="dropdown-item">Ajouter un élève</a>
+                        <div class="dropdown-title">Eleves</div>
+                        <a href="/eleve/list" class="dropdown-item">Liste des élèves</a>
+                        <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
                         <a href="" class="dropdown-item">Comportements</a>
@@ -70,8 +71,10 @@
 
                     <div class="dropdown-menu"
                     >
+                        <div class="dropdown-title">Personnels</div>
+
                         <a href="" class="dropdown-item">Secretaires</a>
-                        <a href="" class="dropdown-item">Professeurs</a>
+                        <a href="/prof/form" class="dropdown-item">Professeurs</a>
                     </div>
                 </li>
 
@@ -82,12 +85,15 @@
 
                     <div class="dropdown-menu"
                     >
-<%--                        <a href="" class="dropdown-item">Niveau Scolaire</a>--%>
+                        <%--                        <a href="" class="dropdown-item">Niveau Scolaire</a>--%>
+                        <div class="dropdown-title">Organisations</div>
+
                         <a href="/classe/form" class="dropdown-item">Classe</a>
                         <a href="/salle/form" class="dropdown-item">Salle</a>
                         <a href="/niveau/form" class="dropdown-item">Niveau</a>
                         <a href="/matiere/form" class="dropdown-item">Matière</a>
-<%--                        <a href="/periodeExamen/form" class="dropdown-item">Periode d'Examen</a>--%>
+                        <a href="/matiereProf/form" class="dropdown-item">Matière - Profs</a>
+                        <%--                        <a href="/periodeExamen/form" class="dropdown-item">Periode d'Examen</a>--%>
                         <a href="/calendrier/form" class="dropdown-item">Calendrier Scolaire</a>
 
                         <a href="" class="dropdown-item">Emploi du temps</a>
@@ -103,6 +109,7 @@
 
                     <div class="dropdown-menu"
                     >
+                        <div class="dropdown-title">Communication</div>
                         <a href="" class="dropdown-item">Communiqué</a>
                         <a href="" class="dropdown-item">Convoquer</a>
                         <a href="" class="dropdown-item">Rencontre</a>
@@ -152,9 +159,6 @@
     </div>
 
 
-
-
-
 </main>
 
 </body>
@@ -179,8 +183,6 @@
 <%--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>--%>
 <!-- Include Bootstrap JS -->
 <%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>--%>
-
-
 
 
 </html>

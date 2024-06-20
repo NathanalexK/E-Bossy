@@ -2,6 +2,7 @@ package com.project.ebossy.service;
 
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Matiere;
+import com.project.ebossy.model.Niveau;
 import com.project.ebossy.repository.ClasseRepository;
 import com.project.ebossy.repository.MatiereRepository;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,10 @@ public class MatiereService {
 
     public Optional<Matiere> getMatiereById(Integer id){
         return matiereRepository.findById(id);
+    }
+
+    public List<Matiere> findAllMatiereByNiveau(Niveau niveau) {
+        return matiereRepository.findAllByNiveau(niveau);
     }
 
 //    public Matiere update(Integer id,Matiere matiere){

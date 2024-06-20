@@ -53,8 +53,6 @@ public class SalleService {
     }
 
     public List<SalleDisponible> getSalleDisponibles(Ecole ecole) {
-//        System.out.println(salleDisponibleRepository.findByEcole(ecole.getIdEcole()));
-//        System.out.println(ecole.getIdEcole());
         return salleDisponibleRepository.findByEcole(ecole.getId());
     }
 
