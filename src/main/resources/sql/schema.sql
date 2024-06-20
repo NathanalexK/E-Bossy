@@ -270,6 +270,8 @@ alter table note drop column id_matiere;
 alter table note add column id_matiere_prof int references prof_matiere(id);
 alter table note add constraint check_unique_note UNIQUE (id_eleve, id_periode_note, id_matiere_prof);
 
+alter table dirigeant add column identifiant varchar(100) unique;
+
 
 -- create table communique(
 --     id serial primary key,

@@ -1,6 +1,7 @@
 package com.project.ebossy.model;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -9,10 +10,12 @@ import org.hibernate.annotations.Fetch;
 @Getter
 @Setter
 @Entity
+@Transactional
 @Table(name = "ecole")
 public class Ecole {
     @Id
     @ColumnDefault("nextval('ecole_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 

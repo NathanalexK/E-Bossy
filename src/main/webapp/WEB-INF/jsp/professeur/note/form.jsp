@@ -10,6 +10,8 @@
 
     MatiereProf selectedMatiereProf = ((MatiereProf) request.getAttribute("selectedMatiereProf"));
     PeriodeNote selectedPeriodeNote = ((PeriodeNote) request.getAttribute("selectedPeriodeNote"));
+
+    double moyenne = ((Double) request.getAttribute("moyenne"));
     int num = 0;
 %>
 <%--a--%>
@@ -53,6 +55,7 @@
                             <%=mp.getId().equals(selectedMatiereProf.getId()) ? "selected" : ""%>
                     <%--                            <%=c.getId().equals(classe.getId()) ? "selected" : ""%>--%>
                     ><%=c.getNomClasse()%> - <%=mp.getIdMatiere().getNomMatiere()%>
+
                     </option>
                     <%
                         }
@@ -89,6 +92,11 @@
             <tr>
                 <td><b>Nombre d'éleves:</b></td>
                 <td><%=noteMap.size()%></td>
+            </tr>
+
+            <tr>
+                <td><b>Moyenne de classe</b></td>
+                <td><%=String.format("%.2f", moyenne)%></td>
             </tr>
         </table>
     </div>

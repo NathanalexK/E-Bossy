@@ -3,6 +3,7 @@ package com.project.ebossy.controller;
 
 import com.project.ebossy.model.*;
 import com.project.ebossy.service.*;
+import com.project.ebossy.util.Calcul;
 import com.project.ebossy.util.Role;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class NoteController {
         roleService.allowedRoles(Role.PROFESSEUR);
         ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "professeur/note/form");
-        Professeur professeur = ((Professeur) httpSession.getAttribute("professeur"));
+        Professeur professeur = ((Professeur) httpSession.getAttribute("utilisateur"));
 
         List<MatiereProf> matiersProfs = matiereProfService.findAllByProfesseur(professeur, null);
 
@@ -64,6 +65,7 @@ public class NoteController {
         System.out.println(matiereProf.getIdClasse().getIdNiveau().getNomNiveau());
         List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(professeur.getIdEcole(), null);
 
+
         if(periodeNote == null) {
             periodeNote = periodeNoteList.get(0);
         }
@@ -73,13 +75,15 @@ public class NoteController {
 
 
         List<EleveAnneeScolaire> easList = eleveAnneeScolaireService.findAllByClasse(matiereProf.getIdClasse());
+        Map<Eleve, Note> noteMap = noteService.findNoteByMatiereProf(matiereProf, periodeNote);
 //
         modelAndView.addObject("matiereProfList", matiersProfs);
         modelAndView.addObject("periodeNoteList", periodeNoteList);
-        modelAndView.addObject("noteMap", noteService.findNoteByMatiereProf(matiereProf, periodeNote));
+        modelAndView.addObject("noteMap", noteMap);
         modelAndView.addObject("easList", easList);
         modelAndView.addObject("selectedMatiereProf", matiereProf);
         modelAndView.addObject("selectedPeriodeNote", periodeNote);
+        modelAndView.addObject("moyenne", Calcul.moyenneNote(noteMap));
 
         return modelAndView;
     }
@@ -111,6 +115,6 @@ public class NoteController {
             notesToSave.add(note);
         }
         noteService.saveAll(notesToSave);
-        return "redirect:/note/form";
+        return "redirect:/note/form?matiereProf="+matiereProf.getId() + "&periodeNote=" + periodeNote.getId();
     }
 }

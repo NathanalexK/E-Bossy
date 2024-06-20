@@ -65,7 +65,7 @@
             S'identifier à votre compte
         </div>
 
-        <form action="">
+        <form action="authenticate" method="post">
             <div class="form-group">
                 <label for="input-identifiant">Identifiant:</label>
                 <input
@@ -83,7 +83,7 @@
                         type="password"
                         id="input-mdp"
                         class="form-control"
-                        name="identifiant"
+                        name="mdp"
                         placeholder="********"
                 >
             </div>

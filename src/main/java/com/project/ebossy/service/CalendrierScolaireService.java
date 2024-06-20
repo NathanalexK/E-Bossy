@@ -3,6 +3,7 @@ package com.project.ebossy.service;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.repository.CalendrierScolaireRepository;
 import com.project.ebossy.view.CalendrierScolaire;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -25,6 +26,7 @@ public class CalendrierScolaireService {
         return calendrierScolaireRepository.findAllCalendrierScolaire(ecole, ecole.getAnneeScolaire());
     }
 
+    @Transactional
     public Map<Integer, List<CalendrierScolaire>> getCalendrierScolaireActuelGrouppedByStatus(Ecole ecole) {
         List<CalendrierScolaire> calendrierScolaire = getCalendrierScolaireActuel(ecole);
         Map<Integer, List<CalendrierScolaire>> map = new HashMap<>();

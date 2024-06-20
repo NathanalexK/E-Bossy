@@ -7,19 +7,19 @@ import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "utilisateur")
 public class Utilisateur {
-    @Id
-    @ColumnDefault("nextval('utilisateur_id_seq'::regclass)")
-    @Column(name = "id", nullable = false)
-    private Long id;
+    Ecole ecole;
+    AnneeScolaire anneeScolaire;
 
-    @Column(name = "mdp", length = 50)
-    private String mdp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_type_user")
-    private TypeUser idTypeUser;
+//    private Long id;
+//
+//    private String mdp;
+//
+//
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_type_user")
+//    private TypeUser idTypeUser;
 
 }

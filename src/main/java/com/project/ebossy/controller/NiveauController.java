@@ -49,7 +49,7 @@ public class NiveauController {
         ModelAndView modelAndView = layoutService.getLayout();
 
         Ecole ecole = (Ecole) httpSession.getAttribute("ecole");
-
+//        Ecole ecole = null;
         modelAndView.addObject("niveauList", niveauService.findAll(ecole.getId()));
 
         modelAndView.addObject("page", "direction/niveau");

@@ -32,7 +32,7 @@
                 <b class="_blue" style="font-size: 24px">E-Bossy</b>
             </div>
             <div class="col-md-4 text-right align-content-center">
-                <a href="">Se Deconnecter</a>
+                <a href="/logout">Se Deconnecter</a>
             </div>
         </div>
     </div>

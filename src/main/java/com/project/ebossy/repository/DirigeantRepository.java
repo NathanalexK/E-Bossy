@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DirigeantRepository extends JpaRepository<Dirigeant, Integer> {
-    @Query("select d from Dirigeant d where d.email = ?1 and d.mdp = ?2")
+    @Query("select d from Dirigeant d where d.identifiant = ?1 and d.mdp = ?2")
     Dirigeant findByIdentifiantAndMotDePasse(String email, String mdp);
 }

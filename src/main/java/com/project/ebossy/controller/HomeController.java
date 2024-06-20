@@ -34,6 +34,9 @@ public class HomeController {
 
     @RequestMapping("/index")
     public ModelAndView index(){
+        if(httpSession.getAttribute("user") != null){
+            return new ModelAndView("redirect:/niveau/form");
+        }
         return new ModelAndView("login/espace");
 //        httpSession.setAttribute("role", "professeur");
 //        Ecole myEcole = ecoleService.getEcoleById(2).get();
