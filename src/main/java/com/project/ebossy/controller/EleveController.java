@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -86,6 +87,29 @@ public class EleveController {
         modelAndView.addObject("eleveList", eleves);
         modelAndView.addObject("classeList", classeList);
         modelAndView.addObject("pasDeClasseList", pasDeClasseList);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/critere-list")
+    public ModelAndView list(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "nom", required = false) String nom,
+            @RequestParam(name = "prenom", required = false) String prenom,
+            @RequestParam(name = "idSexe", required = false) Sexe idSexe,
+            @RequestParam(name = "dateDebut", required = false) LocalDate dateDebut,
+            @RequestParam(name = "dateFin", required = false) LocalDate dateFin
+    ){
+        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        modelAndView.addObject("page", "direction/eleve/critere");
+
+        Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
+        AnneeScolaire myAnneeScolaire = myEcole.getAnneeScolaire();
+
+        Page<EleveAnneeScolaire> eleveAnneeScolairePage = eleveAnneeScolaireService.searchEleveAnneeScolaire(myAnneeScolaire, nom, prenom, idSexe, dateDebut, dateFin, page);
+        modelAndView.addObject("eleveList", eleveAnneeScolairePage.getContent());
+        modelAndView.addObject("totalPages", eleveAnneeScolairePage.getTotalPages());
+        modelAndView.addObject("currentPage", page);
 
         return modelAndView;
     }
