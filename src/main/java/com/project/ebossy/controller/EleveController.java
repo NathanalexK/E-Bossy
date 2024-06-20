@@ -83,9 +83,10 @@ public class EleveController {
         List<EleveAnneeScolaire> eleves = eleveService.findAllByClasse(myClasse);
         List<EleveAnneeScolaire> pasDeClasseList = eleveService.findAllElevePasDeClasse(myClasse.getIdNiveau());
 
+
         modelAndView.addObject("classe", myClasse);
         modelAndView.addObject("eleveList", eleves);
-        modelAndView.addObject("classeList", classeList);
+        modelAndView.addObject("classeList", classeList);modelAndView.addObject("sexeList", sexeRepository.findAll());
         modelAndView.addObject("pasDeClasseList", pasDeClasseList);
 
         return modelAndView;

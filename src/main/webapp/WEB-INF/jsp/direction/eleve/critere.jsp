@@ -5,6 +5,7 @@
 <%
     List<EleveAnneeScolaire> eleveList = ((List<EleveAnneeScolaire>) request.getAttribute("eleveList"));
     int totalPages = ((int) request.getAttribute("totalPages"));
+    int currentPage = ((int) request.getAttribute("currentPage"));
     int num = 0;
 %>
 
@@ -71,7 +72,7 @@
                 <%
                     for(int i = 0; i < totalPages; i++){
                 %>
-                    <li class="page-item"><a class="page-link" href="?page=<%=i%>"><%=i+1%></a></li>
+                    <li class="page-item"><a class="page-link <%=currentPage == i ? "bg-primary text-white" : ""%>" href="&page=<%=i%>"><%=i+1%></a></li>
                 <%
                     }
                 %>
