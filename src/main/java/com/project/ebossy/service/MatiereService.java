@@ -2,6 +2,7 @@ package com.project.ebossy.service;
 
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Matiere;
+import com.project.ebossy.model.Niveau;
 import com.project.ebossy.repository.ClasseRepository;
 import com.project.ebossy.repository.MatiereRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import java.util.Optional;
 
 @Service
 public class MatiereService {
@@ -27,6 +30,28 @@ public class MatiereService {
     }
 
     public Matiere save(Matiere matiere) {
+        return matiereRepository.save(matiere);
+    }
+
+    public Optional<Matiere> getMatiereById(Integer id){
+        return matiereRepository.findById(id);
+    }
+
+    public List<Matiere> findAllMatiereByNiveau(Niveau niveau) {
+        return matiereRepository.findAllByNiveau(niveau);
+    }
+
+//    public Matiere update(Integer id,Matiere matiere){
+//        Matiere matiere2 = getMatiereById(id).get();
+//        // matiere2.setId(id);
+//        matiere2.setNomMatiere(matiere.getNomMatiere());
+//        matiere2.setCoefficient(matiere.getCoefficient());
+//        matiere2.setIdEcole(matiere.getIdEcole());
+//        matiere2.setIdNiveau(matiere.getIdNiveau());
+//        return matiereRepository.save(matiere2);
+//    }
+
+    public Matiere update(Matiere matiere) {
         return matiereRepository.save(matiere);
     }
 

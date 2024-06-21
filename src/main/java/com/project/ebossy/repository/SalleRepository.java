@@ -13,10 +13,10 @@ import java.util.List;
 
 @Repository
 public interface SalleRepository extends JpaRepository<Salle, Integer> {
-    @Query("select s from Salle s where s.idEcole.id = ?1")
+    @Query("select s from Salle s where s.idEcole.id = ?1 order by s.numero")
     List<Salle> findByIdEcole_IdEcole(int idEcole);
 
-    @Query("select s from Salle s where s.idEcole.id = ?1")
+    @Query("select s from Salle s where s.idEcole.id = ?1 order by s.numero")
     List<Salle> findAllByEcole(int idEcole);
 
     @Query("select s from Salle s where s.id not in ?1")

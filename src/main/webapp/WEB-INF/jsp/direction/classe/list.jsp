@@ -27,7 +27,7 @@
             <td><%=classe.getNomClasse()%></td>
             <td><%=classe.getIdSalle().getNumero()%></td>
             <td><%=classe.getIdSalle().getCapacite()%></td>
-            <td><%=classe.getIdTitulaire() != null ? classe.getIdTitulaire().getNom() : "Pas de Responsable"%></td>
+            <td><%=classe.getIdTitulaire() != null ? (classe.getIdTitulaire().getIdSexe().getId() == 1 ? "Mr " :"Mme ") + classe.getIdTitulaire().getNom() : "Pas de Responsable"%></td>
             <td>
                 <form action="delete" method="post" >
                     <input type="hidden" value="<%=classe.getId()%>" name="idClasse">

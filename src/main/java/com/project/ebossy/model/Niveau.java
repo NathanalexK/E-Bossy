@@ -23,6 +23,10 @@ public class Niveau {
     private Integer numero;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_annee_scolaire")
+    private AnneeScolaire idAnneeScolaire;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
