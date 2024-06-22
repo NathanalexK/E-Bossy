@@ -26,9 +26,9 @@
 
 <div class="table-responsive card container-fluid shadow">
 
-    <div class="py-5 text-center">
-        <img class="profil" src="${pageContext.request.contextPath}/uploads/image/eleve/0.jpg" alt="" width="200px">
-    </div>
+<%--    <div class="py-5 text-center">--%>
+<%--        <img class="profil" src="${pageContext.request.contextPath}/uploads/image/eleve/0.jpg" alt="" width="200px">--%>
+<%--    </div>--%>
 
 
     <table class="table table-borderless">
@@ -40,7 +40,14 @@
 
         <tr>
             <td class="font-weight-bold">Prenom(s)</td>
-            <td><%=eleve.getPrenom()%></td>
+            <td>
+                <input
+                        type="text"
+                        name="prenom"
+                        class="form-control disabled_input"
+                        value="<%=eleve.getPrenom()%>"
+                >
+            </td>
         </tr>
 
         <tr>

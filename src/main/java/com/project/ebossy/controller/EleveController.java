@@ -65,7 +65,10 @@ public class EleveController {
     }
 
     @GetMapping("/list")
-    public ModelAndView list(@RequestParam(name = "classe", required = false) Integer idClasse){
+    public ModelAndView list(
+            @RequestParam(name = "classe", required = false) Integer idClasse,
+            @RequestParam(name = "page", defaultValue = "0") Integer page
+    ){
         ModelAndView modelAndView = new ModelAndView("direction/layout");
         modelAndView.addObject("page", "direction/eleve/list");
 
@@ -80,7 +83,7 @@ public class EleveController {
             myClasse = classeList.get(0);
         }
 
-        List<EleveAnneeScolaire> eleves = eleveService.findAllByClasse(myClasse);
+        Page<EleveAnneeScolaire> eleves = eleveAnneeScolaireService.findAllByClasse(myClasse, page);
         List<EleveAnneeScolaire> pasDeClasseList = eleveService.findAllElevePasDeClasse(myClasse.getIdNiveau());
 
 
@@ -88,6 +91,8 @@ public class EleveController {
         modelAndView.addObject("eleveList", eleves);
         modelAndView.addObject("classeList", classeList);modelAndView.addObject("sexeList", sexeRepository.findAll());
         modelAndView.addObject("pasDeClasseList", pasDeClasseList);
+        modelAndView.addObject("totalPages", eleves.getTotalPages());
+        modelAndView.addObject("currentPage", page);
 
         return modelAndView;
     }
@@ -118,6 +123,7 @@ public class EleveController {
     @PostMapping("/save")
     @Transactional
     public String onSave(
+            @RequestParam(name = "id", required = false) Integer id,
             @RequestParam("nom") String nom,
             @RequestParam("prenom") String prenom,
             @RequestParam("idSexe") Sexe idSexe,

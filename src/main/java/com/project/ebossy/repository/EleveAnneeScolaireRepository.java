@@ -17,6 +17,9 @@ public interface EleveAnneeScolaireRepository extends JpaRepository<EleveAnneeSc
     @Query("select e from EleveAnneeScolaire e where e.idClasse = ?1")
     List<EleveAnneeScolaire> findAllByClasse(Classe idClasse);
 
+    @Query("select e from EleveAnneeScolaire e where e.idClasse = ?1")
+    Page<EleveAnneeScolaire> findAllByClassePageable(Classe idClasse, Pageable pageable);
+
     @Query("select e from EleveAnneeScolaire e where e.idNiveau = ?1 and e.idClasse is null ")
     List<EleveAnneeScolaire> findAllElevePasDeClasseByNiveau(Niveau idNiveau);
 

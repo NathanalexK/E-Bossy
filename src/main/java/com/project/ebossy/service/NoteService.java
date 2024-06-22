@@ -54,7 +54,6 @@ public class NoteService {
             System.out.println(note.getIdEleve().getNom() + " " + note.getNote());
         }
 
-
         for (EleveAnneeScolaire eleve : eleveList) {
             noteMap.put(eleve.getIdEleve(), null);
         }
@@ -105,8 +104,33 @@ public class NoteService {
         }
 
         for(Note note : noteList) {
-
+            bulletinMap.get(note.getIdPeriodeNote()).put(note.getMatiereProf().getIdMatiere(), note);
         }
 
+        return bulletinMap;
+    }
+
+    public Map<Matiere, Map<PeriodeNote, Note>> getInversedBulletinDeNote(EleveAnneeScolaire eas) {
+        List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(eas.getIdAnneeScolaire().getIdEcole(), eas.getIdAnneeScolaire());
+        List<MatiereProf> matiereProfList = matiereProfService.findAllByClasse(eas.getIdClasse());
+        List<Note> noteList = findAllByEleveAnneeScolaire(eas);
+
+        Map<Matiere, Map<PeriodeNote, Note>> bulletinMap = new LinkedHashMap<>();
+
+        for (MatiereProf matiereProf : matiereProfList) {
+            Map<PeriodeNote, Note> noteMap = new LinkedHashMap<>();
+
+            for (PeriodeNote periodeNote : periodeNoteList) {
+                noteMap.put(periodeNote, null);
+            }
+
+            bulletinMap.put(matiereProf.getIdMatiere(), noteMap);
+        }
+
+        for(Note note : noteList) {
+            bulletinMap.get(note.getMatiereProf().getIdMatiere()).put(note.getIdPeriodeNote(), note);
+        }
+
+        return bulletinMap;
     }
 }

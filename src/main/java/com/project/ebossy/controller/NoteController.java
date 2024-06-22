@@ -88,6 +88,23 @@ public class NoteController {
         return modelAndView;
     }
 
+    @GetMapping("bulletin")
+    public ModelAndView bulletinEleve(
+            @RequestParam("eleve") EleveAnneeScolaire eas
+    ){
+        ModelAndView modelAndView = layoutService.getLayout();
+        modelAndView.addObject("page", "professeur/note/bulletin");
+
+        Map<Matiere, Map<PeriodeNote, Note>> bulletinMap = noteService.getInversedBulletinDeNote(eas);
+        List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(eas.getIdEleve().getIdEcole(), eas.getIdAnneeScolaire());
+        List<MatiereProf> matiereProfList = matiereProfService.findAllByClasse(eas.getIdClasse());
+
+        modelAndView.addObject("bulletinMap", bulletinMap);
+        modelAndView.addObject("periodeNoteList", periodeNoteList);
+        modelAndView.addObject("matiereProfList", matiereProfList);
+        return modelAndView;
+    }
+
     @PostMapping("/save")
     public String onSave(
             @RequestParam("idNote[]") List<Integer> existedNoteList,

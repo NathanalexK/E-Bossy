@@ -38,6 +38,11 @@ public class EleveAnneeScolaireService {
         return eleveAnneeScolaireRepository.findAllByClasse(classe);
     }
 
+    public Page<EleveAnneeScolaire> findAllByClasse(Classe classe, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return eleveAnneeScolaireRepository.findAllByClassePageable(classe, pageable);
+    }
+
     public Page<EleveAnneeScolaire> searchEleveAnneeScolaire(
             AnneeScolaire anneeScolaire,
             String nom,

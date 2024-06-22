@@ -130,7 +130,7 @@
             <tr>
                 <input type="hidden" name="idNote[]" value="<%=note.getId() != null ? note.getId() : ""%>">
                 <input type="hidden" name="idEleve[]" value="<%=eleve.getIdEleve().getId()%>">
-                <td><%=num%>
+                <td><%=eleve.getId()%>
                 </td>
                 <td class="text-left"><%=eleve.getIdEleve().getNom()%> <%=eleve.getIdEleve().getPrenom()%>
                 </td>
