@@ -272,6 +272,8 @@ alter table note add constraint check_unique_note UNIQUE (id_eleve, id_periode_n
 
 alter table dirigeant add column identifiant varchar(100) unique;
 
+alter table note add column id_matiere_niveau int references matiere_niveau(id);
+
 
 -- create table communique(
 --     id serial primary key,

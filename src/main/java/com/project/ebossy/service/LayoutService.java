@@ -32,7 +32,7 @@ public class LayoutService {
 //            return new ModelAndView("redirect:/");
 //        }
 
-        return switch (role) {
+        ModelAndView mav =  switch (role) {
             case Role.ADMIN -> new ModelAndView("admin/layout");
             case Role.DIRECTEUR -> new ModelAndView("direction/layout");
             case Role.PROFESSEUR -> new ModelAndView("professeur/layout");
@@ -41,5 +41,8 @@ public class LayoutService {
             case Role.ELEVE -> new ModelAndView("eleve/layout");
             default -> throw new RuntimeException("Undefined role: " + role);
         };
+
+        mav.addObject("anneeScolaire", httpSession.getAttribute("anneeScolaire"));
+        return mav;
     }
 }

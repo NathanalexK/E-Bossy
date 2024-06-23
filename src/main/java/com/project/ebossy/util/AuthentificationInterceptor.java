@@ -16,14 +16,12 @@ public class AuthentificationInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         if(request.getSession().getAttribute("ecole") == null){
             response.sendRedirect("/index");
-            System.out.println("null");
             return false;
         }
-//        httpSession.getAttribute("ecole");
-//        System.out.println(((Ecole) request.getSession().getAttribute("ecole")).getNomEcole());
         return true;
     }
 }

@@ -26,6 +26,10 @@ public class NoteService {
     public void save(Note note) {
     }
 
+//    public void deleteAllByPeriodeNote(PeriodeNote periodeNote) {
+//        noteRepository.deleteByIdPeriodeNote(periodeNote);
+//    }
+
 
     public List<Note> saveAll(List<Note> notes) {
         return noteRepository.saveAll(notes);
