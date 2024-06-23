@@ -5,6 +5,7 @@ import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Professeur;
 import com.project.ebossy.model.Sexe;
 import com.project.ebossy.repository.SexeRepository;
+import com.project.ebossy.service.LayoutService;
 import com.project.ebossy.service.ProfesseurService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -24,16 +25,18 @@ public class ProfesseurController {
     private final SexeRepository sexeRepository;
     private final ProfesseurService professeurService;
     private final HttpSession httpSession;
+    private final LayoutService layoutService;
 
-    public ProfesseurController(SexeRepository sexeRepository, ProfesseurService professeurService, HttpSession httpSession) {
+    public ProfesseurController(SexeRepository sexeRepository, ProfesseurService professeurService, HttpSession httpSession, LayoutService layoutService) {
         this.sexeRepository = sexeRepository;
         this.professeurService = professeurService;
         this.httpSession = httpSession;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/form")
     public ModelAndView form(Model model){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/prof/form");
 
         modelAndView.addObject("erreurs", model.getAttribute("erreurs"));

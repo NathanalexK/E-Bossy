@@ -13,4 +13,7 @@ public interface AnneeScolaireRepository extends JpaRepository<AnneeScolaire, In
 
     @Query("select a from AnneeScolaire a where a.idEcole = ?1")
     List<AnneeScolaire> findAllByEcole(Ecole idEcole);
+
+    @Query("select a from AnneeScolaire a where a.idEcole.anneeScolaire = ?1")
+    List<AnneeScolaire> findAllByAnneeScolaire(AnneeScolaire anneeScolaire);
 }

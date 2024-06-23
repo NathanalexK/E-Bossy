@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8" %>
 <%
     String role = request.getAttribute("role").toString();
+    String message = ((String) request.getAttribute("message"));
 %>
 <!doctype html>
 <html lang="en">
@@ -64,6 +65,15 @@
         <div class="text-center h4">
             S'identifier à votre compte
         </div>
+
+        <%
+            if(message != null)
+            {
+        %>
+            <div class="alert alert-danger"> <%=message%></div>
+        <%
+            }
+        %>
 
         <form action="authenticate" method="post">
             <div class="form-group">

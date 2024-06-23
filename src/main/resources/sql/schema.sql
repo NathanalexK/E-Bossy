@@ -229,7 +229,7 @@ create table annee_scolaire_actuel (
 create table status(
     id int primary key,
     nom varchar(20)
-)
+);
 
 alter table tuteur drop column id_ecole;
 alter table eleve add column identifiant varchar(100);
@@ -272,7 +272,7 @@ alter table note add constraint check_unique_note UNIQUE (id_eleve, id_periode_n
 
 alter table dirigeant add column identifiant varchar(100) unique;
 
-alter table note add column id_matiere_niveau int references matiere_niveau(id);
+alter table salle add column id_annee_scolaire int references annee_scolaire(id);
 
 
 -- create table communique(

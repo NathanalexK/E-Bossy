@@ -1,6 +1,7 @@
 package com.project.ebossy.service;
 
 
+import com.project.ebossy.model.Ecole;
 import com.project.ebossy.util.Role;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
@@ -12,25 +13,17 @@ import java.util.Arrays;
 public class LayoutService {
 
     private final HttpSession httpSession;
+    private final AnneeScolaireService anneeScolaireService;
+    private final SessionService sessionService;
 
-    public LayoutService(HttpSession httpSession) {
+    public LayoutService(HttpSession httpSession, AnneeScolaireService anneeScolaireService, SessionService sessionService) {
         this.httpSession = httpSession;
+        this.anneeScolaireService = anneeScolaireService;
+        this.sessionService = sessionService;
     }
 
     public ModelAndView getLayout() {
         String role = httpSession.getAttribute("role").toString();
-//        boolean isAllowed = false;
-//
-//        for (String allowedRole : allowedRoles) {
-//            if (role.equalsIgnoreCase(allowedRole)) {
-//                isAllowed = true;
-//                break;
-//            }
-//        }
-//
-//        if (!isAllowed) {
-//            return new ModelAndView("redirect:/");
-//        }
 
         ModelAndView mav =  switch (role) {
             case Role.ADMIN -> new ModelAndView("admin/layout");
@@ -42,7 +35,8 @@ public class LayoutService {
             default -> throw new RuntimeException("Undefined role: " + role);
         };
 
-        mav.addObject("anneeScolaire", httpSession.getAttribute("anneeScolaire"));
+        mav.addObject("anneeScolaire", sessionService.getAnneeScolaire());
+        mav.addObject("anneeScolaireList", anneeScolaireService.findAllByEcole(((Ecole) httpSession.getAttribute("ecole"))));
         return mav;
     }
 }

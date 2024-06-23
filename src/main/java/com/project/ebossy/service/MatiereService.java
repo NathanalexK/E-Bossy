@@ -1,5 +1,6 @@
 package com.project.ebossy.service;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Matiere;
 import com.project.ebossy.model.Niveau;
@@ -40,6 +41,14 @@ public class MatiereService {
     public List<Matiere> findAllMatiereByNiveau(Niveau niveau) {
         return matiereRepository.findAllByNiveau(niveau);
     }
+
+    public List<Matiere> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return matiereRepository.findByMatiereNiveaux_IdNiveau_IdAnneeScolaire(anneeScolaire);
+    }
+
+//    public List<Matiere> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+//        return matiereRepository.find
+//    }
 
 //    public Matiere update(Integer id,Matiere matiere){
 //        Matiere matiere2 = getMatiereById(id).get();

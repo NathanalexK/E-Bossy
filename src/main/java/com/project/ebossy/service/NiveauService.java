@@ -1,5 +1,6 @@
 package com.project.ebossy.service;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Niveau;
 import com.project.ebossy.repository.NiveauRepository;
@@ -26,6 +27,10 @@ public class NiveauService {
 
     public List<Niveau> findByEcole(Ecole ecole) {
         return niveauRepository.findByEcole(ecole);
+    }
+
+    public List<Niveau> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return niveauRepository.findByAnneeScolaire(anneeScolaire);
     }
 
     public Niveau save(Niveau niveau) {

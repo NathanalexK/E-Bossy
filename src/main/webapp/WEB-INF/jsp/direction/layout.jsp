@@ -1,9 +1,13 @@
 <%@ page import="com.project.ebossy.model.AnneeScolaire" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
     String urlPage = "/WEB-INF/jsp/" + request.getAttribute("page").toString() + ".jsp";
-    AnneeScolaire anneeScolaire = ((AnneeScolaire) request.getAttribute("anneeScolaire"));
+    AnneeScolaire anneeScolaire = ((AnneeScolaire) request.getSession().getAttribute("anneeScolaire"));
+    List<AnneeScolaire> anneeScolaires = ((List<AnneeScolaire>) request.getAttribute("anneeScolaireList")) != null? ((List<AnneeScolaire>) request.getAttribute("anneeScolaireList")) : new ArrayList<>();
+    System.out.println(anneeScolaire.getNom());
 //    System.out.println(anneeScolaire.getNom());
 %>
 
@@ -47,23 +51,25 @@
 
                 <li class="_nav-item btn">
                     <a href="" class="_nav-link">
-                        Mon Compte
+                        Dashboard
                     </a>
                 </li>
 
                 <li class="dropdown btn _nav-item">
                               <span class="_nav-link dropdown-toggle">
-                                    Annee Scolaire: <%=anneeScolaire%>
+                                    <%=anneeScolaire.getNom()%>
                               </span>
 
                     <div class="dropdown-menu"
                     >
-                        <div class="dropdown-title">Eleves</div>
-                        <a href="/eleve/list" class="dropdown-item">Liste des élèves</a>
-                        <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
-                        <a href="" class="dropdown-item">Bulletin de note</a>
-                        <a href="" class="dropdown-item">Absences</a>
-                        <a href="" class="dropdown-item">Comportements</a>
+                        <div class="dropdown-title">Annee Scolaire</div>
+                        <%
+                            for(AnneeScolaire as : anneeScolaires){
+                        %>
+                                <a href="/anneeScolaire/set?id=<%=as.getId()%>" class="dropdown-item"><%=as.getNom()%></a>
+                        <%
+                            }
+                        %>
                     </div>
                 </li>
 

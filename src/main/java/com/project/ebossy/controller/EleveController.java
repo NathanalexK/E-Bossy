@@ -4,6 +4,7 @@ import com.project.ebossy.model.*;
 import com.project.ebossy.repository.SexeRepository;
 import com.project.ebossy.service.*;
 
+import com.project.ebossy.exception.NotFoundException;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -36,8 +37,9 @@ public class EleveController {
 
     private static String UPLOAD_DIR = "image/eleve/";
     private final FileService fileService;
+    private final LayoutService layoutService;
 
-    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService) {
+    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService, LayoutService layoutService) {
         this.eleveService = eleveService;
         this.httpSession = httpSession;
         this.ecoleService = ecoleService;
@@ -47,11 +49,12 @@ public class EleveController {
         this.eleveAnneeScolaireService = eleveAnneeScolaireService;
         this.classeService = classeService;
         this.fileService = fileService;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/form")
     public ModelAndView form(Model model){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/form");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
@@ -69,11 +72,16 @@ public class EleveController {
             @RequestParam(name = "classe", required = false) Integer idClasse,
             @RequestParam(name = "page", defaultValue = "0") Integer page
     ){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/list");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
-        List<Classe> classeList = classeService.findAll(myEcole);
+        AnneeScolaire anneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
+        List<Classe> classeList = classeService.findAllByAnneeScolaire(anneeScolaire);
+
+        if(classeList.isEmpty()){
+            throw new NotFoundException("Aucune classe trouvé pour cette annee scolaire <br> " + anneeScolaire.getNom() + "<br> Creer d'abord une classe pour continuer");
+        }
 
         Classe myClasse = null;
         if(idClasse != null){
@@ -106,11 +114,11 @@ public class EleveController {
             @RequestParam(name = "dateDebut", required = false) LocalDate dateDebut,
             @RequestParam(name = "dateFin", required = false) LocalDate dateFin
     ){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/critere");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
-        AnneeScolaire myAnneeScolaire = myEcole.getAnneeScolaire();
+        AnneeScolaire myAnneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
 
         Page<EleveAnneeScolaire> eleveAnneeScolairePage = eleveAnneeScolaireService.searchEleveAnneeScolaire(myAnneeScolaire, nom, prenom, idSexe, dateDebut, dateFin, page);
         modelAndView.addObject("eleveList", eleveAnneeScolairePage.getContent());
@@ -188,7 +196,7 @@ public class EleveController {
 
     @GetMapping("/information")
     public ModelAndView information(@RequestParam("id") Integer id){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/information");
 
         Eleve myEleve = eleveService.findEleveById(id);

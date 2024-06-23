@@ -1,4 +1,4 @@
-package com.project.ebossy.util;
+package com.project.ebossy.exception;
 
 public class UnallowedRoleException extends RuntimeException {
     public UnallowedRoleException() {

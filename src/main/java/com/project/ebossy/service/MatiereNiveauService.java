@@ -1,9 +1,11 @@
 package com.project.ebossy.service;
 
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Matiere;
 import com.project.ebossy.model.MatiereNiveau;
 import com.project.ebossy.model.Niveau;
+import com.project.ebossy.repository.AnneeScolaireRepository;
 import com.project.ebossy.repository.MatiereNiveauRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,11 @@ import java.util.Map;
 public class MatiereNiveauService {
 
     private final MatiereNiveauRepository matiereNiveauRepository;
+    private final AnneeScolaireRepository anneeScolaireRepository;
 
-    public MatiereNiveauService(MatiereNiveauRepository matiereNiveauRepository) {
+    public MatiereNiveauService(MatiereNiveauRepository matiereNiveauRepository, AnneeScolaireRepository anneeScolaireRepository) {
         this.matiereNiveauRepository = matiereNiveauRepository;
+        this.anneeScolaireRepository = anneeScolaireRepository;
     }
 
     public MatiereNiveau save(MatiereNiveau matiereNiveau) {
@@ -26,6 +30,10 @@ public class MatiereNiveauService {
 
     public List<MatiereNiveau> findAllByNiveau(Niveau niveau) {
         return matiereNiveauRepository.findAllByNiveau(niveau);
+    }
+
+    public List<MatiereNiveau> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return matiereNiveauRepository.findAllByAnneeScolaire(anneeScolaire);
     }
 
     public Map<Matiere, Integer> getCoefficientParMatiere(Niveau niveau){

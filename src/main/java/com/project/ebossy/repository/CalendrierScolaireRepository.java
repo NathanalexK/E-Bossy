@@ -14,7 +14,8 @@ public interface CalendrierScolaireRepository extends JpaRepository<CalendrierSc
     @Query("select c from CalendrierScolaire c where c.idEcole = ?1 and c.idAnneeScolaire = ?2")
     List<CalendrierScolaire> findAllCalendrierScolaire(Ecole idEcole, AnneeScolaire idAnneeScolaire);
 
-
+    @Query("select c from CalendrierScolaire c where c.idAnneeScolaire = ?1")
+    List<CalendrierScolaire> findAllByAnneeScolaire(AnneeScolaire idAnneeScolaire);
 
 
 }

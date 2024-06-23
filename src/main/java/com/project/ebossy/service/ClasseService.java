@@ -28,6 +28,10 @@ public class ClasseService {
         return classe.orElse(null);
     }
 
+    public List<Classe> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return classeRepository.findAllByAnneeScolaire(anneeScolaire);
+    }
+
     public Classe save(Classe classe) {
         return classeRepository.save(classe);
     }

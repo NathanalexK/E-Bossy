@@ -1,9 +1,7 @@
 package com.project.ebossy.controller;
 
-import com.project.ebossy.model.Ecole;
-import com.project.ebossy.model.Matiere;
-import com.project.ebossy.model.MatiereNiveau;
-import com.project.ebossy.model.Niveau;
+import com.project.ebossy.model.*;
+import com.project.ebossy.service.LayoutService;
 import com.project.ebossy.service.MatiereNiveauService;
 import com.project.ebossy.service.MatiereService;
 import com.project.ebossy.service.NiveauService;
@@ -27,23 +25,26 @@ public class MatiereController {
     private final HttpSession httpSession;
     private final MatiereService matiereService;
     private final MatiereNiveauService matiereNiveauService;
+    private final LayoutService layoutService;
 
-    public MatiereController(NiveauService niveauService, HttpSession httpSession, MatiereService matiereService, MatiereNiveauService matiereNiveauService) {
+    public MatiereController(NiveauService niveauService, HttpSession httpSession, MatiereService matiereService, MatiereNiveauService matiereNiveauService, LayoutService layoutService) {
         this.niveauService = niveauService;
         this.httpSession = httpSession;
         this.matiereService = matiereService;
         this.matiereNiveauService = matiereNiveauService;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/form")
     public ModelAndView form(){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/matiere/form");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
+        AnneeScolaire anneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
 
-        modelAndView.addObject("niveauList", niveauService.findAll(myEcole.getId()));
-        modelAndView.addObject("matiereList", matiereService.findAllByEcole(myEcole));
+        modelAndView.addObject("niveauList", niveauService.findAllByAnneeScolaire(anneeScolaire));
+        modelAndView.addObject("matiereList", matiereService.findAllByAnneeScolaire(anneeScolaire));
 
         return modelAndView;
     }

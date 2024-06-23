@@ -24,11 +24,17 @@ public class AuthService {
         switch (role) {
             case Role.DIRECTEUR -> {
                 utilisateur =  dirigeantService.authenticate(username, password);
-                httpSession.setAttribute("ecole", ((Dirigeant) utilisateur).getIdEcole());
+                if(utilisateur != null) {
+                    httpSession.setAttribute("ecole", ((Dirigeant) utilisateur).getIdEcole());
+                    httpSession.setAttribute("anneeScolaire", ((Dirigeant) utilisateur).getIdEcole().getAnneeScolaire());
+                }
             }
             case Role.PROFESSEUR -> {
                 utilisateur = professeurService.authenticate(username, password);
-                httpSession.setAttribute("ecole", ((Professeur) utilisateur).getIdEcole());
+                if(utilisateur != null) {
+                    httpSession.setAttribute("ecole", ((Professeur) utilisateur).getIdEcole());
+                    httpSession.setAttribute("anneeScolaire", ((Professeur) utilisateur).getIdEcole().getAnneeScolaire());
+                }
             }
             default -> {
 //                return null;

@@ -1,5 +1,6 @@
 package com.project.ebossy.service;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Salle;
@@ -54,6 +55,10 @@ public class SalleService {
 
     public List<SalleDisponible> getSalleDisponibles(Ecole ecole) {
         return salleDisponibleRepository.findByEcole(ecole.getId());
+    }
+
+    public List<Salle> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return salleRepository.findAllByAnneeScolaire(anneeScolaire);
     }
 
 //    public boolean isSalleOccupied(Salle salle) {}
