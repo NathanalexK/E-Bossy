@@ -1,6 +1,7 @@
 package com.project.ebossy.controller;
 
 
+import com.project.ebossy.exception.NotFoundException;
 import com.project.ebossy.model.*;
 import com.project.ebossy.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -46,9 +47,12 @@ public class MatiereProfController {
 
         Classe myClasse = null;//        System.out.println(c);
 
+        if(classes.isEmpty()){
+            throw new NotFoundException("Aucune classe trouvée!<br>Veuillez d'abord creer une classe");
+        }
+
         if(idClasse != null) myClasse = classeService.findById(idClasse);
         if(myClasse == null) myClasse = classes.get(0);
-        if(myClasse == null) return new ModelAndView("redirect:/niveau/form");
         Niveau myNiveau =  myClasse.getIdNiveau();
 
         model.addAttribute("classeList", classes);

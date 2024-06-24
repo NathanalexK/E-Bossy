@@ -15,7 +15,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <td><b>Capacité:</b></td>
-                        <td class="bg-light"><%=capacite%>
+                        <td class="bg-light"><%=capacite != null ? capacite : 0%>
                         </td>
                         <td><b>Nombres de salles:</b></td>
                         <td class="bg-light"><%=nombre%>

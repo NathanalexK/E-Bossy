@@ -38,7 +38,8 @@ select
     id_periode_note,
     id_niveau,
     id_classe,
-    sum(note_general) as total
+    sum(note_general) as total,
+    sum(coefficient) as coefficient
 from v_note_general
 group by id_eleve, id_periode_note, id_niveau, id_classe
 ;
@@ -49,12 +50,9 @@ select
     id_classe,
     id_eleve,
     id_periode_note,
-    sum(total) / sum(coef.coef) as moyenne
+    sum(total) / sum(coefficient) as moyenne
 from v_total_note_par_eleve_and_periode note
-join v_total_coef_par_niveau coef
-on coef.id_niveau = note.id_niveau
 group by id_eleve, id_periode_note, id_classe
-order by id_classe, id_periode_note
 ;
 
 create or replace view v_rang_par_classe_et_periode as

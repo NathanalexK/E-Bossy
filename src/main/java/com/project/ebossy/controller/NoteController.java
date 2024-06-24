@@ -116,6 +116,13 @@ public class NoteController {
         return modelAndView;
     }
 
+    @GetMapping("/note/search/form")
+    public ModelAndView searchForm() {
+        ModelAndView modelAndView = layoutService.getLayout();
+        modelAndView.addObject("page", "direction/search");
+        return modelAndView;
+    }
+
     @PostMapping("/save")
     public String onSave(
             @RequestParam("idNote[]") List<Integer> existedNoteList,

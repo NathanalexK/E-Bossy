@@ -214,11 +214,12 @@
         </canvas>
     </div>
 
-    <div class="d-flex py-2">
+    <div class="d-flex pt-5">
         <h2>Graphique des moyennes</h2>
     </div>
+    <hr>
 
-    <div>
+    <div class="px-5 mx-5 border">
         <canvas id="moyenne-chart">
 
         </canvas>
@@ -260,7 +261,8 @@
     %>
     datasets.push({
         label: "<%=periodeNote.getNomPeriode()%>",
-        data: content
+        data: content,
+        fill: false
     });
     <%
         }

@@ -42,8 +42,8 @@ public class SalleController {
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
         AnneeScolaire anneeScolaire = sessionService.getAnneeScolaire();
         modelAndView.addObject("salleList", salleService.findAllByAnneeScolaire(anneeScolaire));
-        modelAndView.addObject("capacite", databaseService.getCapaciteSalleByEcole(myEcole));
-        modelAndView.addObject("nombre", databaseService.getNombreSalleByEcole(myEcole));
+        modelAndView.addObject("capacite", databaseService.getCapaciteSalleByEcole(anneeScolaire));
+        modelAndView.addObject("nombre", databaseService.getNombreSalleByEcole(anneeScolaire));
 //        modelAndView.addObject("salleList", salleService.getSalleDisponibles(((Ecole) httpSession.getAttribute("ecole"))));
         return modelAndView;
     }
@@ -57,6 +57,7 @@ public class SalleController {
         salle.setNumero(numero);
         salle.setCapacite(capacite);
         salle.setIdEcole(((Ecole) httpSession.getAttribute("ecole")));
+        salle.setAnneeScolaire(sessionService.getAnneeScolaire());
         salleService.save(salle);
         return "redirect:/salle/form";
     }

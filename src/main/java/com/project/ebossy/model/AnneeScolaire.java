@@ -30,10 +30,6 @@ public class AnneeScolaire {
 
     @Column(name = "date_fin")
     private LocalDate dateFin;
-//    @Column(name = "annee_debut")
-//    private Integer anneeDebut;
-//
-//    @Column(name = "anne_fin")
-//    private Integer anneFin;
+
 
 }

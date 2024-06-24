@@ -29,11 +29,11 @@ public interface EleveAnneeScolaireRepository extends JpaRepository<EleveAnneeSc
     @Query(
             "select e from EleveAnneeScolaire e where " +
                     "(e.idAnneeScolaire = :idAnneeScolaire) AND" +
-                    "(:nom IS NULL OR e.idEleve.nom LIKE %:nom%) AND " +
-                    "(:prenom IS NULL or e.idEleve.prenom LIKE %:prenom%) AND" +
+                    "(:nom IS NULL OR e.idEleve.nom ILIKE  %:nom%) AND " +
+                    "(:prenom IS NULL or e.idEleve.prenom ILIKE %:prenom%) AND" +
                     "(:idSexe IS NULL or e.idEleve.idSexe = :idSexe) AND " +
-                    "(:dateDebut IS NULL or e.idEleve.dateNaissance >= :dateDebut) AND" +
-                    "(:dateFin IS NULL or e.idEleve.dateNaissance <= :dateFin)"
+                    "(coalesce( :dateDebut,null) IS NULL or e.idEleve.dateNaissance >= :dateDebut) AND" +
+                    "(coalesce( :dateFin,null) IS NULL or e.idEleve.dateNaissance <= :dateFin)"
     )
     Page<EleveAnneeScolaire> findAllByCriteria(
             @Param("idAnneeScolaire") AnneeScolaire anneeScolaire,

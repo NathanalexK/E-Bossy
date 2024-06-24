@@ -8,9 +8,7 @@
 <%--    <h1>Ajouter un niveau</h1>--%>
 <%--</div>--%>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Ajouter un Niveau
-</button>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -60,11 +58,12 @@
 <%--    <button type="submit" class="btn btn-primary">Ajouter</button>--%>
 <%--</form>--%>
 
-<br>
-<br>
 
-<div class="text-center py-2">
-    <h1>Liste des niveaux</h1>
+<div class="d-flex w-100 justify-content-between py-2">
+    <h2>Liste des niveaux</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Ajouter un Niveau
+    </button>
 </div>
 
 <div class="table-responsive card">

@@ -24,14 +24,14 @@ public class DatabaseService {
         return (int) ((Integer) jdbcTemplate.queryForMap(sql, ecole.getId()).get("id_annee_scolaire"));
     }
 
-    public Long getCapaciteSalleByEcole(Ecole ecole){
-        String sql = "select sum(capacite) as capacite from salle where id_ecole=?";
-        return (Long) jdbcTemplate.queryForMap(sql, ecole.getId()).get("capacite");
+    public Long getCapaciteSalleByEcole(AnneeScolaire anneeScolaire){
+        String sql = "select sum(capacite) as capacite from salle where id_annee_scolaire=?";
+        return (Long) jdbcTemplate.queryForMap(sql, anneeScolaire.getId()).get("capacite");
     }
 
-    public Long getNombreSalleByEcole(Ecole ecole){
-        String sql = "select count(*) as nombre from salle where id_ecole=?";
-        return (Long) jdbcTemplate.queryForMap(sql, ecole.getId()).get("nombre");
+    public Long getNombreSalleByEcole(AnneeScolaire anneeScolaire){
+        String sql = "select count(*) as nombre from salle where id_annee_scolaire=?";
+        return (Long) jdbcTemplate.queryForMap(sql, anneeScolaire.getId()).get("nombre");
     }
 
     public boolean TuteurEmailExist(String email){

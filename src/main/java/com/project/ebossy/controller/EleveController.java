@@ -38,8 +38,9 @@ public class EleveController {
     private static String UPLOAD_DIR = "image/eleve/";
     private final FileService fileService;
     private final LayoutService layoutService;
+    private final SessionService sessionService;
 
-    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService, LayoutService layoutService) {
+    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService, LayoutService layoutService, SessionService sessionService) {
         this.eleveService = eleveService;
         this.httpSession = httpSession;
         this.ecoleService = ecoleService;
@@ -50,6 +51,7 @@ public class EleveController {
         this.classeService = classeService;
         this.fileService = fileService;
         this.layoutService = layoutService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/form")
@@ -123,6 +125,11 @@ public class EleveController {
         Page<EleveAnneeScolaire> eleveAnneeScolairePage = eleveAnneeScolaireService.searchEleveAnneeScolaire(myAnneeScolaire, nom, prenom, idSexe, dateDebut, dateFin, page);
         modelAndView.addObject("eleveList", eleveAnneeScolairePage.getContent());
         modelAndView.addObject("totalPages", eleveAnneeScolairePage.getTotalPages());
+        modelAndView.addObject("nom", nom);
+        modelAndView.addObject("prenom", prenom);
+        modelAndView.addObject("idSexe", idSexe);
+        modelAndView.addObject("dateDebut", dateDebut);
+        modelAndView.addObject("dateFin", dateFin);
         modelAndView.addObject("currentPage", page);
 
         return modelAndView;
@@ -208,6 +215,11 @@ public class EleveController {
 
         modelAndView.addObject("eleve", myEleve);
         modelAndView.addObject("parcours", eleveAnneeScolaire);
+
+        Niveau myNiveau = eleveAnneeScolaire.get(0).getIdNiveau();
+
+        modelAndView.addObject("niveau", myNiveau);
+        modelAndView.addObject("classe", eleveAnneeScolaire.get(0).getIdClasse());
 
         return modelAndView;
     }

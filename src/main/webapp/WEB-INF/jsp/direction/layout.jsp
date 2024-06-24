@@ -81,7 +81,8 @@
                     <div class="dropdown-menu"
                     >
                         <div class="dropdown-title">Eleves</div>
-                        <a href="/eleve/list" class="dropdown-item">Liste des élèves</a>
+                        <a href="/eleve/critere-list" class="dropdown-item">Liste des élèves</a>
+                        <a href="/eleve/list" class="dropdown-item">Eleves par classe</a>
                         <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
@@ -132,15 +133,13 @@
                                     Communication
                               </span>
 
-                    <div class="dropdown-menu"
-                    >
+                    <div class="dropdown-menu">
                         <div class="dropdown-title">Communication</div>
                         <a href="" class="dropdown-item">Communiqué</a>
                         <a href="" class="dropdown-item">Convoquer</a>
                         <a href="" class="dropdown-item">Rencontre</a>
                         <a href="" class="dropdown-item">Confirmation Absence</a>
                         <a href="" class="dropdown-item">Alerte</a>
-
                     </div>
                 </li>
 

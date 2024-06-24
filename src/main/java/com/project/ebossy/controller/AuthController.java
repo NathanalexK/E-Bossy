@@ -6,6 +6,7 @@ import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.service.AuthService;
 import com.project.ebossy.service.SessionService;
+import com.project.ebossy.util.Role;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +52,12 @@ public class AuthController {
         if(ecole == null) return "redirect:/login/form";
 
         AnneeScolaire anneeScolaire = sessionService.getAnneeScolaire();
-        if(anneeScolaire == null) throw new AuthException("Annee scolaire non trouvée");
+        if(anneeScolaire == null) {
+            if(role.equals(Role.DIRECTEUR)) {
+                return "redirect:/anneeScolaire/form";
+            }
+            throw new AuthException("Annee scolaire non trouvée");
+        }
 
         httpSession.setAttribute("utilisateur", user);
         httpSession.setAttribute("anneeScolaire", ((Ecole) httpSession.getAttribute("ecole")).getAnneeScolaire());

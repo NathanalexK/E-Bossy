@@ -32,8 +32,9 @@ public class CalendrierScolaireController {
     private final CalendrierScolaireService calendrierScolaireService;
     private final RoleService roleService;
     private final LayoutService layoutService;
+    private final SessionService sessionService;
 
-    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService, RoleService roleService, LayoutService layoutService) {
+    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService, RoleService roleService, LayoutService layoutService, SessionService sessionService) {
         this.httpSession = httpSession;
         this.anneeScolaireService = anneeScolaireService;
         this.evenementScolaireService = evenementScolaireService;
@@ -41,6 +42,7 @@ public class CalendrierScolaireController {
         this.calendrierScolaireService = calendrierScolaireService;
         this.roleService = roleService;
         this.layoutService = layoutService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/form")
@@ -95,7 +97,7 @@ public class CalendrierScolaireController {
         es.setDescription(description);
         Ecole myEcole = (Ecole) httpSession.getAttribute("ecole");
         es.setIdEcole(myEcole);
-        es.setIdAnneeScolaire(myEcole.getAnneeScolaire());
+        es.setIdAnneeScolaire(sessionService.getAnneeScolaire());
         evenementScolaireService.save(es);
 
         return "redirect:/calendrier/form";
@@ -115,7 +117,7 @@ public class CalendrierScolaireController {
         pn.setDateDebut(dateDebut);
         pn.setDateFin(dateFin);
         pn.setIdEcole(myEcole);
-        pn.setIdAnneeScolaire(myEcole.getAnneeScolaire());
+        pn.setIdAnneeScolaire(sessionService.getAnneeScolaire());
         periodeNoteService.save(pn);
         return "redirect:/calendrier/form";
     }

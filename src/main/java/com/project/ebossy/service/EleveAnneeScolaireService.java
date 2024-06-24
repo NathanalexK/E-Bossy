@@ -52,7 +52,7 @@ public class EleveAnneeScolaireService {
             LocalDate fin,
             int page
     ) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 10);
         return eleveAnneeScolaireRepository.findAllByCriteria(anneeScolaire, nom, prenom, idSexe, debut, fin, pageable);
     }
 }
