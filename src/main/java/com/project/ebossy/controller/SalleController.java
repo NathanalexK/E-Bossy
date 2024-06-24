@@ -1,10 +1,13 @@
 package com.project.ebossy.controller;
 
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Salle;
 import com.project.ebossy.service.DatabaseService;
+import com.project.ebossy.service.LayoutService;
 import com.project.ebossy.service.SalleService;
+import com.project.ebossy.service.SessionService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
@@ -21,21 +24,26 @@ public class SalleController {
     private final SalleService salleService;
     private final HttpSession httpSession;
     private final DatabaseService databaseService;
+    private final LayoutService layoutService;
+    private final SessionService sessionService;
 
-    public SalleController(SalleService salleService, HttpSession httpSession, DatabaseService databaseService) {
+    public SalleController(SalleService salleService, HttpSession httpSession, DatabaseService databaseService, LayoutService layoutService, SessionService sessionService) {
         this.salleService = salleService;
         this.httpSession = httpSession;
         this.databaseService = databaseService;
+        this.layoutService = layoutService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/form")
     public ModelAndView salleForm() {
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/salle/form");
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
-        modelAndView.addObject("salleList", salleService.findAllByEcole(myEcole));
-        modelAndView.addObject("capacite", databaseService.getCapaciteSalleByEcole(myEcole));
-        modelAndView.addObject("nombre", databaseService.getNombreSalleByEcole(myEcole));
+        AnneeScolaire anneeScolaire = sessionService.getAnneeScolaire();
+        modelAndView.addObject("salleList", salleService.findAllByAnneeScolaire(anneeScolaire));
+        modelAndView.addObject("capacite", databaseService.getCapaciteSalleByEcole(anneeScolaire));
+        modelAndView.addObject("nombre", databaseService.getNombreSalleByEcole(anneeScolaire));
 //        modelAndView.addObject("salleList", salleService.getSalleDisponibles(((Ecole) httpSession.getAttribute("ecole"))));
         return modelAndView;
     }
@@ -49,6 +57,7 @@ public class SalleController {
         salle.setNumero(numero);
         salle.setCapacite(capacite);
         salle.setIdEcole(((Ecole) httpSession.getAttribute("ecole")));
+        salle.setAnneeScolaire(sessionService.getAnneeScolaire());
         salleService.save(salle);
         return "redirect:/salle/form";
     }

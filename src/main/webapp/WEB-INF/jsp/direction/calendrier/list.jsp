@@ -30,8 +30,15 @@
 </div>
 
 <div class="mt-5">
-    <h4>En Cours: <%=encours.size()%>
+    <div class="d-flex justify-content-between">
+    <h4>En Cours:
     </h4>
+
+    <h4>
+        <%=encours.size()%>
+    </h4>
+    </div>
+    <hr>
     <div class="list-group">
         <%
             if (encours.isEmpty()) {
@@ -84,8 +91,12 @@
 
 
 <div class="mt-5">
-    <h4 class="py-2">A Venir: <%=avenir.size()%>
+    <div class="d-flex justify-content-between">
+    <h4 class="py-2">A Venir:
     </h4>
+        <h4><%=avenir.size()%></>
+    </div>
+    <hr>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : avenir) {
@@ -129,8 +140,13 @@
 
 
 <div class="mt-5">
-    <h4 class="h4">Terminé: <%=fini.size()%>
-    </h4>
+    <div class="d-flex justify-content-between">
+    <h4 class="h4">Terminé: </h4>
+
+    <h4><%=fini.size()%></h4>
+    </div>
+
+    <hr>
     <div class="list-group">
         <%
             for (CalendrierScolaire evenement : fini) {

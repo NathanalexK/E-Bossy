@@ -1,5 +1,6 @@
 package com.project.ebossy.service;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.repository.CalendrierScolaireRepository;
 import com.project.ebossy.view.CalendrierScolaire;
@@ -26,9 +27,25 @@ public class CalendrierScolaireService {
         return calendrierScolaireRepository.findAllCalendrierScolaire(ecole, ecole.getAnneeScolaire());
     }
 
+    public List<CalendrierScolaire> getCalendrierByAnneeScolaire(AnneeScolaire anneeScolaire){
+        return calendrierScolaireRepository.findAllByAnneeScolaire(anneeScolaire);
+    }
+
     @Transactional
     public Map<Integer, List<CalendrierScolaire>> getCalendrierScolaireActuelGrouppedByStatus(Ecole ecole) {
         List<CalendrierScolaire> calendrierScolaire = getCalendrierScolaireActuel(ecole);
+        Map<Integer, List<CalendrierScolaire>> map = new HashMap<>();
+
+        map.put(1, calendrierScolaire.stream().filter(e -> e.getStatus().getId() == 1).sorted(Comparator.comparingInt(CalendrierScolaire::getDateDiff)).toList());
+        map.put(2, calendrierScolaire.stream().filter(e -> e.getStatus().getId() == 2).toList());
+        map.put(3, calendrierScolaire.stream().filter(e -> e.getStatus().getId() == 3).toList());
+
+        return map;
+    }
+
+    @Transactional
+    public Map<Integer, List<CalendrierScolaire>> getCalendrierScolaireGrouppedByStatus(AnneeScolaire anneeScolaire) {
+        List<CalendrierScolaire> calendrierScolaire = getCalendrierByAnneeScolaire(anneeScolaire);
         Map<Integer, List<CalendrierScolaire>> map = new HashMap<>();
 
         map.put(1, calendrierScolaire.stream().filter(e -> e.getStatus().getId() == 1).sorted(Comparator.comparingInt(CalendrierScolaire::getDateDiff)).toList());

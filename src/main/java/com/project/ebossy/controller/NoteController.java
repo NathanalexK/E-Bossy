@@ -30,8 +30,10 @@ public class NoteController {
     private final PeriodeNoteService periodeNoteService;
     private final RoleService roleService;
     private final NoteService noteService;
+    private final MatiereNiveauService matiereNiveauService;
+    private final DatabaseService databaseService;
 
-    public NoteController(LayoutService layoutService, MatiereProfService matiereProfService, HttpSession httpSession, EleveAnneeScolaireService eleveAnneeScolaireService, PeriodeNoteService periodeNoteService, RoleService roleService, NoteService noteService) {
+    public NoteController(LayoutService layoutService, MatiereProfService matiereProfService, HttpSession httpSession, EleveAnneeScolaireService eleveAnneeScolaireService, PeriodeNoteService periodeNoteService, RoleService roleService, NoteService noteService, MatiereNiveauService matiereNiveauService, DatabaseService databaseService) {
         this.layoutService = layoutService;
         this.matiereProfService = matiereProfService;
         this.httpSession = httpSession;
@@ -39,6 +41,8 @@ public class NoteController {
         this.periodeNoteService = periodeNoteService;
         this.roleService = roleService;
         this.noteService = noteService;
+        this.matiereNiveauService = matiereNiveauService;
+        this.databaseService = databaseService;
     }
 
     @GetMapping("/form")
@@ -85,6 +89,37 @@ public class NoteController {
         modelAndView.addObject("selectedPeriodeNote", periodeNote);
         modelAndView.addObject("moyenne", Calcul.moyenneNote(noteMap));
 
+        return modelAndView;
+    }
+
+    @GetMapping("/bulletin")
+    public ModelAndView bulletinEleve(
+            @RequestParam("eleve") EleveAnneeScolaire eas
+    ){
+        ModelAndView modelAndView = layoutService.getLayout();
+        modelAndView.addObject("page", "professeur/note/bulletin");
+
+        Map<Matiere, Map<PeriodeNote, Note>> bulletinMap = noteService.getInversedBulletinDeNote(eas);
+        List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(eas.getIdEleve().getIdEcole(), eas.getIdAnneeScolaire());
+        List<MatiereProf> matiereProfList = matiereProfService.findAllByClasse(eas.getIdClasse());
+        Map<Matiere, Integer> coefMap = matiereNiveauService.getCoefficientParMatiere(eas.getIdNiveau());
+        Map<Integer, Map<String, Object>> rangMap = databaseService.getEleveRangAnneeScolaire(eas.getIdEleve().getId());
+        Map<Integer, Map<String, Object>> statMap = databaseService.getStatitstiqueAnnuelClasse(eas.getIdClasse().getId());
+
+        modelAndView.addObject("bulletinMap", bulletinMap);
+        modelAndView.addObject("periodeNoteList", periodeNoteList);
+        modelAndView.addObject("matiereProfList", matiereProfList);
+        modelAndView.addObject("coefMap", coefMap);
+        modelAndView.addObject("eas", eas);
+        modelAndView.addObject("rangMap", rangMap);
+        modelAndView.addObject("statMap", statMap);
+        return modelAndView;
+    }
+
+    @GetMapping("/note/search/form")
+    public ModelAndView searchForm() {
+        ModelAndView modelAndView = layoutService.getLayout();
+        modelAndView.addObject("page", "direction/search");
         return modelAndView;
     }
 

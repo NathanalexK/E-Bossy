@@ -1,12 +1,10 @@
 package com.project.ebossy.controller;
 
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Niveau;
-import com.project.ebossy.service.EcoleService;
-import com.project.ebossy.service.LayoutService;
-import com.project.ebossy.service.NiveauService;
-import com.project.ebossy.service.RoleService;
+import com.project.ebossy.service.*;
 import com.project.ebossy.util.Role;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,8 @@ public class NiveauController {
     private LayoutService layoutService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private SessionService sessionService;
 
 //    public NiveauController(HttpSession httpSession, NiveauService niveauService, EcoleService ecoleService) {
 //        this.httpSession = httpSession;
@@ -49,8 +49,9 @@ public class NiveauController {
         ModelAndView modelAndView = layoutService.getLayout();
 
         Ecole ecole = (Ecole) httpSession.getAttribute("ecole");
+        AnneeScolaire anneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
 //        Ecole ecole = null;
-        modelAndView.addObject("niveauList", niveauService.findAll(ecole.getId()));
+        modelAndView.addObject("niveauList", niveauService.findAllByAnneeScolaire(anneeScolaire));
 
         modelAndView.addObject("page", "direction/niveau");
         return modelAndView;
@@ -65,7 +66,7 @@ public class NiveauController {
         Ecole idEcole = (Ecole) httpSession.getAttribute("ecole");
         niveau.setIdEcole(idEcole);
         niveau.setNomNiveau(nom);
-        niveau.setIdAnneeScolaire(idEcole.getAnneeScolaire());
+        niveau.setIdAnneeScolaire(sessionService.getAnneeScolaire());
         niveau.setNumero(numero);
         niveauService.save(niveau);
         return "redirect:/niveau/form";

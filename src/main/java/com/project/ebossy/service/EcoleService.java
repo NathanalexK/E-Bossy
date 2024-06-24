@@ -20,4 +20,7 @@ public class EcoleService {
         return ecoleRepository.findById(id);
     }
 
+    public Ecole save(Ecole ecole) {
+        return ecoleRepository.save(ecole);
+    }
 }

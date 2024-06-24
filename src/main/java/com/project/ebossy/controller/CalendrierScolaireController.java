@@ -31,23 +31,28 @@ public class CalendrierScolaireController {
     private final PeriodeNoteService periodeNoteService;
     private final CalendrierScolaireService calendrierScolaireService;
     private final RoleService roleService;
+    private final LayoutService layoutService;
+    private final SessionService sessionService;
 
-    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService, RoleService roleService) {
+    public CalendrierScolaireController(HttpSession httpSession, AnneeScolaireService anneeScolaireService, EvenementScolaireService evenementScolaireService, PeriodeNoteService periodeNoteService, CalendrierScolaireService calendrierScolaireService, RoleService roleService, LayoutService layoutService, SessionService sessionService) {
         this.httpSession = httpSession;
         this.anneeScolaireService = anneeScolaireService;
         this.evenementScolaireService = evenementScolaireService;
         this.periodeNoteService = periodeNoteService;
         this.calendrierScolaireService = calendrierScolaireService;
         this.roleService = roleService;
+        this.layoutService = layoutService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/form")
     public ModelAndView calendrierForm() {
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/calendrier/form");
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
+        AnneeScolaire anneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
 
-        Map<Integer, List<CalendrierScolaire>> eventByStatus = calendrierScolaireService.getCalendrierScolaireActuelGrouppedByStatus(myEcole);
+        Map<Integer, List<CalendrierScolaire>> eventByStatus = calendrierScolaireService.getCalendrierScolaireGrouppedByStatus(anneeScolaire);
 
         modelAndView.addObject("readonly", roleService.canAccess(Role.PROFESSEUR, Role.TUTEUR, Role.ELEVE, Role.PARENT, Role.SECRETAIRE));
         modelAndView.addObject("avenir", eventByStatus.get(1));
@@ -92,7 +97,7 @@ public class CalendrierScolaireController {
         es.setDescription(description);
         Ecole myEcole = (Ecole) httpSession.getAttribute("ecole");
         es.setIdEcole(myEcole);
-        es.setIdAnneeScolaire(myEcole.getAnneeScolaire());
+        es.setIdAnneeScolaire(sessionService.getAnneeScolaire());
         evenementScolaireService.save(es);
 
         return "redirect:/calendrier/form";
@@ -112,7 +117,7 @@ public class CalendrierScolaireController {
         pn.setDateDebut(dateDebut);
         pn.setDateFin(dateFin);
         pn.setIdEcole(myEcole);
-        pn.setIdAnneeScolaire(myEcole.getAnneeScolaire());
+        pn.setIdAnneeScolaire(sessionService.getAnneeScolaire());
         periodeNoteService.save(pn);
         return "redirect:/calendrier/form";
     }

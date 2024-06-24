@@ -40,4 +40,7 @@ public class Note {
     @JoinColumn(name = "id_periode_note")
     private PeriodeNote idPeriodeNote;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_matiere_niveau")
+//    private MatiereNiveau matiereNiveau;
 }

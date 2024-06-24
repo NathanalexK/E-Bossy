@@ -5,10 +5,7 @@ import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Professeur;
 import com.project.ebossy.model.Salle;
-import com.project.ebossy.service.ClasseService;
-import com.project.ebossy.service.NiveauService;
-import com.project.ebossy.service.ProfesseurService;
-import com.project.ebossy.service.SalleService;
+import com.project.ebossy.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,18 +23,20 @@ public class ClasseController {
     private final NiveauService niveauService;
     private final ClasseService classeService;
     private final ProfesseurService professeurService;
+    private final LayoutService layoutService;
 
-    public ClasseController(HttpSession httpSession, SalleService salleService, NiveauService niveauService, ClasseService classeService, ProfesseurService professeurService) {
+    public ClasseController(HttpSession httpSession, SalleService salleService, NiveauService niveauService, ClasseService classeService, ProfesseurService professeurService, LayoutService layoutService) {
         this.httpSession = httpSession;
         this.salleService = salleService;
         this.niveauService = niveauService;
         this.classeService = classeService;
         this.professeurService = professeurService;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/form")
     public ModelAndView classeForm(){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/classe/form");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));

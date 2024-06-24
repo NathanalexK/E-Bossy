@@ -1,9 +1,8 @@
 package com.project.ebossy.service;
 
-import com.project.ebossy.util.UnallowedRoleException;
+import com.project.ebossy.exception.UnallowedRoleException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class RoleService {

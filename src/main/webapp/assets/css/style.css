@@ -132,3 +132,7 @@ form{
     object-fit: cover;
     border: s;
 }
+
+.page-selected {
+    background-color: #00629c!important;
+}

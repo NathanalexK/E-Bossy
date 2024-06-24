@@ -26,5 +26,9 @@ public class Salle {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_annee_scolaire")
+    private AnneeScolaire anneeScolaire;
 }
 

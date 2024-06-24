@@ -1,12 +1,15 @@
 <%@ page import="com.project.ebossy.model.Classe" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.project.ebossy.model.EleveAnneeScolaire" %>
+<%@ page import="org.springframework.data.domain.Page" %>
 <%@page pageEncoding="UTF-8" %>
 <%
     Classe classe = ((Classe) request.getAttribute("classe"));
     List<Classe> classeList = ((List<Classe>) request.getAttribute("classeList"));
-    List<EleveAnneeScolaire> eleveList = ((List<EleveAnneeScolaire>) request.getAttribute("eleveList"));
+    Page<EleveAnneeScolaire> eleveList = ((Page<EleveAnneeScolaire>) request.getAttribute("eleveList"));
     List<EleveAnneeScolaire> pasDeClasseListe = ((List<EleveAnneeScolaire>) request.getAttribute("pasDeClasseList"));
+    Integer currentPage = (Integer) request.getAttribute("currentPage");
+    Integer totalPages = (Integer) request.getAttribute("totalPages");
     int num = 0;
 %>
 
@@ -38,6 +41,8 @@
             </form>
         </div>
     </div>
+
+
 </div>
 
 <div class="table-responsive card container-fluid">
@@ -57,16 +62,17 @@
             <th>Date de naissance</th>
             <th>Sexe</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
 
         <tbody>
         <%
             for (EleveAnneeScolaire eleve : eleveList) {
-                num++;
+
         %>
         <tr>
-            <td><%=num%>
+            <td><%=eleve.getId()%>
             </td>
             <td class="text-left"><%=eleve.getIdEleve().getNom()%> <%=eleve.getIdEleve().getPrenom()%>
             </td>
@@ -77,6 +83,9 @@
             <td>
                 <a href="/eleve/information?id=<%=eleve.getIdEleve().getId()%>">Voir informations</a>
             </td>
+            <td>
+                <a href="/note/bulletin?eleve=<%=eleve.getId()%>">Voir Bulletin</a>
+            </td>
         </tr>
         <%
             }
@@ -84,6 +93,24 @@
         </tbody>
 
     </table>
+
+    <div class="row d-flex justify-content-center">
+        <div aria-label="Page navigation example " class="bg-transparent">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <%
+                    for(int i = 0; i < totalPages; i++){
+                %>
+                <li class="page-item"><a class="page-link <%=currentPage == i ? "bg-primary text-white" : ""%>" href="?page=<%=i%>"><%=i+1%></a></li>
+                <%
+                    }
+                %>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+    </div>
+
+
 
 
 </div>

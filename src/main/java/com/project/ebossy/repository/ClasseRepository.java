@@ -1,5 +1,6 @@
 package com.project.ebossy.repository;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Classe;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Salle;
@@ -24,6 +25,8 @@ public interface ClasseRepository extends JpaRepository<Classe, Integer> {
     @Query("select c from Classe c where c.idEcole = ?1")
     Classe findOneByEcole(Ecole idEcole);
 
+    @Query("select c from Classe c where c.idEcole.anneeScolaire = ?1")
+    List<Classe> findAllByAnneeScolaire(AnneeScolaire anneeScolaire);
 //    @Query("select c from Classe c where c.idEcole.id = :idEcole")
 //    Optional<Classe> findFirstClasseByEcole(@Param("idEcole") int idEcole, Pageable pageable);
 

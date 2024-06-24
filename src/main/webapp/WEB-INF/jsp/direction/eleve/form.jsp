@@ -132,7 +132,7 @@
                 </div>
             </div>
 
-            <input type="file" class="form-control-file" name="photo">
+<%--            <input type="file" class="form-control-file" name="photo">--%>
 
 
             <button type="submit" class="btn btn-primary">Inscrire</button>

@@ -4,6 +4,7 @@ import com.project.ebossy.model.*;
 import com.project.ebossy.repository.SexeRepository;
 import com.project.ebossy.service.*;
 
+import com.project.ebossy.exception.NotFoundException;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +37,10 @@ public class EleveController {
 
     private static String UPLOAD_DIR = "image/eleve/";
     private final FileService fileService;
+    private final LayoutService layoutService;
+    private final SessionService sessionService;
 
-    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService) {
+    public EleveController(EcoleService ecoleService, HttpSession httpSession, EleveService eleveService, SexeRepository sexeRepository, NiveauService niveauService, TuteurService tuteurService, EleveAnneeScolaireService eleveAnneeScolaireService, ClasseService classeService, FileService fileService, LayoutService layoutService, SessionService sessionService) {
         this.eleveService = eleveService;
         this.httpSession = httpSession;
         this.ecoleService = ecoleService;
@@ -46,11 +50,13 @@ public class EleveController {
         this.eleveAnneeScolaireService = eleveAnneeScolaireService;
         this.classeService = classeService;
         this.fileService = fileService;
+        this.layoutService = layoutService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping("/form")
     public ModelAndView form(Model model){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/form");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
@@ -64,12 +70,20 @@ public class EleveController {
     }
 
     @GetMapping("/list")
-    public ModelAndView list(@RequestParam(name = "classe", required = false) Integer idClasse){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+    public ModelAndView list(
+            @RequestParam(name = "classe", required = false) Integer idClasse,
+            @RequestParam(name = "page", defaultValue = "0") Integer page
+    ){
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/list");
 
         Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
-        List<Classe> classeList = classeService.findAll(myEcole);
+        AnneeScolaire anneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
+        List<Classe> classeList = classeService.findAllByAnneeScolaire(anneeScolaire);
+
+        if(classeList.isEmpty()){
+            throw new NotFoundException("Aucune classe trouvé pour cette annee scolaire <br> " + anneeScolaire.getNom() + "<br> Creer d'abord une classe pour continuer");
+        }
 
         Classe myClasse = null;
         if(idClasse != null){
@@ -79,13 +93,44 @@ public class EleveController {
             myClasse = classeList.get(0);
         }
 
-        List<EleveAnneeScolaire> eleves = eleveService.findAllByClasse(myClasse);
+        Page<EleveAnneeScolaire> eleves = eleveAnneeScolaireService.findAllByClasse(myClasse, page);
         List<EleveAnneeScolaire> pasDeClasseList = eleveService.findAllElevePasDeClasse(myClasse.getIdNiveau());
+
 
         modelAndView.addObject("classe", myClasse);
         modelAndView.addObject("eleveList", eleves);
-        modelAndView.addObject("classeList", classeList);
+        modelAndView.addObject("classeList", classeList);modelAndView.addObject("sexeList", sexeRepository.findAll());
         modelAndView.addObject("pasDeClasseList", pasDeClasseList);
+        modelAndView.addObject("totalPages", eleves.getTotalPages());
+        modelAndView.addObject("currentPage", page);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/critere-list")
+    public ModelAndView list(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "nom", required = false) String nom,
+            @RequestParam(name = "prenom", required = false) String prenom,
+            @RequestParam(name = "idSexe", required = false) Sexe idSexe,
+            @RequestParam(name = "dateDebut", required = false) LocalDate dateDebut,
+            @RequestParam(name = "dateFin", required = false) LocalDate dateFin
+    ){
+        ModelAndView modelAndView = layoutService.getLayout();
+        modelAndView.addObject("page", "direction/eleve/critere");
+
+        Ecole myEcole = ((Ecole) httpSession.getAttribute("ecole"));
+        AnneeScolaire myAnneeScolaire = ((AnneeScolaire) httpSession.getAttribute("anneeScolaire"));
+
+        Page<EleveAnneeScolaire> eleveAnneeScolairePage = eleveAnneeScolaireService.searchEleveAnneeScolaire(myAnneeScolaire, nom, prenom, idSexe, dateDebut, dateFin, page);
+        modelAndView.addObject("eleveList", eleveAnneeScolairePage.getContent());
+        modelAndView.addObject("totalPages", eleveAnneeScolairePage.getTotalPages());
+        modelAndView.addObject("nom", nom);
+        modelAndView.addObject("prenom", prenom);
+        modelAndView.addObject("idSexe", idSexe);
+        modelAndView.addObject("dateDebut", dateDebut);
+        modelAndView.addObject("dateFin", dateFin);
+        modelAndView.addObject("currentPage", page);
 
         return modelAndView;
     }
@@ -93,6 +138,7 @@ public class EleveController {
     @PostMapping("/save")
     @Transactional
     public String onSave(
+            @RequestParam(name = "id", required = false) Integer id,
             @RequestParam("nom") String nom,
             @RequestParam("prenom") String prenom,
             @RequestParam("idSexe") Sexe idSexe,
@@ -157,7 +203,7 @@ public class EleveController {
 
     @GetMapping("/information")
     public ModelAndView information(@RequestParam("id") Integer id){
-        ModelAndView modelAndView = new ModelAndView("direction/layout");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("page", "direction/eleve/information");
 
         Eleve myEleve = eleveService.findEleveById(id);
@@ -169,6 +215,11 @@ public class EleveController {
 
         modelAndView.addObject("eleve", myEleve);
         modelAndView.addObject("parcours", eleveAnneeScolaire);
+
+        Niveau myNiveau = eleveAnneeScolaire.get(0).getIdNiveau();
+
+        modelAndView.addObject("niveau", myNiveau);
+        modelAndView.addObject("classe", eleveAnneeScolaire.get(0).getIdClasse());
 
         return modelAndView;
     }

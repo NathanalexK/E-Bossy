@@ -5,24 +5,30 @@ import com.project.ebossy.model.*;
 import com.project.ebossy.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class NoteService {
     private final NoteRepository noteRepository;
     private final EleveService eleveService;
     private final EleveAnneeScolaireService eleveAnneeScolaireService;
+    private final PeriodeNoteService periodeNoteService;
+    private final MatiereProfService matiereProfService;
 
-    public NoteService(NoteRepository noteRepository, EleveService eleveService, EleveAnneeScolaireService eleveAnneeScolaireService) {
+    public NoteService(NoteRepository noteRepository, EleveService eleveService, EleveAnneeScolaireService eleveAnneeScolaireService, PeriodeNoteService periodeNoteService, MatiereProfService matiereProfService) {
         this.noteRepository = noteRepository;
         this.eleveService = eleveService;
         this.eleveAnneeScolaireService = eleveAnneeScolaireService;
+        this.periodeNoteService = periodeNoteService;
+        this.matiereProfService = matiereProfService;
     }
 
     public void save(Note note) {
     }
+
+//    public void deleteAllByPeriodeNote(PeriodeNote periodeNote) {
+//        noteRepository.deleteByIdPeriodeNote(periodeNote);
+//    }
 
 
     public List<Note> saveAll(List<Note> notes) {
@@ -33,6 +39,10 @@ public class NoteService {
 
     public List<Note> findAllByMatiereProf(MatiereProf matiereProf) {
         return noteRepository.findAllByMatiereProf(matiereProf);
+    }
+
+    public List<Note> findAllByEleveAnneeScolaire(EleveAnneeScolaire eleveAnneeScolaire) {
+        return noteRepository.findByIdEleveAndIdPeriodeNote_IdAnneeScolaire(eleveAnneeScolaire.getIdEleve(), eleveAnneeScolaire.getIdAnneeScolaire());
     }
 
 
@@ -48,7 +58,6 @@ public class NoteService {
             System.out.println(note.getIdEleve().getNom() + " " + note.getNote());
         }
 
-
         for (EleveAnneeScolaire eleve : eleveList) {
             noteMap.put(eleve.getIdEleve(), null);
         }
@@ -60,5 +69,72 @@ public class NoteService {
 
         System.out.println(noteMap);
         return noteMap;
+    }
+
+
+    public Map<Matiere, Note> getBulletinDeNote(EleveAnneeScolaire eas , PeriodeNote periodeNote){
+        List<MatiereProf> matiereList = matiereProfService.findAllByClasse(eas.getIdClasse());
+        List<Note> noteList = findAllByEleveAnneeScolaire(eas);
+
+        Map<Matiere, Note> noteMap = new LinkedHashMap<>();
+
+        for(MatiereProf mp : matiereList) {
+            noteMap.put(mp.getIdMatiere(), null);
+        }
+
+        for(Note note : noteList) {
+            noteMap.put(note.getMatiereProf().getIdMatiere(), note);
+        }
+
+        return noteMap;
+    }
+
+
+    public Map<PeriodeNote, Map<Matiere, Note>> getBulletinDeNote(EleveAnneeScolaire eas) {
+        List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(eas.getIdAnneeScolaire().getIdEcole(), eas.getIdAnneeScolaire());
+        List<MatiereProf> matiereProfList = matiereProfService.findAllByClasse(eas.getIdClasse());
+        List<Note> noteList = findAllByEleveAnneeScolaire(eas);
+
+        Map<PeriodeNote, Map<Matiere, Note>> bulletinMap = new LinkedHashMap<>();
+
+        for (PeriodeNote periodeNote : periodeNoteList) {
+            Map<Matiere, Note> noteMap = new LinkedHashMap<>();
+
+            for (MatiereProf matiereProf : matiereProfList) {
+                noteMap.put(matiereProf.getIdMatiere(), null);
+            }
+
+            bulletinMap.put(periodeNote, noteMap);
+        }
+
+        for(Note note : noteList) {
+            bulletinMap.get(note.getIdPeriodeNote()).put(note.getMatiereProf().getIdMatiere(), note);
+        }
+
+        return bulletinMap;
+    }
+
+    public Map<Matiere, Map<PeriodeNote, Note>> getInversedBulletinDeNote(EleveAnneeScolaire eas) {
+        List<PeriodeNote> periodeNoteList = periodeNoteService.findAllByEcole(eas.getIdAnneeScolaire().getIdEcole(), eas.getIdAnneeScolaire());
+        List<MatiereProf> matiereProfList = matiereProfService.findAllByClasse(eas.getIdClasse());
+        List<Note> noteList = findAllByEleveAnneeScolaire(eas);
+
+        Map<Matiere, Map<PeriodeNote, Note>> bulletinMap = new LinkedHashMap<>();
+
+        for (MatiereProf matiereProf : matiereProfList) {
+            Map<PeriodeNote, Note> noteMap = new LinkedHashMap<>();
+
+            for (PeriodeNote periodeNote : periodeNoteList) {
+                noteMap.put(periodeNote, null);
+            }
+
+            bulletinMap.put(matiereProf.getIdMatiere(), noteMap);
+        }
+
+        for(Note note : noteList) {
+            bulletinMap.get(note.getMatiereProf().getIdMatiere()).put(note.getIdPeriodeNote(), note);
+        }
+
+        return bulletinMap;
     }
 }

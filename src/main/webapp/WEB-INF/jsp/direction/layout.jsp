@@ -1,7 +1,14 @@
+<%@ page import="com.project.ebossy.model.AnneeScolaire" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
     String urlPage = "/WEB-INF/jsp/" + request.getAttribute("page").toString() + ".jsp";
+    AnneeScolaire anneeScolaire = ((AnneeScolaire) request.getSession().getAttribute("anneeScolaire"));
+    List<AnneeScolaire> anneeScolaires = ((List<AnneeScolaire>) request.getAttribute("anneeScolaireList")) != null? ((List<AnneeScolaire>) request.getAttribute("anneeScolaireList")) : new ArrayList<>();
+    System.out.println(anneeScolaire.getNom());
+//    System.out.println(anneeScolaire.getNom());
 %>
 
 <!DOCTYPE html>
@@ -23,15 +30,15 @@
 <body>
 <main>
     <div class="py-2 border-bottom">
-        <div class="d-flex flex-wrap justify-content-center">
-            <div class="col-md-4 align-content-center">
+        <div class="d-flex flex-wrap justify-content-around">
+            <div class="align-content-center align-items-end">
                 <b class="">Espace Direction</b>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="">
                 <!--                        <img src="../assets/icon/logo.png" alt="" width="34px" class="mx-2">-->
                 <b class="_blue" style="font-size: 24px">E-Bossy</b>
             </div>
-            <div class="col-md-4 text-right align-content-center">
+            <div class="text-right align-content-center">
                 <a href="/logout">Se Deconnecter</a>
             </div>
         </div>
@@ -44,8 +51,26 @@
 
                 <li class="_nav-item btn">
                     <a href="" class="_nav-link">
-                        Mon Compte
+                        Dashboard
                     </a>
+                </li>
+
+                <li class="dropdown btn _nav-item">
+                              <span class="_nav-link dropdown-toggle">
+                                    <%=anneeScolaire.getNom()%>
+                              </span>
+
+                    <div class="dropdown-menu"
+                    >
+                        <div class="dropdown-title">Annee Scolaire</div>
+                        <%
+                            for(AnneeScolaire as : anneeScolaires){
+                        %>
+                                <a href="/anneeScolaire/set?id=<%=as.getId()%>" class="dropdown-item"><%=as.getNom()%></a>
+                        <%
+                            }
+                        %>
+                    </div>
                 </li>
 
                 <li class="dropdown btn _nav-item">
@@ -56,7 +81,8 @@
                     <div class="dropdown-menu"
                     >
                         <div class="dropdown-title">Eleves</div>
-                        <a href="/eleve/list" class="dropdown-item">Liste des élèves</a>
+                        <a href="/eleve/critere-list" class="dropdown-item">Liste des élèves</a>
+                        <a href="/eleve/list" class="dropdown-item">Eleves par classe</a>
                         <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
@@ -107,15 +133,13 @@
                                     Communication
                               </span>
 
-                    <div class="dropdown-menu"
-                    >
+                    <div class="dropdown-menu">
                         <div class="dropdown-title">Communication</div>
                         <a href="" class="dropdown-item">Communiqué</a>
                         <a href="" class="dropdown-item">Convoquer</a>
                         <a href="" class="dropdown-item">Rencontre</a>
                         <a href="" class="dropdown-item">Confirmation Absence</a>
                         <a href="" class="dropdown-item">Alerte</a>
-
                     </div>
                 </li>
 
@@ -135,19 +159,6 @@
                         <a href="/payeEcolage/form" class="dropdown-item">Prix</a>
                         <a href="" class="dropdown-item">Ecolage non payé </a>
 
-                    </div>
-                </li>
-
-                <li class="dropdown btn _nav-item">
-                              <span class="_nav-link dropdown-toggle">
-                                    Autres
-                              </span>
-
-                    <div class="dropdown-menu"
-                    >
-                        <a href="" class="dropdown-item">item 1</a>
-                        <a href="" class="dropdown-item">item 2</a>
-                        <a href="" class="dropdown-item">item 3</a>
                     </div>
                 </li>
             </ul>

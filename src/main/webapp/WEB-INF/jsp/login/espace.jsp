@@ -1,5 +1,6 @@
 <%@ page import="com.project.ebossy.util.Role" %>
 <%@page pageEncoding="UTF-8" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +14,6 @@
 <body>
     <div class="container">
         <h2>Se Connecter en tant que:</h2>
-
         <a href="/login/form?role=<%=Role.DIRECTEUR%>" >Directeur</a>
         <a href="/login/form?role=<%=Role.SECRETAIRE%>">Secretaire</a>
         <a href="/login/form?role=<%=Role.PROFESSEUR%>">Professeur</a>

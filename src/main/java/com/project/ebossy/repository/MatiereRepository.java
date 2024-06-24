@@ -1,5 +1,6 @@
 package com.project.ebossy.repository;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Ecole;
 import com.project.ebossy.model.Matiere;
 import com.project.ebossy.model.Niveau;
@@ -16,4 +17,9 @@ public interface MatiereRepository extends JpaRepository<Matiere, Integer> {
 
     @Query("select m from Matiere m inner join m.matiereNiveaux matiereNiveaux where matiereNiveaux.idNiveau = ?1")
     List<Matiere> findAllByNiveau(Niveau idNiveau);
+
+    @Query("""
+            select m from Matiere m inner join m.matiereNiveaux matiereNiveaux
+            where matiereNiveaux.idNiveau.idAnneeScolaire = ?1""")
+    List<Matiere> findByMatiereNiveaux_IdNiveau_IdAnneeScolaire(AnneeScolaire idAnneeScolaire);
 }

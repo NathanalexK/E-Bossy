@@ -1,5 +1,6 @@
 package com.project.ebossy.repository;
 
+import com.project.ebossy.model.AnneeScolaire;
 import com.project.ebossy.model.Salle;
 import com.project.ebossy.view.SalleDisponible;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,9 @@ public interface SalleRepository extends JpaRepository<Salle, Integer> {
 
     @Query("select s from Salle s where s.id not in ?1")
     List<Salle> getSalleDisponible(Collection<Integer> ids);
+
+    @Query("select s from Salle s where s.anneeScolaire = ?1")
+    List<Salle> findAllByAnneeScolaire(AnneeScolaire anneeScolaire);
 
 //    @Query("select s from v_salles_disponibles s where s.idEcole.idEcole = ?1")
 //    List<Salle> getSalleNonDisponible(int idEcole);

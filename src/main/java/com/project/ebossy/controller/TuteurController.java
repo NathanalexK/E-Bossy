@@ -4,6 +4,7 @@ import com.project.ebossy.model.Sexe;
 import com.project.ebossy.model.Tuteur;
 import com.project.ebossy.repository.SexeRepository;
 import com.project.ebossy.repository.TuteurRepository;
+import com.project.ebossy.service.LayoutService;
 import com.project.ebossy.service.TuteurService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +26,19 @@ public class TuteurController {
     private final SexeRepository sexeRepository;
     private final TuteurRepository tuteurRepository;
     private final TuteurService tuteurService;
+    private final LayoutService layoutService;
 
     public TuteurController(SexeRepository sexeRepository,
-                            TuteurRepository tuteurRepository, TuteurService tuteurService) {
+                            TuteurRepository tuteurRepository, TuteurService tuteurService, LayoutService layoutService) {
         this.sexeRepository = sexeRepository;
         this.tuteurRepository = tuteurRepository;
         this.tuteurService = tuteurService;
+        this.layoutService = layoutService;
     }
 
     @GetMapping("/inscription/form")
     public ModelAndView loginForm(){
-        ModelAndView modelAndView = new ModelAndView("tuteur/connexion/inscription");
+        ModelAndView modelAndView = layoutService.getLayout();
         modelAndView.addObject("sexeList", sexeRepository.findAll());
         return modelAndView;
     }

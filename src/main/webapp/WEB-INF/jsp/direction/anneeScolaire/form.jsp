@@ -1,7 +1,6 @@
 <%@page pageEncoding="UTF-8" %>
 <%
-    String role = request.getAttribute("role").toString();
-    String message = ((String) request.getAttribute("message"));
+    String message = ((String) request.getAttribute("error"));
 %>
 <!doctype html>
 <html lang="en">
@@ -57,56 +56,63 @@
 
 
 <div class="row border p-4 middle shadow rounded">
-    <div class="top">
-        <%=role.toUpperCase()%>
-    </div>
-
     <div style="width: 450px">
         <div class="text-center h4">
-            S'identifier à votre compte
+            Creer une nouvelle Annee Scolaire
         </div>
+
+        <small>Votre etablissement ne dispose pas encore d'annee scolaire</small>
 
         <%
             if(message != null)
             {
         %>
-            <div class="alert alert-danger"> <%=message%></div>
+        <div class="alert alert-danger"> <%=message%></div>
         <%
             }
         %>
 
-        <form action="authenticate" method="post">
+        <form action="/anneeScolaire/save" method="post">
             <div class="form-group">
-                <label for="input-identifiant">Identifiant:</label>
+                <label for="input-nom">Nom:</label>
                 <input
                         type="text"
-                        id="input-identifiant"
+                        id="input-nom"
                         class="form-control"
-                        name="identifiant"
-                        placeholder="mon_identite@ecole.mg"
+                        name="nom"
+                        placeholder="Oct 2023 - Juil 2024"
                 >
             </div>
 
             <div class="form-group">
-                <label for="input-mdp">Mot de passe:</label>
+                <label for="input-debut">Date debut: </label>
                 <input
-                        type="password"
-                        id="input-mdp"
+                        type="date"
+                        id="input-debut"
                         class="form-control"
-                        name="mdp"
-                        placeholder="********"
+                        name="dateDebut"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="input-fin">Date Fin: </label>
+                <input
+                        type="date"
+                        id="input-fin"
+                        class="form-control"
+                        name="dateFin"
                 >
             </div>
 
             <div class="text-center pt-3">
                 <button type="submit" class="btn btn-primary">
-                    S'identifier
+                    C'est Parti!
                 </button>
                 <div>
                     ou
                 </div>
 
-                <a href="/index">Changer de role</a>
+                <a href="/logout">Se deconnecter</a>
             </div>
         </form>
     </div>
