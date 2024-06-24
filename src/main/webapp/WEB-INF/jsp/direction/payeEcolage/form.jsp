@@ -12,22 +12,12 @@
 
 <form action="save" method="post">
     <div class="form-group">
-        <label for="numero_in">Numero d'eleve:</label>
-        <input type="number" name="numero" id="numero_in" class="form-control" required>
-    </div>
-    
-    <div class="form-group">
         <label for="classe">Classe:</label>
         <select name="idclasse" id="classe" class="form-control">
-            <%
-                for(Classe classe : classeList)
-                {
-            %>
-                <option value="<%=classe.getId()%>"><%=classe.getNomClasse()%></option>
-            <%
-                }
-            %>
-
+            <option value="">Selectionner une classe</option>
+            <% for(Classe classe : classeList) { %>
+            <option value="<%= classe.getId() %>"><%= classe.getNomClasse() %></option>
+            <% } %>
         </select>
     </div>
 

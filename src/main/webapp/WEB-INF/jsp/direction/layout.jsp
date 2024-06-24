@@ -111,7 +111,7 @@
                     >
                         <div class="dropdown-title">Communication</div>
                         <a href="" class="dropdown-item">Communiqué</a>
-                        <a href="" class="dropdown-item">Convoquer</a>
+                        <a href="/convocation/form" class="dropdown-item">Convoquer</a>
                         <a href="" class="dropdown-item">Rencontre</a>
                         <a href="" class="dropdown-item">Confirmation Absence</a>
                         <a href="" class="dropdown-item">Alerte</a>

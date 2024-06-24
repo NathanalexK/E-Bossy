@@ -27,7 +27,9 @@ public class EleveService {
         return eleve.orElse(null);
     }
 
-
+    public List<Eleve> findByIdClasse(int classe){
+        return eleveRepository.findByIdClasse(classe);
+    }
     public List<Eleve> findAllByEcole(Ecole ecole){
         return eleveRepository.findAllByEcole(ecole);
     }
