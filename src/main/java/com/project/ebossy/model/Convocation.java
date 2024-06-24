@@ -3,7 +3,6 @@ package com.project.ebossy.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Table(name = "convocation")
 public class Convocation {
     @Id
-    @ColumnDefault("nextval('convocation_id_seq'::regclass)")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -21,10 +20,9 @@ public class Convocation {
     @JoinColumn(name = "id_ecole")
     private Ecole idEcole;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_eleve")
-    private Eleve idEleve;
+    @JoinColumn(name = "id_eleve_annee_scolaire")
+    private EleveAnneeScolaire idEleveAnneeScolaire;
 
     @Column(name = "date_convocation")
     private LocalDate dateConvocation;

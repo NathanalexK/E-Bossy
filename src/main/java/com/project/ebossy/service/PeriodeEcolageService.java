@@ -4,15 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.ebossy.model.Ecole;
-import com.project.ebossy.model.Eleve;
-import com.project.ebossy.repository.VPeriodeEcolageForDateRepository;
-import com.project.ebossy.view.SalleDisponible;
-import com.project.ebossy.view.VEleveEcole;
+import com.project.ebossy.model.PeriodeEcolage;
 import com.project.ebossy.view.VPeriodeEcolageForDate;
 import org.springframework.stereotype.Service;
 
-import com.project.ebossy.model.PeriodeEcolage;
 import com.project.ebossy.repository.PeriodeEcolageRepository;
 
 @Service
@@ -28,11 +23,15 @@ public class PeriodeEcolageService {
 
     public PeriodeEcolage getByDate(Integer idEcole, LocalDate dates){
         VPeriodeEcolageForDate vp = vPeriodeEcolageForDateService.getByDate(idEcole, dates);
-        Optional<PeriodeEcolage> pr =  getById(vp.getId());
+        Optional<PeriodeEcolage> pr = getById(vp.getId());
         if (pr.isPresent()){
             return  pr.get();
         }
         return null;
+    }
+
+    public List<PeriodeEcolage> getByNonPayerEleve(Integer idEleve){
+        return periodeEcolageRepository.getByNonPayerEleve(idEleve);
     }
 
     public Optional<PeriodeEcolage> getById(Integer id){

@@ -1,10 +1,9 @@
 package com.project.ebossy.service;
 
-import com.project.ebossy.model.Classe;
+import com.project.ebossy.model.PayeEcolage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.ebossy.model.PayeEcolage;
 import com.project.ebossy.repository.PayeEcolageRepository;
 
 @Service

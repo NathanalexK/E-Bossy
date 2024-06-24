@@ -165,12 +165,14 @@ create table periode_ecolage(
     date_fin date,
     id_annee_scolaire int references annee_scolaire(id)
 );
+alter table periode_ecolage add column nom varchar(40);
+drop table paye_ecolage;
+
 create table paye_ecolage(
-    id serial primary key, 
-    id_ecole int references ecole(id), 
-    id_eleve int references eleve(id),
-    date_payement date,
-    id_periode_ecolage int references periode_ecolage(id)
+     id serial primary key,
+     id_eleve_annee_scolaire int references eleve_annee_scolaire(id),
+     date_payement date,
+     id_periode_ecolage int references periode_ecolage(id)
 );
 create table absence(
     id serial primary key,  
