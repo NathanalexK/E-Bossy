@@ -5,6 +5,16 @@ INSERT INTO status VALUES (3, 'Terminé');
 INSERT INTO sexe VALUES (1, 'Mâle');
 INSERT INTO sexe VALUES (2, 'Femelle');
 
+INSERT INTO type_ecole VALUES (2, 'Lycée');
+
+INSERT INTO annee_scolaire (id,nom )VALUES (2,'annee1');
+INSERT INTO ecole (nom_ecole, localisation, id_type_ecole, id_annee_scolaire) VALUES ('Le lotus', 'Akandidramamy', 2, 2);
+
+
+INSERT INTO dirigeant (nom, prenom, date_naissance, adresse, conctact, email, mdp, id_ecole, id_sexe, identifiant) VALUES 
+('Andriantsoa', 'Aina', '1990-07-14', 'Lot II D 25, Antananarivo', '0380989055', 'NyAina.Andriantsoa@gmail.com','dirigeant2',4,1,103);
+
+
 INSERT INTO tuteur (nom, prenom, date_naissance, adresse, conctact, email, mdp, id_sexe) VALUES
  ('Rasolofomanana', 'Mamy', '1990-04-12', 'Lot II D 23, Antananarivo', '0321234567', 'mamy.rasolofomanana@example.com', 'Mamy123', 1),
  ('Rajoelina', 'Hanta', '1985-06-19', 'Lot 5 B 12, Antananarivo', '0339876543', 'hanta.rajoelina@example.com', 'Hanta123', 2),

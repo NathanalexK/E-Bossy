@@ -11,7 +11,7 @@
     Integer currentPage = (Integer) request.getAttribute("currentPage");
     Integer totalPages = (Integer) request.getAttribute("totalPages");
     int num = 0;
-%>
+%> 
 
 <div class="fixed-bottom text-center border-top py-2 shadow">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

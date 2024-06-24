@@ -86,7 +86,8 @@
                         <a href="/eleve/form" class="dropdown-item">Inscrire un élève</a>
                         <a href="" class="dropdown-item">Bulletin de note</a>
                         <a href="" class="dropdown-item">Absences</a>
-                        <a href="" class="dropdown-item">Comportements</a>
+                        <a href="/comportements/form" class="dropdown-item">Comportements</a>
+                        <a href="/comportements/list" class="dropdown-item">Eleves et Comportements</a>
                     </div>
                 </li>
 

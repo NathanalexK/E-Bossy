@@ -274,7 +274,10 @@ alter table dirigeant add column identifiant varchar(100) unique;
 
 alter table salle add column id_annee_scolaire int references annee_scolaire(id);
 
-
+create table comportements(
+    id serial primary key,
+    nom varchar(20)
+);
 -- create table communique(
 --     id serial primary key,
 --     id_type_user int references type_user(id),

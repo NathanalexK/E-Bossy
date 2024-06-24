@@ -112,3 +112,17 @@ group by id_periode_note, id_classe) as a;
 select
     *
 from matiere_niveau;
+
+
+CREATE OR REPLACE VIEW v_comportements_eleve AS
+SELECT 
+    ROW_NUMBER() OVER() AS serial_id,
+    e.id AS id,
+    e.id_eleve AS id_eleve,
+    e.id_classe AS id_classe,
+    c.id AS id_comportements,
+    1 AS ComportementsModif  -- Ajout de la colonne avec la valeur par défaut 1
+FROM eleve_annee_scolaire e
+CROSS JOIN comportements c
+WHERE c.id = 1
+GROUP BY e.id, e.id_eleve, e.id_classe, c.id;
