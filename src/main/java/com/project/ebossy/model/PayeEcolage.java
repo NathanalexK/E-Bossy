@@ -3,7 +3,6 @@ package com.project.ebossy.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -18,12 +17,8 @@ public class PayeEcolage {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ecole")
-    private Ecole idEcole;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_eleve")
-    private Eleve idEleve;
+    @JoinColumn(name = "id_eleve_annee_scolaire")
+    private EleveAnneeScolaire idEleveAnneeScolaire;
 
     @Column(name = "date_payement")
     private LocalDate datePayement;

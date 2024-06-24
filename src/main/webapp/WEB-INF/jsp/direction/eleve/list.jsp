@@ -86,6 +86,9 @@
             <td>
                 <a href="/note/bulletin?eleve=<%=eleve.getId()%>">Voir Bulletin</a>
             </td>
+            <td>
+                <a href="/payeEcolage/form?eleve=<%=eleve.getId()%>">Payer ecolage</a>
+            </td>
         </tr>
         <%
             }
