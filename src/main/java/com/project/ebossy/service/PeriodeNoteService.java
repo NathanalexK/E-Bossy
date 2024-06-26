@@ -27,6 +27,10 @@ public class PeriodeNoteService {
         return periodeNoteRepository.findByEcole(ecole);
     }
 
+    public List<PeriodeNote> findAllByAnneeScolaire(AnneeScolaire anneeScolaire) {
+        return periodeNoteRepository.findAllByAnneeScolaire(anneeScolaire);
+    }
+
     public List<PeriodeNote> findAllByEcole(Ecole ecole, AnneeScolaire anneeScolaire) {
         if(anneeScolaire == null){
             anneeScolaire = ecole.getAnneeScolaire();

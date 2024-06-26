@@ -50,7 +50,7 @@
             <ul class="mb-0">
 
                 <li class="_nav-item btn">
-                    <a href="" class="_nav-link">
+                    <a href="/dashboard" class="_nav-link">
                         Dashboard
                     </a>
                 </li>
@@ -165,7 +165,8 @@
         </div>
     </nav>
 
-    <div class="container py-5">
+
+    <div class="container container-fluid pb-5 pt-2">
         <jsp:include page="<%=urlPage%>"></jsp:include>
     </div>
 

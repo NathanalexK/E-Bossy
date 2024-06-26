@@ -62,7 +62,7 @@ public class AuthController {
         httpSession.setAttribute("utilisateur", user);
         httpSession.setAttribute("anneeScolaire", ((Ecole) httpSession.getAttribute("ecole")).getAnneeScolaire());
         System.out.println(((Ecole) httpSession.getAttribute("ecole")).getNomEcole());
-        return "redirect:/niveau/form";
+        return "redirect:/dashboard";
 
     }
 

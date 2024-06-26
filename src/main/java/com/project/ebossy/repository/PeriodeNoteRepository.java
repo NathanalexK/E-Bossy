@@ -18,4 +18,7 @@ public interface PeriodeNoteRepository extends JpaRepository<PeriodeNote, Intege
 
     @Query("select p from PeriodeNote p where p.idEcole = ?1 and p.idAnneeScolaire = ?2 order by p.dateDebut")
     List<PeriodeNote> findAllByEcoleWithAnneeScolaire(Ecole idEcole, AnneeScolaire idAnneeScolaire);
+
+    @Query("select p from PeriodeNote p where p.idAnneeScolaire = ?1 ORDER BY p.dateDebut")
+    List<PeriodeNote> findAllByAnneeScolaire(AnneeScolaire idAnneeScolaire);
 }
